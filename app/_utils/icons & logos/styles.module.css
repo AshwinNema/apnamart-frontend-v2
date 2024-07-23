@@ -9,3 +9,12 @@
 .dark-logo {
   stroke: white;
 }
+
+.password-icon {
+  fill: #5d6265;
+  cursor: pointer;
+}
+
+.password-icon:hover {
+  fill: black;
+}

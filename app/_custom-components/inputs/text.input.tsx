@@ -1,0 +1,55 @@
+import { Input } from "@nextui-org/react";
+import { ReactNode, useState } from "react";
+import { ZodSchema } from "zod";
+import { getZodErrMsg, setNestedPath } from "@/app/_utils";
+
+export const TextInput = ({
+  value,
+  setData,
+  validationSchema,
+  Icon,
+  label,
+  placeholder,
+}: {
+  value: string;
+  setData: (value: string) => void;
+  validationSchema?: ZodSchema;
+  Icon?: () => ReactNode;
+  label?: string;
+  placeholder?: string;
+}) => {
+  const [config, setConfig] = useState({ invalid: false, errorMsg: "" });
+  const setDataFunc = setNestedPath(setConfig);
+
+  const isInvalid = () => {
+    if (!value || !validationSchema) {
+      return false;
+    }
+    const validation = validationSchema.safeParse(value);
+    if (validation.error) {
+      const errMsg = getZodErrMsg(validation.error);
+      setDataFunc("errorMsg")(errMsg);
+    }
+
+    return !validation.success;
+  };
+
+  return (
+    <Input
+      autoFocus
+      startContent={<>{Icon && <Icon />}</>}
+      value={value}
+      isInvalid={config.invalid}
+      color={config.invalid ? "danger" : "default"}
+      errorMessage={`${config.errorMsg}`}
+      isClearable
+      onValueChange={setData}
+      label={`${label || ""}`}
+      placeholder={`${placeholder ? placeholder : `Please enter ${label}`}`}
+      variant="bordered"
+      onBlur={() => {
+        setDataFunc("invalid")(isInvalid());
+      }}
+    />
+  );
+};

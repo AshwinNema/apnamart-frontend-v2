@@ -1,8 +1,10 @@
 import React from "react";
-
-interface Props extends React.PropsWithChildren {
+import styles from "./styles.module.css";
+export interface Props extends React.PropsWithChildren {
   className?: string;
+  onClick?: (value: any) => void;
 }
+
 export const MoonIcon = (props: Props) => (
   <svg
     aria-hidden="true"
@@ -36,3 +38,27 @@ export const SunIcon = (props: Props = {}) => (
     </g>
   </svg>
 );
+
+export const ClearIcon = (props: Props = {}) => (
+  <svg
+    width="25px"
+    height="25px"
+    viewBox="0 0 1024 1024"
+    xmlns="http://www.w3.org/2000/svg"
+    {...props}
+    className={`${styles["password-icon"]}`}
+  >
+    <path d="M896 512c0-212.077-171.921-384-384-384-212.077 0-384 171.923-384 384 0 212.079 171.923 384 384 384 212.079 0 384-171.921 384-384zM579.883 398.863c12.497-12.497 32.759-12.497 45.257 0 12.493 12.497 12.493 32.757 0 45.254L557.257 512l67.878 67.883c12.497 12.497 12.497 32.759 0 45.257-12.493 12.493-32.755 12.493-45.252 0L512 557.257l-67.883 67.883c-12.497 12.493-32.757 12.493-45.254 0-12.497-12.497-12.497-32.759 0-45.257L466.744 512l-67.881-67.883c-12.497-12.497-12.497-32.758 0-45.254s32.757-12.497 45.254 0L512 466.744l67.883-67.881z" />
+  </svg>
+);
+
+export const ValidationErrIcon = () => {
+  return <>❌</>;
+};
+
+export const SuccessIcon = () => {
+  return <> 🚀</>;
+};
+
+export * from "./input.icons";
+export * from "./apnamart.logo";

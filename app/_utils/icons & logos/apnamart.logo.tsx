@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import styles from "./logo.module.css";
+import styles from "./styles.module.css";
 import { useTheme } from "next-themes";
 import { themes } from "../enum";
-export default function Logo() {
+
+export const ApnamartLogo = () => {
   const { theme } = useTheme();
   const [logoClass, setLogoClass] = useState(styles.logo);
 
@@ -54,4 +55,4 @@ export default function Logo() {
       <p className="font-bold text-inherit">Apnamart</p>
     </>
   );
-}
+};

@@ -1,7 +1,7 @@
 import { themes } from "@/app/_utils/enum";
 import { Switch } from "@nextui-org/react";
 import { useTheme } from "next-themes";
-import { MoonIcon, SunIcon } from "./mode-icons";
+import { MoonIcon, SunIcon } from "../../_utils/icons & logos";
 import { useState } from "react";
 
 export default function ThemeSwitch() {
