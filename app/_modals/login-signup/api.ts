@@ -1,4 +1,3 @@
-import { toast } from "react-toastify";
 import {
   loginValidationSchema,
   loginConfig,
@@ -6,12 +5,12 @@ import {
   signUpValidationSchema,
 } from "./constants";
 import { appEndPoints } from "@/app/_utils/endpoints";
-import { HTTP_METHODS, makeDataRequest } from "@/app/_services/fetch.service";
-import { ValidationErrIcon } from "@/app/_utils/icons & logos";
+import { HTTP_METHODS, makeDataRequest } from "@/app/_services/fetch-service";
 import { getZodErrMsg } from "@/app/_utils";
 import { setLocalStorageKey } from "@/app/_services/local-storage.service";
 import { setUser } from "@/lib/slices/user/user.slice";
 import { AppDispatch } from "@/lib/store";
+import { errorToast, toastErrorIcons } from "@/app/_utils/toast";
 
 export const loginSignUp = async (
   formData: loginConfig["formData"],
@@ -26,7 +25,7 @@ export const loginSignUp = async (
 
   if (data?.error) {
     const errMsg = getZodErrMsg(data.error);
-    toast.error(errMsg, { icon: ValidationErrIcon });
+    errorToast({ msg: errMsg, iconType: toastErrorIcons.validation });
     return;
   }
 
@@ -38,12 +37,14 @@ export const loginSignUp = async (
       HTTP_METHODS.POST,
       url,
       data.data,
+      undefined,
+      { showToastAndRedirect: false },
     );
     setLocalStorageKey("user", user);
     setLocalStorageKey("tokens", tokens);
     onClose();
     dispatch(setUser(user));
   } catch (err: any) {
-    toast.error(err?.message);
+    errorToast({ msg: err?.message });
   }
 };

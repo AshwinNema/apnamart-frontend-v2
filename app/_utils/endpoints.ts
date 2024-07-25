@@ -4,4 +4,5 @@ export const appEndPoints = {
   LOGIN: `${backendService}auth/login`,
   REGISTER: `${backendService}auth/register`,
   REFRESH_TOKEN: `${backendService}auth/refresh-token`,
+  GOOGLE_LOGIN: `${backendService}auth/google`,
 };

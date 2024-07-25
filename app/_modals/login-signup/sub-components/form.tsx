@@ -1,19 +1,21 @@
-import { loginConfig, modalTypes } from "./constants";
+import { loginConfig, modalTypes } from "../constants";
 import { PasswordInput, TextInput } from "@/app/_custom-components/inputs";
 import { Avatar, AvatarIcon } from "@nextui-org/react";
 import { MailIcon } from "@/app/_utils/icons & logos";
 import { z } from "zod";
+import { setKeyVal } from "@/app/_utils";
 export default function Form({
   formData,
   setData,
   modalType,
 }: {
   formData: loginConfig["formData"];
-  setData: (value: string) => (value: string) => void;
+  setData: setKeyVal;
   modalType: modalTypes | null;
 }) {
   return (
     <>
+      <p className="italic text-sm">Please enter your credentials</p>
       {modalType === modalTypes.signUp && (
         <>
           <TextInput

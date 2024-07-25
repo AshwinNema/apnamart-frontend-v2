@@ -4,27 +4,11 @@ import {
   getLocalStorageKey,
   redirect,
   setLocalStorageKey,
-} from "./local-storage.service";
-import { appEndPoints } from "../_utils/endpoints";
-import { toast } from "react-toastify";
-
-export const HTTP_METHODS = {
-  POST: "POST",
-  GET: "GET",
-  PUT: "PUT",
-  DELETE: "DELETE",
-};
-
-interface token {
-  access: {
-    token: string;
-    expires: Date;
-  };
-  refresh: {
-    token: string;
-    expires: Date;
-  };
-}
+} from "../local-storage.service";
+import { appEndPoints } from "../../_utils/endpoints";
+import { errorToast, toastErrorIcons } from "../../_utils/toast";
+import { HTTP_METHODS, token, params, fetchErrParam } from "./helper";
+export * from "./helper";
 
 const getRefreshToken = async (refreshToken: string) => {
   try {
@@ -41,7 +25,7 @@ const getRefreshToken = async (refreshToken: string) => {
     );
     const tokens = await response.json();
     if (tokens?.code === 401) {
-      toast.error("Token expired");
+      errorToast({ msg: "Token expired" });
       clearStorage();
       setTimeout(() => {
         redirect("/");
@@ -75,16 +59,18 @@ const getToken = async () => {
   return await getRefreshToken(tokens.refresh.token);
 };
 
-interface params {
-  [key: string]: number | string | boolean;
-}
-
 export const makeDataRequest = async (
   method: string,
   url: string,
   data?: object,
   params?: params,
+  errHandling: fetchErrParam = {
+    showToastAndRedirect: true,
+    iconType: toastErrorIcons.default,
+  },
 ) => {
+  const { showToastAndRedirect, iconType = toastErrorIcons.default } =
+    errHandling;
   const headers = {
     "Content-Type": "application/json",
     Authorization: `Bearer ${await getToken()}`,
@@ -105,17 +91,24 @@ export const makeDataRequest = async (
       method,
       body: (data && JSON.stringify(data)) || undefined,
       headers,
-    }).then((response) => {
+    }).then(async (response) => {
       if (response.status === 401) {
-        toast.error("Token expired");
-        clearStorage();
-        redirect("/");
+        if (showToastAndRedirect) {
+          errorToast({ msg: "Token expired" });
+          clearStorage();
+          redirect("/");
+        }
         return;
       }
       if (response.status === 204) {
         return Promise.resolve("ok");
       }
-      return response.json();
+      const dataResponse = await response.json();
+      if (dataResponse?.statusCode >= 400) {
+        errorToast({ msg: dataResponse.message, iconType });
+        return null;
+      }
+      return dataResponse;
     }),
   );
 };

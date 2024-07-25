@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import styles from "./styles.module.css";
 import { useTheme } from "next-themes";
-import { themes } from "../enum";
+import { browserTheme } from "@/app/layout-components/theme-switch";
 
 export const ApnamartLogo = () => {
   const { theme } = useTheme();
   const [logoClass, setLogoClass] = useState(styles.logo);
 
   useEffect(() => {
-    if (theme === themes.light) {
+    if (theme === browserTheme.light) {
       setLogoClass(styles.logo);
       return;
     }

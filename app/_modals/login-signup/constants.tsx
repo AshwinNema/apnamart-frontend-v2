@@ -62,6 +62,7 @@ export type loginConfig = {
     password: string;
     name: string;
   };
+  currentStep: number;
 };
 
 export const defaultConfig = {
@@ -71,6 +72,7 @@ export const defaultConfig = {
     password: "",
     name: "",
   },
+  currentStep: 0,
 };
 
 export enum modalTypes {

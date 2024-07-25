@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@nextui-org/react": "^2.4.2",
+    "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^2.2.6",
     "framer-motion": "^11.2.13",
     "local-storage": "^2.0.0",

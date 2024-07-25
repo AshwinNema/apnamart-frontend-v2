@@ -1,5 +1,4 @@
 import { get, set, remove, clear } from "local-storage";
-import { useRouter } from "next/router";
 
 export function getLocalStorageKey<T>(attribute: string): T {
   return get(attribute);
@@ -19,6 +18,5 @@ export const clearStorage = () => {
 };
 
 export const redirect = (route: string) => {
-  const router = useRouter();
-  router.push(route);
+  window.location.href = `${window.location.href}${route}`;
 };

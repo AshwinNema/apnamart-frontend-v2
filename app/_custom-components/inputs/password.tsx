@@ -6,7 +6,7 @@ import {
   LockIcon,
 } from "@/app/_utils/icons & logos";
 import { useState } from "react";
-import { passwordErrMsg } from "../../_utils";
+import { passwordErrMsg, setVal } from "../../_utils";
 import { loginValidationSchema } from "@/app/_modals/login-signup/constants";
 
 export const PasswordInput = ({
@@ -16,7 +16,7 @@ export const PasswordInput = ({
   label,
 }: {
   password: string;
-  setData: (value: string) => void;
+  setData: setVal;
   placeholder?: string;
   label?: string;
 }) => {

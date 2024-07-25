@@ -1,7 +1,7 @@
 import { Input } from "@nextui-org/react";
 import { ReactNode, useState } from "react";
 import { ZodSchema } from "zod";
-import { getZodErrMsg, setNestedPath } from "@/app/_utils";
+import { getZodErrMsg, setNestedPath, setVal } from "@/app/_utils";
 
 export const TextInput = ({
   value,
@@ -12,7 +12,7 @@ export const TextInput = ({
   placeholder,
 }: {
   value: string;
-  setData: (value: string) => void;
+  setData: setVal;
   validationSchema?: ZodSchema;
   Icon?: () => ReactNode;
   label?: string;

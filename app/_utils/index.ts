@@ -1,6 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
 import * as _ from "lodash";
-import { SafeParseReturnType, ZodError } from "zod";
+import { ZodError } from "zod";
+import { getLocalStorageKey } from "../_services/local-storage.service";
+import { browserTheme } from "../layout-components/theme-switch";
 
 export const passwordRegex =
   /(?=.*[A-Z])(?=.*\d).{8,}|(?=.*\d)(?=.*[A-Z]).{8,}/;
@@ -18,23 +20,26 @@ export const setNestedPath =
     });
   };
 
-interface keyVals {
-  key: string;
-  val: any;
-}
+export type setKeyVal = (key: string) => (value: any) => void;
 
-export const setMultiplePaths = (
-  setDataFunc: Dispatch<SetStateAction<any>>,
-  pathValList: keyVals[],
-) => {
-  setDataFunc((prevVal: Object) => {
-    pathValList.forEach(({ key, val }) => {
-      _.set(prevVal, key, val);
+export type setVal = (value: any) => void;
+
+export type keyVals = [string, any];
+
+export const setMultiplePaths =
+  (setDataFunc: Dispatch<SetStateAction<any>>) => (pathValList: keyVals[]) => {
+    setDataFunc((prevVal: Object) => {
+      pathValList.forEach(([key, val]) => {
+        _.set(prevVal, key, val);
+      });
+      return { ...prevVal };
     });
-    return { ...prevVal };
-  });
-};
+  };
 
 export const getZodErrMsg = (error: ZodError<any>) => {
   return error.issues.map((issue) => issue.message).join(", ");
+};
+
+export const getBrowserTheme = (): browserTheme => {
+  return getLocalStorageKey("theme") || browserTheme.light;
 };

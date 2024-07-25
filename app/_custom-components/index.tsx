@@ -22,7 +22,6 @@ export const ImageComponent = ({
     <Image
       isBlurred={isBlurred}
       as={NextImage}
-      unoptimized={true}
       width={width}
       height={height}
       src={src}

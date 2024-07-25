@@ -52,17 +52,13 @@ export default function Header() {
               <Button
                 onPress={openModal(modalTypes.login)}
                 color="primary"
-                variant="flat"
+                variant="faded"
               >
                 Login
               </Button>
             </NavbarItem>
             <NavbarItem>
-              <Button
-                onPress={openModal(modalTypes.signUp)}
-                color="primary"
-                variant="flat"
-              >
+              <Button onPress={openModal(modalTypes.signUp)} color="primary">
                 Sign Up
               </Button>
             </NavbarItem>

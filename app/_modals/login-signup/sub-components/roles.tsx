@@ -1,8 +1,9 @@
 import React from "react";
 import { Checkbox } from "@nextui-org/react";
 import { Card, CardBody, CardFooter } from "@nextui-org/react";
-import { modalTypes, roleCard, userRoleKeys, userRoles } from "./constants";
+import { modalTypes, roleCard, userRoleKeys, userRoles } from "../constants";
 import { ImageComponent } from "@/app/_custom-components";
+import { setVal } from "@/app/_utils";
 
 export const RoleCard = ({
   src,
@@ -51,7 +52,7 @@ export default function Roles({
   modalType,
 }: {
   selectedRole: userRoleKeys;
-  setRole: (arg: string) => void;
+  setRole: setVal;
   modalType: modalTypes | null;
 }) {
   return (

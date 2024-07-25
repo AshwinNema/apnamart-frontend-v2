@@ -1,3 +1,3 @@
 export default function Home() {
-  return <div className="dark"></div>;
+  return <div></div>;
 }
