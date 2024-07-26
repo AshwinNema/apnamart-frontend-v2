@@ -6,6 +6,39 @@ import { errorToast } from "@/app/_utils/toast";
 import { AppDispatch } from "@/lib/store";
 import { setLocalStorageKey } from "@/app/_services/local-storage.service";
 import { setUser } from "@/lib/slices/user/user.slice";
+import {
+  notificationTypes,
+  setNotificationType,
+} from "@/lib/slices/notification/notification.slice";
+import { getNewUserModalProps } from "@/app/layout-components/notifications/new-user";
+
+const processSuccessResponse = (
+  response: any,
+  onClose: () => void,
+  dispatch: AppDispatch,
+) => {
+  if (!response) {
+    return;
+  }
+  const { user, tokens, noInitialPassword, isNewUser } = response;
+  setLocalStorageKey("user", user);
+  setLocalStorageKey("tokens", tokens);
+  onClose();
+  if (isNewUser) {
+    dispatch(
+      setNotificationType({
+        type: notificationTypes.newUser,
+        modalProps: getNewUserModalProps(),
+        details: {
+          name: user.name,
+          role: user.role,
+          noInitialPassword: noInitialPassword,
+        },
+      }),
+    );
+  }
+  dispatch(setUser(user));
+};
 
 export const googleSuccessResponse = (
   credentialResponse: TokenResponse,
@@ -23,14 +56,7 @@ export const googleSuccessResponse = (
     { showToastAndRedirect: false },
   )
     .then((response) => {
-      if (!response) {
-        return;
-      }
-      const { user, tokens } = response;
-      setLocalStorageKey("user", user);
-      setLocalStorageKey("tokens", tokens);
-      onClose();
-      dispatch(setUser(user));
+      processSuccessResponse(response, onClose, dispatch);
     })
     .catch((err) => {
       errorToast({ msg: err?.message });
@@ -42,15 +68,7 @@ export const onTwitterSuccess = (
   onClose: () => void,
   dispatch: AppDispatch,
 ) => {
-  if (!response) {
-    return;
-  }
-  console.log(response, "this is the response")
-  const { user, tokens } = response;
-  setLocalStorageKey("user", user);
-  setLocalStorageKey("tokens", tokens);
-  onClose();
-  dispatch(setUser(user));
+  processSuccessResponse(response, onClose, dispatch);
 };
 
 export const onTwitterFailure = (err: Error) => {
