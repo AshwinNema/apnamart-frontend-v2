@@ -18,3 +18,7 @@
 .password-icon:hover {
   fill: black;
 }
+
+.twitterBtn {
+  enable-background: new 0 0 24 24;
+}

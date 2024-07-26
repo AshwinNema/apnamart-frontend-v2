@@ -36,3 +36,23 @@ export const googleSuccessResponse = (
       errorToast({ msg: err?.message });
     });
 };
+
+export const onTwitterSuccess = (
+  response: any,
+  onClose: () => void,
+  dispatch: AppDispatch,
+) => {
+  if (!response) {
+    return;
+  }
+  console.log(response, "this is the response")
+  const { user, tokens } = response;
+  setLocalStorageKey("user", user);
+  setLocalStorageKey("tokens", tokens);
+  onClose();
+  dispatch(setUser(user));
+};
+
+export const onTwitterFailure = (err: Error) => {
+  errorToast({ msg: err.message });
+};

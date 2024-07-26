@@ -8,8 +8,10 @@ import { useGoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { Button } from "@nextui-org/react";
 import styles from "../style.module.css";
 import { GoogleIcon } from "@/app/_utils/icons & logos";
-import { googleSuccessResponse } from "./util";
+import { googleSuccessResponse, onTwitterFailure, onTwitterSuccess } from "./util";
 import { useAppDispatch } from "@/lib/hooks";
+import TwitterLogin from "./twitter-login";
+import { appEndPoints } from "@/app/_utils/endpoints";
 
 export default function MainFormBody({
   config,
@@ -24,7 +26,6 @@ export default function MainFormBody({
 }) {
   const dispatch = useAppDispatch();
   const { formData } = config;
-
   const googleClientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT as string;
 
   const GoogleButton = () => {
@@ -77,7 +78,17 @@ export default function MainFormBody({
               <GoogleButton />
             </GoogleOAuthProvider>
 
-            {/* <Divider orientation="vertical" /> */}
+            <Divider orientation="vertical" />
+            <TwitterLogin
+              text={`${modalType === modalTypes.signUp ? "Sign Up" : "Login"} with Twitter`}
+              loginUrl={appEndPoints.TWITTER_ACCESS_TOKEN}
+              requestTokenUrl={appEndPoints.TWITTER_REQUEST_TOKEN}
+              additonalAcessParams={{ role: config.formData.role }}
+              onSuccess={(response) =>
+                onTwitterSuccess(response, onClose, dispatch)
+              }
+              onFailure={onTwitterFailure}
+            />
           </div>
         </>
       ) : null}
