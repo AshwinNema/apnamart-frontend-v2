@@ -1,42 +1,76 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Navbar,
   NavbarBrand,
   NavbarContent,
   NavbarItem,
-  Link,
   Button,
+  useDisclosure,
 } from "@nextui-org/react";
 import ThemeSwitch from "../theme-switch";
-import Logo from "@/app/_utils/images/website-logo";
+import { ApnamartLogo } from "@/app/_utils/icons & logos/apnamart.logo";
+import LoginSignUpModal from "@/app/_modals/login-signup";
+import { modalTypes } from "@/app/_modals/login-signup/constants";
+import { setNestedPath } from "@/app/_utils";
+import { useAppSelector } from "@/lib/hooks";
 
 export default function Header() {
-  return (
-    <Navbar
-      isBordered
-      classNames={{
-        item: ["flex", "relative", "h-full", "items-center"],
-        base: ["flex", "justify-between"],
-        wrapper: ["max-w-full"],
-      }}
-    >
-      <NavbarBrand>
-        <Logo />
-      </NavbarBrand>
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const user = useAppSelector((state) => state.user);
 
-      <NavbarContent justify="end">
-        <NavbarItem>
-          <ThemeSwitch />
-        </NavbarItem>
-        <NavbarItem>
-          <Link href="#">Login</Link>
-        </NavbarItem>
-        <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
-            Sign Up
-          </Button>
-        </NavbarItem>
-      </NavbarContent>
-    </Navbar>
+  const [config, setConfig] = useState({
+    modalType: null,
+  });
+
+  const setDataFunc = setNestedPath(setConfig);
+
+  const openModal = (modalType: modalTypes) => () => {
+    setDataFunc("modalType")(modalType);
+    onOpen();
+  };
+
+  return (
+    <>
+      <Navbar
+        isBordered
+        classNames={{
+          item: ["flex", "relative", "h-full", "items-center"],
+          base: ["flex", "justify-between"],
+          wrapper: ["max-w-full"],
+        }}
+      >
+        <NavbarBrand>
+          <ApnamartLogo />
+        </NavbarBrand>
+
+        {!user && (
+          <NavbarContent justify="end">
+            <NavbarItem>
+              <ThemeSwitch />
+            </NavbarItem>
+            <NavbarItem>
+              <Button
+                onPress={openModal(modalTypes.login)}
+                color="primary"
+                variant="faded"
+              >
+                Login
+              </Button>
+            </NavbarItem>
+            <NavbarItem>
+              <Button onPress={openModal(modalTypes.signUp)} color="primary">
+                Sign Up
+              </Button>
+            </NavbarItem>
+          </NavbarContent>
+        )}
+      </Navbar>
+      <LoginSignUpModal
+        modalType={config.modalType}
+        setModalType={setDataFunc("modalType")}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      />
+    </>
   );
 }

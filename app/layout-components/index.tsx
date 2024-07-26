@@ -3,6 +3,8 @@ import NextUIProvider from "./providers";
 import Header from "./header";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 import { useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Layout({
   children,
@@ -25,6 +27,7 @@ export default function Layout({
         <NextThemesProvider attribute="class">
           <Header />
           {children}
+          <ToastContainer autoClose={2000} />
         </NextThemesProvider>
       </main>
     </NextUIProvider>

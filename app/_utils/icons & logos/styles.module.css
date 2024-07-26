@@ -9,3 +9,16 @@
 .dark-logo {
   stroke: white;
 }
+
+.password-icon {
+  fill: #5d6265;
+  cursor: pointer;
+}
+
+.password-icon:hover {
+  fill: black;
+}
+
+.twitterBtn {
+  enable-background: new 0 0 24 24;
+}
