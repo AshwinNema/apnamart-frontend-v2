@@ -43,27 +43,29 @@ export default function Header() {
           <ApnamartLogo />
         </NavbarBrand>
 
-        {!user && (
-          <NavbarContent justify="end">
-            <NavbarItem>
-              <ThemeSwitch />
-            </NavbarItem>
-            <NavbarItem>
-              <Button
-                onPress={openModal(modalTypes.login)}
-                color="primary"
-                variant="faded"
-              >
-                Login
-              </Button>
-            </NavbarItem>
-            <NavbarItem>
-              <Button onPress={openModal(modalTypes.signUp)} color="primary">
-                Sign Up
-              </Button>
-            </NavbarItem>
-          </NavbarContent>
-        )}
+        <NavbarContent justify="end">
+          <NavbarItem>
+            <ThemeSwitch />
+          </NavbarItem>
+          {!user && (
+            <>
+              <NavbarItem>
+                <Button
+                  onPress={openModal(modalTypes.login)}
+                  color="primary"
+                  variant="faded"
+                >
+                  Login
+                </Button>
+              </NavbarItem>
+              <NavbarItem>
+                <Button onPress={openModal(modalTypes.signUp)} color="primary">
+                  Sign Up
+                </Button>
+              </NavbarItem>
+            </>
+          )}
+        </NavbarContent>
       </Navbar>
       <LoginSignUpModal
         modalType={config.modalType}
