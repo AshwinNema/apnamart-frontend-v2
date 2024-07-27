@@ -5,8 +5,9 @@ import {
   ThunkAction,
 } from "@reduxjs/toolkit";
 import { userSlice } from "./slices/user/user.slice";
+import { notificationsSlice } from "./slices/notification/notification.slice";
 
-const rootReducer = combineSlices(userSlice);
+const rootReducer = combineSlices(userSlice, notificationsSlice);
 
 export type RootState = ReturnType<typeof rootReducer>;
 

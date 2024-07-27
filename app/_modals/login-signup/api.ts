@@ -11,6 +11,11 @@ import { setLocalStorageKey } from "@/app/_services/local-storage.service";
 import { setUser } from "@/lib/slices/user/user.slice";
 import { AppDispatch } from "@/lib/store";
 import { errorToast, toastErrorIcons } from "@/app/_utils/toast";
+import {
+  notificationTypes,
+  setNotificationType,
+} from "@/lib/slices/notification/notification.slice";
+import { getNewUserModalProps } from "@/app/layout-components/notifications/new-user";
 
 export const loginSignUp = async (
   formData: loginConfig["formData"],
@@ -43,6 +48,18 @@ export const loginSignUp = async (
     setLocalStorageKey("user", user);
     setLocalStorageKey("tokens", tokens);
     onClose();
+    if (modalType === modalTypes.signUp) {
+      dispatch(
+        setNotificationType({
+          type: notificationTypes.newUser,
+          details: {
+            name: user.name,
+            role: formData.role,
+          },
+          modalProps: getNewUserModalProps(),
+        }),
+      );
+    }
     dispatch(setUser(user));
   } catch (err: any) {
     errorToast({ msg: err?.message });

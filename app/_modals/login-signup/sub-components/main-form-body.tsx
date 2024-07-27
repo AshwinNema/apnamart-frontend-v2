@@ -8,7 +8,11 @@ import { useGoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { Button } from "@nextui-org/react";
 import styles from "../style.module.css";
 import { GoogleIcon } from "@/app/_utils/icons & logos";
-import { googleSuccessResponse, onTwitterFailure, onTwitterSuccess } from "./util";
+import {
+  googleSuccessResponse,
+  onTwitterFailure,
+  onTwitterSuccess,
+} from "./util";
 import { useAppDispatch } from "@/lib/hooks";
 import TwitterLogin from "./twitter-login";
 import { appEndPoints } from "@/app/_utils/endpoints";
