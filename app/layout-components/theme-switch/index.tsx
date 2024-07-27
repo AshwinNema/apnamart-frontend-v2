@@ -1,16 +1,21 @@
 import { Switch } from "@nextui-org/react";
 import { useTheme } from "next-themes";
-import { MoonIcon, SunIcon } from "../../_utils/icons & logos";
 import { useState } from "react";
+import { MdSunny } from "react-icons/md";
+import { IoMdMoon } from "react-icons/io";
 
 export enum browserTheme {
   light = "light",
   dark = "dark",
+  system = "system",
 }
 
 export default function ThemeSwitch() {
   const { theme, setTheme } = useTheme();
-  const [isSelected, setIsSelected] = useState(theme !== browserTheme.light);
+  const [isSelected, setIsSelected] = useState(
+    theme !== browserTheme.light && theme !== browserTheme.system,
+  );
+
   return (
     <Switch
       defaultValue={
@@ -25,9 +30,9 @@ export default function ThemeSwitch() {
       color="warning"
       thumbIcon={({ isSelected, className }) =>
         isSelected ? (
-          <SunIcon className={className} />
+          <MdSunny className={className} />
         ) : (
-          <MoonIcon className={className} />
+          <IoMdMoon className={className} />
         )
       }
     />

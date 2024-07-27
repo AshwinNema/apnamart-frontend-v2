@@ -1,4 +1,3 @@
-import { TwitterIcon } from "@/app/_utils/icons & logos";
 import { browserTheme } from "@/app/layout-components/theme-switch";
 import { Button } from "@nextui-org/react";
 import { useTheme } from "next-themes";
@@ -9,6 +8,7 @@ import {
   makeDataRequest,
   params,
 } from "@/app/_services/fetch-service";
+import { BsTwitterX } from "react-icons/bs";
 
 export default function TwitterLogin({
   text,
@@ -75,7 +75,7 @@ export default function TwitterLogin({
     <Button
       variant="faded"
       className={`font-bold ${theme === browserTheme.dark && "bg-white text-black"} `}
-      startContent={<TwitterIcon />}
+      startContent={<BsTwitterX className="scale-150" />}
       isDisabled={pollingRef.current !== null}
       onClick={twitterLogin}
     >

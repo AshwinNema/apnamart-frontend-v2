@@ -2,6 +2,7 @@ import { Input } from "@nextui-org/react";
 import { ReactNode, useState } from "react";
 import { ZodSchema } from "zod";
 import { getZodErrMsg, setNestedPath, setVal } from "@/app/_utils";
+import { ClearIcon } from "@/app/_utils/icons & logos";
 
 export const TextInput = ({
   value,
@@ -34,6 +35,10 @@ export const TextInput = ({
     return !validation.success;
   };
 
+  const EndContent = () => {
+    return !!value ? <ClearIcon onClick={() => setData("")} /> : null;
+  };
+
   return (
     <Input
       autoFocus
@@ -42,7 +47,8 @@ export const TextInput = ({
       isInvalid={config.invalid}
       color={config.invalid ? "danger" : "default"}
       errorMessage={`${config.errorMsg}`}
-      isClearable
+      isClearable={false}
+      endContent={<EndContent />}
       onValueChange={setData}
       label={`${label || ""}`}
       placeholder={`${placeholder ? placeholder : `Please enter ${label}`}`}

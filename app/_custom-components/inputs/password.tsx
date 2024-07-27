@@ -1,13 +1,11 @@
 import { Input } from "@nextui-org/react";
-import {
-  ClearIcon,
-  EyeFilledIcon,
-  EyeSlashFilledIcon,
-  LockIcon,
-} from "@/app/_utils/icons & logos";
+import { ClearIcon } from "@/app/_utils/icons & logos";
 import { useState } from "react";
 import { passwordErrMsg, setVal } from "../../_utils";
 import { loginValidationSchema } from "@/app/_modals/login-signup/constants";
+import { IoIosLock } from "react-icons/io";
+import { HiMiniEyeSlash } from "react-icons/hi2";
+import { BsFillEyeFill } from "react-icons/bs";
 
 export const PasswordInput = ({
   password,
@@ -36,9 +34,7 @@ export const PasswordInput = ({
 
   return (
     <Input
-      startContent={
-        <LockIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-      }
+      startContent={<IoIosLock className="scale-150" />}
       value={password}
       isInvalid={invalid}
       color={invalid ? "danger" : "default"}
@@ -47,21 +43,21 @@ export const PasswordInput = ({
         setInvalid(isInvalid());
       }}
       endContent={
-        <>
+        <div className="flex items-center	gap-2">
           <button
             className="focus:outline-none"
             type="button"
             onClick={toggleVisibility}
           >
             {isVisible ? (
-              <EyeSlashFilledIcon className="text-2xl text-default-400 pointer-events-none" />
+              <HiMiniEyeSlash className="scale-[1.2] mb-2" />
             ) : (
-              <EyeFilledIcon className="text-2xl text-default-200 pointer-events-none" />
+              <BsFillEyeFill className="scale-[1.2] mb-2" />
             )}
           </button>
 
           {!!password && <ClearIcon onClick={() => setData("")} />}
-        </>
+        </div>
       }
       onValueChange={setData}
       label={`${label || "Password"}`}
