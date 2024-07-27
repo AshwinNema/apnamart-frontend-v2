@@ -7,7 +7,8 @@ import { Divider } from "@nextui-org/react";
 import { useGoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { Button } from "@nextui-org/react";
 import styles from "../style.module.css";
-import { GoogleIcon } from "@/app/_utils/icons & logos";
+import { FcGoogle } from "react-icons/fc";
+
 import {
   googleSuccessResponse,
   onTwitterFailure,
@@ -49,7 +50,7 @@ export default function MainFormBody({
         className={`${styles.googleBtn} text-white font-bold`}
         variant="bordered"
         onPress={() => login()}
-        startContent={<GoogleIcon />}
+        startContent={<FcGoogle className="scale-[1.75]" />}
       >
         {modalType === modalTypes.signUp ? "Sign Up" : "Login"} with Google
       </Button>

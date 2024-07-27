@@ -1,9 +1,10 @@
 import { loginConfig, modalTypes } from "../constants";
 import { PasswordInput, TextInput } from "@/app/_custom-components/inputs";
 import { Avatar, AvatarIcon } from "@nextui-org/react";
-import { MailIcon } from "@/app/_utils/icons & logos";
 import { z } from "zod";
 import { setKeyVal } from "@/app/_utils";
+import { IoIosMail } from "react-icons/io";
+
 export default function Form({
   formData,
   setData,
@@ -37,9 +38,7 @@ export default function Form({
         value={formData.email}
         setData={setData("email")}
         validationSchema={z.string().email()}
-        Icon={() => (
-          <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-        )}
+        Icon={() => <IoIosMail className="scale-150" />}
         label="Email"
         placeholder="Please enter your email"
       />
