@@ -18,7 +18,7 @@ export const RoleCard = ({
       onPress={() => {
         setRole(role);
       }}
-      className={`overflow-visible ${selectedRole === role && 'border-2 border-[#0070f0]'}`}
+      className={`overflow-visible ${selectedRole === role && "border-2 border-[#0070f0]"}`}
       shadow="md"
     >
       <CardBody className="overflow-visible p-0">

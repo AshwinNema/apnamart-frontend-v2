@@ -34,8 +34,8 @@ export default function NotFound() {
               you need!
             </p>
 
-            <p>
-              <Listbox variant="flat">
+            <div>
+              <Listbox aria-label="Documentation list" variant="flat">
                 <ListboxSection title="You can refer below for understanding this project better">
                   {guideItems.map((item: guideItem) => {
                     const { key, description, Icon, mainText } = item;
@@ -51,7 +51,7 @@ export default function NotFound() {
                   })}
                 </ListboxSection>
               </Listbox>
-            </p>
+            </div>
           </div>
         </div>
       </div>
