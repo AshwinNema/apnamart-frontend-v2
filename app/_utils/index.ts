@@ -36,6 +36,8 @@ export const setMultiplePaths =
     });
   };
 
+export type multiplePathSetter = (pathValList: keyVals[]) => void;
+
 export const getZodErrMsg = (error: ZodError<any>) => {
   return error.issues.map((issue) => issue.message).join(", ");
 };

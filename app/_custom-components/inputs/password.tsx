@@ -12,11 +12,13 @@ export const PasswordInput = ({
   setData,
   placeholder,
   label,
+  variant = "bordered",
 }: {
   password: string;
   setData: setVal;
   placeholder?: string;
   label?: string;
+  variant?: "bordered" | "flat" | "faded" | "underlined";
 }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [invalid, setInvalid] = useState(false);
@@ -63,7 +65,7 @@ export const PasswordInput = ({
       label={`${label || "Password"}`}
       placeholder={`${placeholder || "Enter your password"}`}
       type={isVisible ? "text" : "password"}
-      variant="bordered"
+      variant={variant}
     />
   );
 };

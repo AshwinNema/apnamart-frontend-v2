@@ -13,6 +13,8 @@ import { modalTypes } from "@/app/_modals/login-signup/constants";
 import { setNestedPath } from "@/app/_utils";
 import { useAppSelector } from "@/lib/hooks";
 import { GiShop } from "react-icons/gi";
+import UserProfile from "../user-profile";
+import Link from "next/link";
 
 export default function Header() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -40,10 +42,12 @@ export default function Header() {
         }}
       >
         <NavbarBrand>
-          <div className="flex gap-3">
-            <GiShop className="scale-[2]" />
-            <div className="font-bold font-serif">Apnamart</div>
-          </div>
+          <Link href="/">
+            <div className="flex gap-3">
+              <GiShop className="scale-[2]" />
+              <div className="font-bold font-serif">Apnamart</div>
+            </div>
+          </Link>
         </NavbarBrand>
 
         <NavbarContent justify="end">
@@ -67,6 +71,12 @@ export default function Header() {
                 </Button>
               </NavbarItem>
             </>
+          )}
+
+          {!!user && (
+            <NavbarItem>
+              <UserProfile />
+            </NavbarItem>
           )}
         </NavbarContent>
       </Navbar>
