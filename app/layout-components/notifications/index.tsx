@@ -12,7 +12,7 @@ export default function NotificationModal() {
   useEffect(() => {
     if (!type) return;
     onOpen();
-  }, [type, onOpen]);
+  }, [type]);
 
   return (
     <Modal
@@ -25,7 +25,11 @@ export default function NotificationModal() {
     >
       <ModalContent>
         {(onClose) => (
-          <>{type === notificationTypes.newUser && <NewUserNotification />}</>
+          <>
+            {type === notificationTypes.newUser && (
+              <NewUserNotification onClose={onClose} />
+            )}
+          </>
         )}
       </ModalContent>
     </Modal>

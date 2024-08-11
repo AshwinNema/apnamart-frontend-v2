@@ -27,4 +27,4 @@ const infoToastEntities = {
   infoToast,
 };
 
-export default infoToastEntities
+export default infoToastEntities;

@@ -3,14 +3,24 @@
 import { IconInput, ProtectedRoute } from "../_custom-components";
 import { Tabs, Tab, Badge, Avatar } from "@nextui-org/react";
 import { tabKeys, tabOption, tabOptions } from "./utils";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { setNestedPath } from "../_utils";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { getUserProfile, uploadProfileImage } from "./api";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useSearchParams } from "next/navigation";
 
 function Page() {
   const user = useAppSelector((state) => state.user);
+  const params = useSearchParams();
+  const selectedTab = params.get("selectedTab");
+  useEffect(() => {
+    if (!selectedTab) return;
+    if (selectedTab in tabKeys && selectedTab !== tabKeys.profile) {
+      setProperty("selectedTab")(selectedTab);
+    }
+  }, [selectedTab]);
+
   const dispatch = useAppDispatch();
   const [config, setConfig] = useState({
     selectedTab: tabKeys.basicDetails,
@@ -66,6 +76,7 @@ function Page() {
             if (key === tabKeys.profile) {
               return;
             }
+
             setProperty("selectedTab")(key);
           }}
         >

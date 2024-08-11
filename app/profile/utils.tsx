@@ -4,7 +4,7 @@ import { Card, CardBody } from "@nextui-org/react";
 import { FcViewDetails } from "react-icons/fc";
 import { FaMapLocationDot } from "react-icons/fa6";
 import { RiListSettingsLine } from "react-icons/ri";
-import BasicDetails from "./basic-details";
+import BasicDetails from "./user-input-details";
 import dynamic from "next/dynamic";
 import { Spinner } from "../_custom-components";
 
@@ -19,6 +19,8 @@ export enum tabKeys {
   address = "address",
   settings = "settings",
 }
+
+export type userInputPage = Omit<tabKeys, tabKeys.profile | tabKeys.address>;
 
 export interface tabOption {
   title: ReactNode;
@@ -35,7 +37,9 @@ export const tabOptions: tabOption[] = [
         Basic Details
       </div>
     ),
-    Content: (props) => <BasicDetails {...props} />,
+    Content: (props) => (
+      <BasicDetails userInputPage={tabKeys.basicDetails} {...props} />
+    ),
     key: tabKeys.basicDetails,
   },
   {
@@ -55,15 +59,8 @@ export const tabOptions: tabOption[] = [
         Settings
       </div>
     ),
-    Content: () => (
-      <Card>
-        <CardBody>
-          Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-          nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-          reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur.
-        </CardBody>
-      </Card>
+    Content: (props) => (
+      <BasicDetails userInputPage={tabKeys.settings} {...props} />
     ),
     key: tabKeys.settings,
   },

@@ -12,4 +12,5 @@ export const appEndPoints = {
   QUERY_MAP_LOCATION: `${backendService}user/query-location`,
   GET_ADDRESS: `${backendService}user/address`,
   UPDATE_USER_ADDRESS: `${backendService}user/address`,
+  UPDATE_USER_PROFILE: `${backendService}user/profile`,
 };

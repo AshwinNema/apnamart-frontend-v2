@@ -41,7 +41,7 @@ export const Spinner = () => {
 
   useEffect(() => {
     onOpen();
-  }, [onOpen]);
+  }, []);
 
   return (
     <Modal
@@ -66,7 +66,7 @@ export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     !user && router.push("/");
-  }, [user, router]);
+  }, [user]);
 
   return <> {user ? children : <Spinner />}</>;
 };

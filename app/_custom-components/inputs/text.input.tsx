@@ -41,7 +41,7 @@ export const TextInput = ({
     isFocussed: false,
   });
   const setDataFunc = setNestedPath(setConfig);
-  const setMultipleDataDunc = setMultiplePaths(setConfig);
+  const setMultipleDataFunc = setMultiplePaths(setConfig);
 
   useEffect(() => {
     if (!alternateText) return;
@@ -55,8 +55,8 @@ export const TextInput = ({
     } else {
       update[1][1] = alternateText;
     }
-    setMultipleDataDunc(update);
-  }, [alternateText, value, config.isFocussed, setMultipleDataDunc]);
+    setMultipleDataFunc(update);
+  }, [alternateText, value, config.isFocussed]);
 
   const isInvalid = () => {
     if (!value || !validationSchema) {
@@ -98,7 +98,7 @@ export const TextInput = ({
           ["invalid", isInvalid()],
           ["isFocussed", false],
         ];
-        setMultipleDataDunc(updates);
+        setMultipleDataFunc(updates);
       }}
     />
   );

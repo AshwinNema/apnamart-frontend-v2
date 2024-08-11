@@ -1,4 +1,5 @@
 import { userRoleKeys, userRoles } from "@/app/_modals/login-signup/constants";
+import { tabKeys } from "@/app/profile/utils";
 import { useAppSelector } from "@/lib/hooks";
 import {
   modalProps,
@@ -21,7 +22,11 @@ export const getNewUserModalProps = (): modalPropsInterface => {
   };
 };
 
-export default function NewUserNotification() {
+export default function NewUserNotification({
+  onClose,
+}: {
+  onClose: () => void;
+}) {
   const notifications = useAppSelector((state) => state.notifications);
   const details = notifications.details as details;
 
@@ -36,7 +41,10 @@ export default function NewUserNotification() {
           <p className="italic">
             <span className="font-bold">Please note :</span> Your inital
             password is not set, hence you will not be able to sign in using
-            password. You can set it by <Link href="#">clicking here</Link>
+            password. You can set it by{" "}
+            <Link onClick={onClose} href={`/profile?${tabKeys.settings}`}>
+              clicking here
+            </Link>
           </p>
         </ModalFooter>
       )}
