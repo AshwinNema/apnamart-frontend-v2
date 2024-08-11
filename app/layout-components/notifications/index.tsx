@@ -12,7 +12,7 @@ export default function NotificationModal() {
   useEffect(() => {
     if (!type) return;
     onOpen();
-  }, [type]);
+  }, [type, onOpen]);
 
   return (
     <Modal

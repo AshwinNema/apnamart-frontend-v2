@@ -1,12 +1,19 @@
+"use client";
 import React from "react";
 import { MdCancel } from "react-icons/md";
 import { useTheme } from "next-themes";
 import { browserTheme } from "@/app/layout-components/theme-switch";
 import { ImCross } from "react-icons/im";
-
+import { ImYoutube } from "react-icons/im";
+import { TbFileSettings } from "react-icons/tb";
+import { GrDocumentUser } from "react-icons/gr";
+import { MdLocationOff } from "react-icons/md";
+import { TbBrowserOff } from "react-icons/tb";
 export interface Props extends React.PropsWithChildren {
   className?: string;
   onClick?: (value: any) => void;
+  height?: string;
+  width?: string;
 }
 
 export const ClearIcon = (props: Props = {}) => {
@@ -28,6 +35,26 @@ export const ValidationErrIcon = () => {
   return <ImCross className="fill-[red]" />;
 };
 
+export const LocationDeniedIcon = () => {
+  return <MdLocationOff className="fill-[red]" />;
+};
+
+export const BrowserDeniedIcon = () => {
+  return <TbBrowserOff />;
+};
+
 export const SuccessIcon = () => {
   return <> 🚀</>;
+};
+
+export const YouTubeIcon = () => {
+  return <ImYoutube className="fill-[red]" />;
+};
+
+export const TechnicalDocumentationIcon = () => {
+  return <TbFileSettings />;
+};
+
+export const UserGuideIcon = () => {
+  return <GrDocumentUser />;
 };

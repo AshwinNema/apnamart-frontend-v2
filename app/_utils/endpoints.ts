@@ -7,4 +7,9 @@ export const appEndPoints = {
   GOOGLE_LOGIN: `${backendService}auth/google`,
   TWITTER_ACCESS_TOKEN: `${backendService}auth/twitter/access-token`,
   TWITTER_REQUEST_TOKEN: `${backendService}auth/twitter/request-token`,
+  UPLOAD_PROFILE_IMG: `${backendService}user/profile-photo`,
+  PROFILE: `${backendService}user/profile`,
+  QUERY_MAP_LOCATION: `${backendService}user/query-location`,
+  GET_ADDRESS: `${backendService}user/address`,
+  UPDATE_USER_ADDRESS: `${backendService}user/address`,
 };

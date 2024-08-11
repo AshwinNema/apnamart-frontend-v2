@@ -1,7 +1,13 @@
 import { Input } from "@nextui-org/react";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { ZodSchema } from "zod";
-import { getZodErrMsg, setNestedPath, setVal } from "@/app/_utils";
+import {
+  getZodErrMsg,
+  keyVals,
+  setMultiplePaths,
+  setNestedPath,
+  setVal,
+} from "@/app/_utils";
 import { ClearIcon } from "@/app/_utils/icons & logos";
 
 export const TextInput = ({
@@ -11,6 +17,10 @@ export const TextInput = ({
   Icon,
   label,
   placeholder,
+  className = "",
+  alternateText,
+  variant = "bordered",
+  autoFocus = false,
 }: {
   value: string;
   setData: setVal;
@@ -18,9 +28,35 @@ export const TextInput = ({
   Icon?: () => ReactNode;
   label?: string;
   placeholder?: string;
+  className?: string;
+  alternateText?: string;
+  variant?: "bordered" | "flat" | "faded" | "underlined";
+  autoFocus?: boolean;
 }) => {
-  const [config, setConfig] = useState({ invalid: false, errorMsg: "" });
+  const [config, setConfig] = useState({
+    invalid: false,
+    errorMsg: "",
+    label: label || "",
+    placeholder: `${placeholder ? placeholder : ""}`,
+    isFocussed: false,
+  });
   const setDataFunc = setNestedPath(setConfig);
+  const setMultipleDataDunc = setMultiplePaths(setConfig);
+
+  useEffect(() => {
+    if (!alternateText) return;
+    const update: keyVals[] = [
+      ["label", ""],
+      ["placeholder", ""],
+    ];
+
+    if (value || config.isFocussed) {
+      update[0][1] = alternateText;
+    } else {
+      update[1][1] = alternateText;
+    }
+    setMultipleDataDunc(update);
+  }, [alternateText, value, config.isFocussed, setMultipleDataDunc]);
 
   const isInvalid = () => {
     if (!value || !validationSchema) {
@@ -41,20 +77,28 @@ export const TextInput = ({
 
   return (
     <Input
-      autoFocus
+      autoFocus={autoFocus}
       startContent={<>{Icon && <Icon />}</>}
       value={value}
       isInvalid={config.invalid}
       color={config.invalid ? "danger" : "default"}
       errorMessage={`${config.errorMsg}`}
       isClearable={false}
+      onFocus={() => {
+        setDataFunc("isFocussed")(true);
+      }}
       endContent={<EndContent />}
       onValueChange={setData}
-      label={`${label || ""}`}
-      placeholder={`${placeholder ? placeholder : `Please enter ${label}`}`}
-      variant="bordered"
+      label={config.label}
+      className={`${className}`}
+      placeholder={config.placeholder}
+      variant={variant}
       onBlur={() => {
-        setDataFunc("invalid")(isInvalid());
+        const updates: keyVals[] = [
+          ["invalid", isInvalid()],
+          ["isFocussed", false],
+        ];
+        setMultipleDataDunc(updates);
       }}
     />
   );

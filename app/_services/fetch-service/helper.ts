@@ -2,12 +2,12 @@ import { toastErrorIcons } from "@/app/_utils/toast";
 import { getLocalStorageKey } from "../local-storage.service";
 import { getRefreshToken } from "./helper-apis";
 
-export const HTTP_METHODS = {
-  POST: "POST",
-  GET: "GET",
-  PUT: "PUT",
-  DELETE: "DELETE",
-};
+export enum HTTP_METHODS {
+  POST = "POST",
+  GET = "GET",
+  PUT = "PUT",
+  DELETE = "DELETE",
+}
 
 export interface token {
   access: {
@@ -24,10 +24,20 @@ export interface params {
   [key: string]: number | string | boolean;
 }
 
-export interface fetchErrParam {
+export interface errHandling {
   showToastAndRedirect?: boolean;
   iconType?: toastErrorIcons;
   throwErr?: boolean;
+}
+
+export interface fetchConfig extends errHandling {
+  showLoader?: boolean;
+  showToast?: boolean;
+}
+
+export interface uploadRespHandling extends errHandling {
+  successMsg: string;
+  successCallback?: (...args: any[]) => any;
 }
 
 export const getToken = async () => {
@@ -38,7 +48,9 @@ export const getToken = async () => {
   }
 
   const expiredAt =
-    (tokens && tokens.access && tokens.access.expires) || new Date(1971);
+    tokens && tokens.access && tokens.access.expires
+      ? new Date(tokens.access.expires)
+      : new Date(1971);
   expiredAt.setMinutes(expiredAt.getMinutes() - 1);
 
   if (expiredAt > new Date()) {
@@ -46,4 +58,18 @@ export const getToken = async () => {
   }
 
   return await getRefreshToken(tokens.refresh.token);
+};
+
+export const addQuery = (params?: params) => {
+  if (params) {
+    const query = Object.keys(params)
+      .map(
+        (k: string) =>
+          encodeURIComponent(k) + "=" + encodeURIComponent(params[k]),
+      )
+      .join("&");
+    return "?" + query;
+  }
+
+  return "";
 };
