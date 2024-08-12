@@ -25,7 +25,11 @@ export default function NotificationModal() {
     >
       <ModalContent>
         {(onClose) => (
-          <>{type === notificationTypes.newUser && <NewUserNotification />}</>
+          <>
+            {type === notificationTypes.newUser && (
+              <NewUserNotification onClose={onClose} />
+            )}
+          </>
         )}
       </ModalContent>
     </Modal>

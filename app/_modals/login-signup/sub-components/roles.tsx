@@ -1,5 +1,5 @@
 import React from "react";
-import { Checkbox } from "@nextui-org/react";
+import { Badge, Checkbox } from "@nextui-org/react";
 import { Card, CardBody, CardFooter } from "@nextui-org/react";
 import { modalTypes, roleCard, userRoleKeys, userRoles } from "../constants";
 import { ImageComponent } from "@/app/_custom-components";
@@ -18,7 +18,7 @@ export const RoleCard = ({
       onPress={() => {
         setRole(role);
       }}
-      className={`overflow-visible `}
+      className={`overflow-visible ${selectedRole === role && "border-2 border-[#0070f0]"}`}
       shadow="md"
     >
       <CardBody className="overflow-visible p-0">
