@@ -29,7 +29,7 @@ export default function Layout({
 
   return (
     <>
-      {promiseInProgress && <Spinner />}\
+      {promiseInProgress && <Spinner />}
       <NextUIProvider>
         <main>
           <NextThemesProvider attribute="class">

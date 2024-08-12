@@ -6,11 +6,7 @@ import { errorToast } from "@/app/_utils/toast";
 import { AppDispatch } from "@/lib/store";
 import { setLocalStorageKey } from "@/app/_services/local-storage.service";
 import { setUser } from "@/lib/slices/user/user.slice";
-import {
-  notificationTypes,
-  setNotificationType,
-} from "@/lib/slices/notification/notification.slice";
-import { getNewUserModalProps } from "@/app/layout-components/notifications/new-user";
+import { dispatchAction } from "@/app/layout-components/notifications/new-user";
 
 const processSuccessResponse = (
   response: any,
@@ -26,15 +22,11 @@ const processSuccessResponse = (
   onClose();
   if (isNewUser) {
     dispatch(
-      setNotificationType({
-        type: notificationTypes.newUser,
-        modalProps: getNewUserModalProps(),
-        details: {
-          name: user.name,
-          role: user.role,
-          noInitialPassword: noInitialPassword,
-        },
-      }),
+      dispatchAction({
+        name: user.name,
+        role: user.role,
+        noInitialPassword: noInitialPassword,
+      })
     );
   }
   dispatch(setUser(user));
