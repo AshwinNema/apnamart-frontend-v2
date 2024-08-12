@@ -3,7 +3,8 @@ import { tabKeys } from "@/app/profile/utils";
 import { useAppSelector } from "@/lib/hooks";
 import {
   modalProps,
-  modalPropsInterface,
+  notificationTypes,
+  setNotificationType,
 } from "@/lib/slices/notification/notification.slice";
 import { ModalBody, ModalFooter, ModalHeader } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
@@ -14,13 +15,15 @@ interface details {
   noInitialPassword?: boolean;
 }
 
-export const getNewUserModalProps = (): modalPropsInterface => {
-  return {
+export const dispatchAction = (details: details) => setNotificationType({
+  type: notificationTypes.newUser,
+  details,
+  modalProps: {
     ...modalProps,
     className: `${modalProps.className} p-11`,
     placement: "top",
-  };
-};
+  },
+})
 
 export default function NewUserNotification({
   onClose,

@@ -18,7 +18,7 @@ export interface modalPropsInterface {
     | "bottom-center";
 }
 
-interface notificationModal {
+export interface notificationModal {
   type: notificationTypes | null;
   details: object | null;
   modalProps: modalPropsInterface;
