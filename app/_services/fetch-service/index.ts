@@ -51,7 +51,6 @@ export const makeDataRequest = async (
     headers,
   })
     .then(async (response) => {
-      console.log("Coming in response", response);
       if (response.status === 401) {
         if (showToastAndRedirect) {
           errorToast({ msg: "Token expired" });
@@ -77,7 +76,6 @@ export const makeDataRequest = async (
       return dataResponse;
     })
     .catch((err) => {
-      console.log("Coming in catch err", err);
       errorToast({ msg: err.message });
     });
   if (showLoader) {
