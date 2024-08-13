@@ -8,6 +8,7 @@ import { appEndPoints } from "../_utils/endpoints";
 import {
   getLocalStorageKey,
   setLocalStorageKey,
+  storageAttributes,
 } from "../_services/local-storage.service";
 import { AppDispatch } from "@/lib/store";
 import { z } from "zod";
@@ -25,10 +26,10 @@ export const getUserProfile = (dispatch: AppDispatch) => {
     if (!res) {
       return;
     }
-    let user = getLocalStorageKey("user") as UserInterface;
+    let user = getLocalStorageKey(storageAttributes.user) as UserInterface;
     user = { ...user, ...res };
     dispatch(setUser(user));
-    setLocalStorageKey("user", user);
+    setLocalStorageKey(storageAttributes.user, user);
   });
 };
 
@@ -44,10 +45,10 @@ export const uploadProfileImage = (file: File, dispatch: AppDispatch) => {
   ).then((res) => {
     if (!res) return;
 
-    let user = getLocalStorageKey("user") as UserInterface;
+    let user = getLocalStorageKey(storageAttributes.user) as UserInterface;
     user = { ...user, ...res };
     dispatch(setUser(user));
-    setLocalStorageKey("key", user);
+    setLocalStorageKey(storageAttributes.user, user);
   });
 };
 
@@ -83,13 +84,13 @@ export const updateUserDetails = (
       return;
     }
     if (!res) return;
-    let user = getLocalStorageKey("user") as UserInterface;
+    let user = getLocalStorageKey(storageAttributes.user) as UserInterface;
     user = { ...user, ...res };
     successToast({
       msg: "User details updated successfully",
       iconType: toastSuccessIcons.rocket,
     });
     dispatch(setUser(user));
-    setLocalStorageKey("key", user);
+    setLocalStorageKey(storageAttributes.user, user);
   });
 };

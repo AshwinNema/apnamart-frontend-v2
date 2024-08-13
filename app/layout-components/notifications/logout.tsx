@@ -7,6 +7,7 @@ import { GiShop } from "react-icons/gi";
 import {
   clearUserStorage,
   getLocalStorageKey,
+  storageAttributes,
 } from "@/app/_services/local-storage.service";
 import { appEndPoints } from "@/app/_utils/endpoints";
 import { useAppDispatch } from "@/lib/hooks";
@@ -36,7 +37,7 @@ export default function Logout({ onClose }: { onClose: () => void }) {
   const dispatch = useAppDispatch();
 
   const logout = () => {
-    const tokens: token = getLocalStorageKey<token>("tokens");
+    const tokens: token = getLocalStorageKey<token>(storageAttributes.tokens);
     const access = tokens?.access?.token || "";
     const refresh = tokens?.refresh?.token || "";
 
