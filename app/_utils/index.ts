@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import * as _ from "lodash";
 import { ZodError } from "zod";
-import { getLocalStorageKey } from "../_services/local-storage.service";
+import { getLocalStorageKey, storageAttributes } from "../_services/local-storage.service";
 import { browserTheme } from "../layout-components/theme-switch";
 
 export const passwordRegex =
@@ -43,5 +43,5 @@ export const getZodErrMsg = (error: ZodError<any>) => {
 };
 
 export const getBrowserTheme = (): browserTheme => {
-  return getLocalStorageKey("theme") || browserTheme.light;
+  return getLocalStorageKey(storageAttributes.theme) || browserTheme.light;
 };

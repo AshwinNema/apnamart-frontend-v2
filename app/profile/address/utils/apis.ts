@@ -9,7 +9,7 @@ import {
 } from "@/app/_utils/toast";
 import { setUser, UserInterface } from "@/lib/slices/user/user.slice";
 import { AppDispatch } from "@/lib/store";
-import { setLocalStorageKey } from "@/app/_services/local-storage.service";
+import { setLocalStorageKey, storageAttributes } from "@/app/_services/local-storage.service";
 
 export const getAddress = (
   latLng: { lat: number; lng: number },
@@ -49,7 +49,7 @@ export const updateUserAddress = (
       if (!res) return;
       const updatedUser = { ...user, address: res };
       dispatch(setUser(updatedUser));
-      setLocalStorageKey("user", updatedUser);
+      setLocalStorageKey(storageAttributes.user, updatedUser);
       successToast({
         msg: "User address updated successfully",
         iconType: toastSuccessIcons.rocket,
