@@ -3,6 +3,7 @@ import {
   makeDataRequest,
   token,
 } from "@/app/_services/fetch-service";
+import { GiShop } from "react-icons/gi";
 import {
   clearUserStorage,
   getLocalStorageKey,
@@ -58,8 +59,11 @@ export default function Logout({ onClose }: { onClose: () => void }) {
   };
   return (
     <>
-      <ModalHeader className="text-4l font-bold font-serif">
-        Logout of Apnamart?
+      <ModalHeader className="text-4l font-bold font-serif flex flex-col">
+        <div className="flex justify-center mb-3">
+          <GiShop className="scale-[2]" />
+        </div>
+        <div className="flex justify-center">Logout of Apnamart?</div>
       </ModalHeader>
       <ModalBody>
         You can always log back in at any time. If you just want to switch
