@@ -15,15 +15,16 @@ interface details {
   noInitialPassword?: boolean;
 }
 
-export const dispatchAction = (details: details) => setNotificationType({
-  type: notificationTypes.newUser,
-  details,
-  modalProps: {
-    ...modalProps,
-    className: `${modalProps.className} p-11`,
-    placement: "top",
-  },
-})
+export const handleAction = (details: details) =>
+  setNotificationType({
+    type: notificationTypes.newUser,
+    details,
+    modalProps: {
+      ...modalProps,
+      className: `${modalProps.className} p-11`,
+      placement: "top",
+    },
+  });
 
 export default function NewUserNotification({
   onClose,
