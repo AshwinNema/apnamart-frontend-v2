@@ -56,6 +56,8 @@ export default function LoginSignUpModal({
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         placement="top-center"
+        hideCloseButton={true}
+        isDismissable={false}
       >
         <ModalContent>
           {(onClose) => (

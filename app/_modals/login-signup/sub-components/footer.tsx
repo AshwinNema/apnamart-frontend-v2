@@ -39,6 +39,9 @@ export default function Footer({
           Next
         </Button>
       ) : null}
+      <Button variant="flat" color="danger" fullWidth={true} onPress={onClose}>
+        Cancel
+      </Button>
       <p
         className="text-primary flex justify-end hover:cursor-pointer"
         onClick={changeModalType}

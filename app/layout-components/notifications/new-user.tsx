@@ -1,8 +1,10 @@
 import { userRoleKeys, userRoles } from "@/app/_modals/login-signup/constants";
+import { tabKeys } from "@/app/profile/utils";
 import { useAppSelector } from "@/lib/hooks";
 import {
   modalProps,
-  modalPropsInterface,
+  notificationTypes,
+  setNotificationType,
 } from "@/lib/slices/notification/notification.slice";
 import { ModalBody, ModalFooter, ModalHeader } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
@@ -13,15 +15,22 @@ interface details {
   noInitialPassword?: boolean;
 }
 
-export const getNewUserModalProps = (): modalPropsInterface => {
-  return {
-    ...modalProps,
-    className: `${modalProps.className} p-11`,
-    placement: "top",
-  };
-};
+export const handleAction = (details: details) =>
+  setNotificationType({
+    type: notificationTypes.newUser,
+    details,
+    modalProps: {
+      ...modalProps,
+      className: `${modalProps.className} p-11`,
+      placement: "top",
+    },
+  });
 
-export default function NewUserNotification() {
+export default function NewUserNotification({
+  onClose,
+}: {
+  onClose: () => void;
+}) {
   const notifications = useAppSelector((state) => state.notifications);
   const details = notifications.details as details;
 
@@ -36,7 +45,10 @@ export default function NewUserNotification() {
           <p className="italic">
             <span className="font-bold">Please note :</span> Your inital
             password is not set, hence you will not be able to sign in using
-            password. You can set it by <Link href="#">clicking here</Link>
+            password. You can set it by{" "}
+            <Link onClick={onClose} href={`/profile?${tabKeys.settings}`}>
+              clicking here
+            </Link>
           </p>
         </ModalFooter>
       )}

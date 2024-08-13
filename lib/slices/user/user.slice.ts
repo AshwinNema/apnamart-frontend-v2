@@ -1,9 +1,40 @@
-import { getLocalStorageKey } from "@/app/_services/local-storage.service";
+import { getLocalStorageKey, storageAttributes } from "@/app/_services/local-storage.service";
+import { addressType } from "@/app/profile/address/utils";
 import { createSlice } from "@reduxjs/toolkit";
+
+export enum UserRole {
+  customer = "customer",
+  admin = "admin",
+  merchant = "merchant",
+}
+
+export interface UserInterface {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  userRoles: UserRole[];
+  role: UserRole;
+  address?: {
+    addressLine1: string;
+    addressLine2: string;
+    addressType: addressType;
+    latitude: number;
+    longtitude: number;
+    otherAddress?: string;
+  };
+  phoneNo: string;
+  photo: string;
+  cloudinary_public_id: string;
+  createdAt: Date;
+  updatedAt: Date;
+  isBlackListed: boolean;
+  archive: boolean;
+}
 
 export const userSlice = createSlice({
   name: "user",
-  initialState: getLocalStorageKey("user") || null,
+  initialState: getLocalStorageKey<UserInterface>(storageAttributes.user) || null,
   reducers: {
     setUser(_, action) {
       return action.payload;

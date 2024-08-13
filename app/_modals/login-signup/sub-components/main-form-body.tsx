@@ -6,7 +6,6 @@ import { setKeyVal } from "@/app/_utils";
 import { Divider } from "@nextui-org/react";
 import { useGoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
 import { Button } from "@nextui-org/react";
-import styles from "../style.module.css";
 import { FcGoogle } from "react-icons/fc";
 
 import {
@@ -47,7 +46,7 @@ export default function MainFormBody({
     return (
       <Button
         radius="full"
-        className={`${styles.googleBtn} text-white font-bold`}
+        className={`bg-google-gradient text-white font-bold`}
         variant="bordered"
         onPress={() => login()}
         startContent={<FcGoogle className="scale-[1.75]" />}
