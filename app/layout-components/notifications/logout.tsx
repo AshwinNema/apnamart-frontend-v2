@@ -1,0 +1,90 @@
+import {
+  HTTP_METHODS,
+  makeDataRequest,
+  token,
+} from "@/app/_services/fetch-service";
+import {
+  clearUserStorage,
+  getLocalStorageKey,
+} from "@/app/_services/local-storage.service";
+import { appEndPoints } from "@/app/_utils/endpoints";
+import { useAppDispatch } from "@/lib/hooks";
+import {
+  modalProps,
+  notificationTypes,
+  setNotificationType,
+} from "@/lib/slices/notification/notification.slice";
+import { setUser } from "@/lib/slices/user/user.slice";
+import { Button, ModalBody, ModalFooter, ModalHeader } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
+
+export const handleAction = () =>
+  setNotificationType({
+    type: notificationTypes.logout,
+    details: null,
+    modalProps: {
+      ...modalProps,
+      backdrop: "blur",
+      hideCloseButton: true,
+      isDismissable: false,
+    },
+  });
+
+export default function Logout({ onClose }: { onClose: () => void }) {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+
+  const logout = () => {
+    const tokens: token = getLocalStorageKey<token>("tokens");
+    const access = tokens?.access?.token || "";
+    const refresh = tokens?.refresh?.token || "";
+
+    makeDataRequest(
+      HTTP_METHODS.POST,
+      appEndPoints.LOG_OUT,
+      { access, refresh },
+      undefined,
+      {
+        addToken: false,
+        showToastAndRedirect: false,
+        showToast: false,
+      },
+    ).finally(() => {
+      clearUserStorage();
+      dispatch(setUser(null));
+      router.push("/");
+      onClose();
+    });
+  };
+  return (
+    <>
+      <ModalHeader className="text-4l font-bold font-serif">
+        Logout of Apnamart?
+      </ModalHeader>
+      <ModalBody>
+        You can always log back in at any time. If you just want to switch
+        accounts, you can do that by adding an existing account.
+      </ModalBody>
+      <ModalFooter>
+        <div className="flex flex-col w-full">
+          <Button
+            onPress={logout}
+            className="mb-3"
+            color="primary"
+            fullWidth={true}
+          >
+            Log out
+          </Button>
+          <Button
+            variant="flat"
+            color="danger"
+            fullWidth={true}
+            onPress={onClose}
+          >
+            Cancel
+          </Button>
+        </div>
+      </ModalFooter>
+    </>
+  );
+}

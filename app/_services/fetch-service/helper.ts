@@ -33,6 +33,7 @@ export interface errHandling {
 export interface fetchConfig extends errHandling {
   showLoader?: boolean;
   showToast?: boolean;
+  addToken?: boolean;
 }
 
 export interface uploadRespHandling extends errHandling {

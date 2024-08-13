@@ -12,8 +12,9 @@ export const removeLocalStorageKey = (key: string) => {
   remove(key);
 };
 
-export const clearStorage = () => {
-  clear();
+export const clearUserStorage = () => {
+  removeLocalStorageKey("tokens");
+  removeLocalStorageKey("user");
   return null;
 };
 

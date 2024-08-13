@@ -3,6 +3,7 @@ import * as _ from "lodash";
 
 export enum notificationTypes {
   newUser = "newUser",
+  logout = "logout",
 }
 
 export interface modalPropsInterface {
@@ -16,6 +17,8 @@ export interface modalPropsInterface {
     | "top-center"
     | "bottom"
     | "bottom-center";
+  hideCloseButton: boolean;
+  isDismissable: boolean;
 }
 
 export interface notificationModal {
@@ -29,6 +32,8 @@ export const modalProps: modalPropsInterface = Object.freeze({
   backdrop: "opaque",
   scrollBehavior: "inside",
   placement: "top-center",
+  hideCloseButton: false,
+  isDismissable: true,
 });
 
 const initialState: notificationModal = {
@@ -51,3 +56,5 @@ export const notificationsSlice = createSlice({
 });
 
 export const { setNotificationType } = notificationsSlice.actions;
+
+export const resetNotifications = () => setNotificationType(initialState);

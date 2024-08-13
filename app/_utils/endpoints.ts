@@ -13,4 +13,5 @@ export const appEndPoints = {
   GET_ADDRESS: `${backendService}user/address`,
   UPDATE_USER_ADDRESS: `${backendService}user/address`,
   UPDATE_USER_PROFILE: `${backendService}user/profile`,
+  LOG_OUT: `${backendService}auth/logout`,
 };

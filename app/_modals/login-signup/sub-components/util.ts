@@ -6,7 +6,7 @@ import { errorToast } from "@/app/_utils/toast";
 import { AppDispatch } from "@/lib/store";
 import { setLocalStorageKey } from "@/app/_services/local-storage.service";
 import { setUser } from "@/lib/slices/user/user.slice";
-import { dispatchAction } from "@/app/layout-components/notifications/new-user";
+import { handleAction } from "@/app/layout-components/notifications/new-user";
 
 const processSuccessResponse = (
   response: any,
@@ -22,11 +22,11 @@ const processSuccessResponse = (
   onClose();
   if (isNewUser) {
     dispatch(
-      dispatchAction({
+      handleAction({
         name: user.name,
         role: user.role,
         noInitialPassword: noInitialPassword,
-      })
+      }),
     );
   }
   dispatch(setUser(user));

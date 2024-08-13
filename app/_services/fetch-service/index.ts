@@ -1,5 +1,5 @@
 import { trackPromise } from "react-promise-tracker";
-import { clearStorage, redirect } from "../local-storage.service";
+import { clearUserStorage, redirect } from "../local-storage.service";
 import { errorToast, successToast, toastErrorIcons } from "../../_utils/toast";
 import {
   params,
@@ -16,12 +16,13 @@ export const makeDataRequest = async (
   url: string,
   data?: object,
   params?: params,
-  errHandling: fetchConfig = {
+  reqConfig: fetchConfig = {
     showToastAndRedirect: true,
     iconType: toastErrorIcons.default,
     throwErr: false,
     showLoader: true,
     showToast: true,
+    addToken: true,
   },
 ) => {
   const {
@@ -30,11 +31,18 @@ export const makeDataRequest = async (
     throwErr,
     showLoader = true,
     showToast = true,
-  } = errHandling;
-  const headers = {
+    addToken = true,
+  } = reqConfig;
+  const headers: {
+    "Content-Type": string;
+    Authorization?: string;
+  } = {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${await getToken()}`,
   };
+
+  if (addToken) {
+    headers["Authorization"] = `Bearer ${await getToken()}`;
+  }
 
   url += addQuery(params);
   const promise = fetch(url, {
@@ -43,10 +51,11 @@ export const makeDataRequest = async (
     headers,
   })
     .then(async (response) => {
+      console.log("Coming in response", response);
       if (response.status === 401) {
         if (showToastAndRedirect) {
           errorToast({ msg: "Token expired" });
-          clearStorage();
+          clearUserStorage();
           redirect("/");
         }
         return;
@@ -68,6 +77,7 @@ export const makeDataRequest = async (
       return dataResponse;
     })
     .catch((err) => {
+      console.log("Coming in catch err", err);
       errorToast({ msg: err.message });
     });
   if (showLoader) {
@@ -115,7 +125,7 @@ export const makeUploadDataRequest = async (
         if (response.status === 401) {
           if (showToastAndRedirect) {
             errorToast({ msg: "Token expired" });
-            clearStorage();
+            clearUserStorage();
             redirect("/");
           }
           return;

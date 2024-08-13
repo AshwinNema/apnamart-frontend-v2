@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   Dropdown,
   DropdownTrigger,
@@ -6,12 +6,13 @@ import {
   DropdownItem,
   User,
 } from "@nextui-org/react";
-import { useAppSelector } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useRouter } from "next/navigation";
+import { handleAction } from "./notifications/logout";
 
 export default function UserProfile() {
   const user = useAppSelector((state) => state.user);
-
+  const dispatch = useAppDispatch();
   const router = useRouter();
   enum dropDownItemKeys {
     signIn = "Signed as",
@@ -23,6 +24,9 @@ export default function UserProfile() {
     switch (key) {
       case dropDownItemKeys.updateProfile:
         router.push("/profile");
+        break;
+      case dropDownItemKeys.logout:
+        dispatch(handleAction());
         break;
       default:
         break;
@@ -56,7 +60,7 @@ export default function UserProfile() {
         <DropdownItem key={dropDownItemKeys.updateProfile}>
           Update Profile
         </DropdownItem>
-        <DropdownItem key="logout" color="danger">
+        <DropdownItem key={dropDownItemKeys.logout} color="danger">
           Log Out
         </DropdownItem>
       </DropdownMenu>
