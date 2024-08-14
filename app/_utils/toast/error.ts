@@ -1,10 +1,17 @@
+"use client";
 import { toast, ToastOptions } from "react-toastify";
-import { ValidationErrIcon } from "../icons & logos";
+import {
+  BrowserDeniedIcon,
+  LocationDeniedIcon,
+  ValidationErrIcon,
+} from "../icons & logos";
 import { getBrowserTheme } from "..";
 
 export enum toastErrorIcons {
   validation = "validation error",
   default = "default",
+  locationDenied = "location denied",
+  browserDenied = "browser denied",
 }
 
 export const errorToast = ({
@@ -20,13 +27,19 @@ export const errorToast = ({
     case toastErrorIcons.validation:
       toastProps.icon = ValidationErrIcon;
       break;
+
+    case toastErrorIcons.locationDenied:
+      toastProps.icon = LocationDeniedIcon;
+      break;
+    case toastErrorIcons.browserDenied:
+      toastProps.icon = BrowserDeniedIcon;
+      break;
     default:
       break;
   }
   toast.error(msg, toastProps);
 };
 
-export default {
-  toastErrorIcons,
-  errorToast,
-};
+const errorToastEntities = { toastErrorIcons, errorToast };
+
+export default errorToastEntities;
