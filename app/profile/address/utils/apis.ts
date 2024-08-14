@@ -9,7 +9,10 @@ import {
 } from "@/app/_utils/toast";
 import { setUser, UserInterface } from "@/lib/slices/user/user.slice";
 import { AppDispatch } from "@/lib/store";
-import { setLocalStorageKey, storageAttributes } from "@/app/_services/local-storage.service";
+import {
+  setLocalStorageKey,
+  storageAttributes,
+} from "@/app/_services/local-storage.service";
 
 export const getAddress = (
   latLng: { lat: number; lng: number },

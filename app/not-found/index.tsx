@@ -42,7 +42,7 @@ export default function NotFound() {
         </div>
         <Card
           shadow={`${theme === browserTheme.dark ? "lg" : "none"}`}
-          className={`${theme === browserTheme.dark && "border-none"}`}
+          className={`${theme === browserTheme.dark && "border-none"} m-5`}
         >
           <CardBody>
             <CardHeader className="flex justify-center text-4xl font-bold">

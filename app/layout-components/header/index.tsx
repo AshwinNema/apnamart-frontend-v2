@@ -15,6 +15,7 @@ import { useAppSelector } from "@/lib/hooks";
 import { GiShop } from "react-icons/gi";
 import UserProfile from "../user-profile";
 import Link from "next/link";
+import { UserRoleMenu } from "../user-role-menu";
 
 export default function Header() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -41,7 +42,9 @@ export default function Header() {
           wrapper: ["max-w-full"],
         }}
       >
-        <NavbarBrand>
+        <NavbarBrand className="flex items-center gap-4">
+          {user && <UserRoleMenu />}
+
           <Link href="/">
             <div className="flex gap-3">
               <GiShop className="scale-[2]" />

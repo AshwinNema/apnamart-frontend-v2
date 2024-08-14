@@ -1,4 +1,7 @@
-import { getLocalStorageKey, storageAttributes } from "@/app/_services/local-storage.service";
+import {
+  getLocalStorageKey,
+  storageAttributes,
+} from "@/app/_services/local-storage.service";
 import { addressType } from "@/app/profile/address/utils";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -34,7 +37,8 @@ export interface UserInterface {
 
 export const userSlice = createSlice({
   name: "user",
-  initialState: getLocalStorageKey<UserInterface>(storageAttributes.user) || null,
+  initialState:
+    getLocalStorageKey<UserInterface>(storageAttributes.user) || null,
   reducers: {
     setUser(_, action) {
       return action.payload;

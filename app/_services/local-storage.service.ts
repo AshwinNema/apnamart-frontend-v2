@@ -1,16 +1,19 @@
-import { get, set, remove, } from "local-storage";
+import { get, set, remove } from "local-storage";
 
 export enum storageAttributes {
   user = "user",
   tokens = "tokens",
-  theme = "theme"
+  theme = "theme",
 }
 
 export function getLocalStorageKey<T>(attribute: storageAttributes): T {
   return get(attribute);
 }
 
-export const setLocalStorageKey = (attribute: storageAttributes, value: any) => {
+export const setLocalStorageKey = (
+  attribute: storageAttributes,
+  value: any,
+) => {
   set(attribute, value);
 };
 
