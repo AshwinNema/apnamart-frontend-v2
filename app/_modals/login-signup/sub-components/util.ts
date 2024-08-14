@@ -4,7 +4,10 @@ import { appEndPoints } from "@/app/_utils/endpoints";
 import { HTTP_METHODS, makeDataRequest } from "@/app/_services/fetch-service";
 import { errorToast } from "@/app/_utils/toast";
 import { AppDispatch } from "@/lib/store";
-import { setLocalStorageKey, storageAttributes } from "@/app/_services/local-storage.service";
+import {
+  setLocalStorageKey,
+  storageAttributes,
+} from "@/app/_services/local-storage.service";
 import { setUser } from "@/lib/slices/user/user.slice";
 import { handleAction } from "@/app/layout-components/notifications/new-user";
 

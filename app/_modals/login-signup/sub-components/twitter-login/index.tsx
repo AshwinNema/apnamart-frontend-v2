@@ -34,9 +34,9 @@ export default function TwitterLogin({
 
   useEffect(() => {
     if (typeof pollingRef.current === "number") {
-      pollingRef.current = null
+      pollingRef.current = null;
     }
-  }, [pollingRef.current])
+  }, [pollingRef.current]);
 
   useEffect(() => {
     return () => {
