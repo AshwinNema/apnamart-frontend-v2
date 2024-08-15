@@ -1,6 +1,5 @@
 "use client";
 import React, { ReactNode } from "react";
-import { Card, CardBody } from "@nextui-org/react";
 import { FcViewDetails } from "react-icons/fc";
 import { FaMapLocationDot } from "react-icons/fa6";
 import { RiListSettingsLine } from "react-icons/ri";

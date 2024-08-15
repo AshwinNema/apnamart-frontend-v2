@@ -97,7 +97,7 @@ export const makeUploadDataRequest = async (
   },
 ) => {
   const {
-    showToastAndRedirect,
+    showToastAndRedirect = true,
     iconType = toastErrorIcons.default,
     throwErr,
     successCallback,
