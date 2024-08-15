@@ -6,3 +6,9 @@
   background-color: transparent;
   border: none;
 }
+
+.hideMapContainer {
+  .leaflet-container {
+    z-index: -1;
+  }
+}

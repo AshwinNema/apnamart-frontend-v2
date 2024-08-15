@@ -13,7 +13,7 @@ import { routes } from "../_utils";
 import { useRouter } from "next/navigation";
 
 export const AdminLandingPage = () => {
-  const {admin} = routes
+  const { admin } = routes;
   const itemList = [
     {
       key: admin.merchants,
@@ -37,7 +37,7 @@ export const AdminLandingPage = () => {
       title: "Manage Products",
     },
   ];
-  const router = useRouter()
+  const router = useRouter();
   return (
     <>
       <Card className="m-5 mt-11">
@@ -49,9 +49,11 @@ export const AdminLandingPage = () => {
             As the backbone of our eCommerce platform, you play a crucial role
             in ensuring everything runs smoothly! Here, you have the power to:
           </div>
-          <Listbox onAction={(key) => {
-            router.push(key as string)
-          }}>
+          <Listbox
+            onAction={(key) => {
+              router.push(key as string);
+            }}
+          >
             {itemList.map((item) => {
               return (
                 <ListboxItem
@@ -65,15 +67,16 @@ export const AdminLandingPage = () => {
             })}
           </Listbox>
         </CardBody>
-        <CardFooter >
+        <CardFooter>
           <div>
-          <div className="text-xl">
-          Your efforts help create a seamless shopping experience for our users.
-          Let’s make online shopping better together! 🚀
-          </div>
-          <p className="font-bold mt-5">Note: You can navigate to the above respective function by clicking on them
-            or through menu in the nav bar
-          </p>
+            <div className="text-xl">
+              Your efforts help create a seamless shopping experience for our
+              users. Let’s make online shopping better together! 🚀
+            </div>
+            <p className="font-bold mt-5">
+              Note: You can navigate to the above respective function by
+              clicking on them or through menu in the nav bar
+            </p>
           </div>
         </CardFooter>
       </Card>
