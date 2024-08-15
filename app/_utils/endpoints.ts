@@ -8,7 +8,7 @@ const auth = {
   TWITTER_ACCESS_TOKEN: `${backendService}auth/twitter/access-token`,
   TWITTER_REQUEST_TOKEN: `${backendService}auth/twitter/request-token`,
   LOG_OUT: `${backendService}auth/logout`,
-}
+};
 
 const user = {
   UPLOAD_PROFILE_IMG: `${backendService}user/profile-photo`,
@@ -17,9 +17,9 @@ const user = {
   GET_ADDRESS: `${backendService}user/address`,
   UPDATE_USER_ADDRESS: `${backendService}user/address`,
   UPDATE_USER_PROFILE: `${backendService}user/profile`,
-}
+};
 
 export const appEndPoints = {
- ...auth,
- ...user
+  ...auth,
+  ...user,
 };

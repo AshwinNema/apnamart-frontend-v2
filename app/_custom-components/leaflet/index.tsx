@@ -8,7 +8,7 @@ export function GlowingMarker() {
   return (
     <div className="scale-[3] relative">
       <div
-        className={`absolute -left-[250%] bottom-[125%] text-[0.3rem] bg-[#ca8a04] w-[800%] p-1 animate-hideMarkerToolTip`}
+        className={`absolute -left-[260%] bottom-[125%] text-[0.3rem] bg-[#ca8a04] w-[800%] p-1 animate-hideMarkerToolTip`}
       >
         <p>Your order will be delivered here</p>
         <p className="text-[0.2rem] flex justfy-center ml-[20%]">
@@ -21,9 +21,11 @@ export function GlowingMarker() {
 
       <div className={`relative animate-markerArrival`}>
         <HiLocationMarker className={`fill-theme`} />
-
         <div
-          className={`absolute scale-75 rounded-[50%] left-[37%] -bottom-[30%] bg-[black] z-0 h-1 w-1 animate-glow `}
+          className={`absolute scale-75 rounded-[50%] left-[35%] -bottom-[30%] bg-[black] z-0 h-1 w-1`}
+        ></div>
+        <div
+          className={`w-[400%] h-[400%] rounded-[50%] absolute -bottom-[210%] -left-[150%] bg-transparent z-0 animate-glow`}
         ></div>
       </div>
     </div>
