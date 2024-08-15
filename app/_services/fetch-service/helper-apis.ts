@@ -6,6 +6,7 @@ import {
   clearUserStorage,
   redirect,
   setLocalStorageKey,
+  storageAttributes,
 } from "../local-storage.service";
 
 export const getRefreshToken = async (refreshToken: string) => {
@@ -30,7 +31,7 @@ export const getRefreshToken = async (refreshToken: string) => {
       }, 2000);
       return;
     } else {
-      setLocalStorageKey("tokens", tokens);
+      setLocalStorageKey(storageAttributes.tokens, tokens);
     }
     return tokens.access.token;
   } catch (err) {

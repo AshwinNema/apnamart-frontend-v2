@@ -3,7 +3,7 @@
 import { IconInput, ProtectedRoute } from "../_custom-components";
 import { Tabs, Tab, Badge, Avatar } from "@nextui-org/react";
 import { tabKeys, tabOption, tabOptions } from "./utils";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { setNestedPath } from "../_utils";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { getUserProfile, uploadProfileImage } from "./api";

@@ -7,7 +7,10 @@ import {
 import { appEndPoints } from "@/app/_utils/endpoints";
 import { HTTP_METHODS, makeDataRequest } from "@/app/_services/fetch-service";
 import { getZodErrMsg } from "@/app/_utils";
-import { setLocalStorageKey } from "@/app/_services/local-storage.service";
+import {
+  setLocalStorageKey,
+  storageAttributes,
+} from "@/app/_services/local-storage.service";
 import { setUser } from "@/lib/slices/user/user.slice";
 import { AppDispatch } from "@/lib/store";
 import { errorToast, toastErrorIcons } from "@/app/_utils/toast";
@@ -43,8 +46,8 @@ export const loginSignUp = async (
     );
     if (!userData) return;
     const { user, tokens } = userData;
-    setLocalStorageKey("user", user);
-    setLocalStorageKey("tokens", tokens);
+    setLocalStorageKey(storageAttributes.user, user);
+    setLocalStorageKey(storageAttributes.tokens, tokens);
     onClose();
     if (modalType === modalTypes.signUp) {
       dispatch(

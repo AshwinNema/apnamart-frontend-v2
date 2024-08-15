@@ -1,15 +1,11 @@
 "use client";
 import { Card, CardBody } from "@nextui-org/react";
 import React, { useState, useMemo, useEffect, useCallback } from "react";
-import "leaflet/dist/leaflet.css";
-import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css";
-import "leaflet-defaulticon-compatibility";
 import { MainMap } from "../../_custom-components";
 import { setMultiplePaths, setNestedPath } from "@/app/_utils";
 import {
   getAddress,
   mainConfig as config,
-  drawerInitialVal,
   getInitialDrawerVals,
 } from "./utils";
 import MainCardComponent from "./components/main-card";

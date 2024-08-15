@@ -28,8 +28,8 @@ const config: Config = {
       },
       keyframes: {
         glow: {
-          "0%": { boxShadow: "0px 0px 0px 4px #f97316" },
-          "100%": { boxShadow: "0px 0px 0px 40px transparent" },
+          "0%": { backgroundColor: "#f97316", transform: "scale(0)" },
+          "100%": { transform: "scale(1)" },
         },
         markerArrival: {
           "0%": { transform: "translateY(-0.2rem)" },

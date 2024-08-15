@@ -33,6 +33,12 @@ export default function TwitterLogin({
   const pollingRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    if (typeof pollingRef.current === "number") {
+      pollingRef.current = null;
+    }
+  }, [pollingRef.current]);
+
+  useEffect(() => {
     return () => {
       if (pollingRef.current) {
         clearInterval(pollingRef.current);
@@ -49,7 +55,9 @@ export default function TwitterLogin({
         requestTokenUrl,
         undefined,
         undefined,
-        { throwErr: true },
+        {
+          throwErr: true,
+        },
       ).then((data) => {
         const authenticationUrl =
           "https://api.twitter.com/oauth/authenticate?oauth_token=" +
@@ -77,7 +85,7 @@ export default function TwitterLogin({
       className={`font-bold ${theme === browserTheme.dark && "bg-white text-black"} `}
       startContent={<BsTwitterX className="scale-150" />}
       isDisabled={pollingRef.current !== null}
-      onClick={twitterLogin}
+      onPress={twitterLogin}
     >
       {text}
     </Button>

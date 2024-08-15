@@ -1,5 +1,8 @@
 import { toastErrorIcons } from "@/app/_utils/toast";
-import { getLocalStorageKey } from "../local-storage.service";
+import {
+  getLocalStorageKey,
+  storageAttributes,
+} from "../local-storage.service";
 import { getRefreshToken } from "./helper-apis";
 
 export enum HTTP_METHODS {
@@ -42,7 +45,7 @@ export interface uploadRespHandling extends errHandling {
 }
 
 export const getToken = async () => {
-  const tokens: token = getLocalStorageKey<token>("tokens");
+  const tokens: token = getLocalStorageKey<token>(storageAttributes.tokens);
 
   if (!tokens) {
     return;
