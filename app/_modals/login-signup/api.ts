@@ -7,15 +7,14 @@ import {
 import { appEndPoints } from "@/app/_utils/endpoints";
 import { HTTP_METHODS, makeDataRequest } from "@/app/_services/fetch-service";
 import { getZodErrMsg } from "@/app/_utils";
-import { setLocalStorageKey } from "@/app/_services/local-storage.service";
+import {
+  setLocalStorageKey,
+  storageAttributes,
+} from "@/app/_services/local-storage.service";
 import { setUser } from "@/lib/slices/user/user.slice";
 import { AppDispatch } from "@/lib/store";
 import { errorToast, toastErrorIcons } from "@/app/_utils/toast";
-import {
-  notificationTypes,
-  setNotificationType,
-} from "@/lib/slices/notification/notification.slice";
-import { getNewUserModalProps } from "@/app/layout-components/notifications/new-user";
+import { handleAction } from "@/app/layout-components/notifications/new-user";
 
 export const loginSignUp = async (
   formData: loginConfig["formData"],
@@ -38,25 +37,23 @@ export const loginSignUp = async (
     modalType === modalTypes.login ? appEndPoints.LOGIN : appEndPoints.REGISTER;
 
   try {
-    const { user, tokens } = await makeDataRequest(
+    const userData = await makeDataRequest(
       HTTP_METHODS.POST,
       url,
       data.data,
       undefined,
       { showToastAndRedirect: false },
     );
-    setLocalStorageKey("user", user);
-    setLocalStorageKey("tokens", tokens);
+    if (!userData) return;
+    const { user, tokens } = userData;
+    setLocalStorageKey(storageAttributes.user, user);
+    setLocalStorageKey(storageAttributes.tokens, tokens);
     onClose();
     if (modalType === modalTypes.signUp) {
       dispatch(
-        setNotificationType({
-          type: notificationTypes.newUser,
-          details: {
-            name: user.name,
-            role: formData.role,
-          },
-          modalProps: getNewUserModalProps(),
+        handleAction({
+          name: user.name,
+          role: formData.role,
         }),
       );
     }

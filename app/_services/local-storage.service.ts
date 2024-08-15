@@ -1,19 +1,29 @@
-import { get, set, remove, clear } from "local-storage";
+import { get, set, remove } from "local-storage";
 
-export function getLocalStorageKey<T>(attribute: string): T {
+export enum storageAttributes {
+  user = "user",
+  tokens = "tokens",
+  theme = "theme",
+}
+
+export function getLocalStorageKey<T>(attribute: storageAttributes): T {
   return get(attribute);
 }
 
-export const setLocalStorageKey = (attribute: string, value: any) => {
+export const setLocalStorageKey = (
+  attribute: storageAttributes,
+  value: any,
+) => {
   set(attribute, value);
 };
 
-export const removeLocalStorageKey = (key: string) => {
+export const removeLocalStorageKey = (key: storageAttributes) => {
   remove(key);
 };
 
-export const clearStorage = () => {
-  clear();
+export const clearUserStorage = () => {
+  removeLocalStorageKey(storageAttributes.tokens);
+  removeLocalStorageKey(storageAttributes.user);
   return null;
 };
 

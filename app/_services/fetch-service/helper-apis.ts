@@ -3,9 +3,10 @@ import { trackPromise } from "react-promise-tracker";
 import { HTTP_METHODS } from "./helper";
 import { errorToast } from "@/app/_utils/toast";
 import {
-  clearStorage,
+  clearUserStorage,
   redirect,
   setLocalStorageKey,
+  storageAttributes,
 } from "../local-storage.service";
 
 export const getRefreshToken = async (refreshToken: string) => {
@@ -24,13 +25,13 @@ export const getRefreshToken = async (refreshToken: string) => {
     const tokens = await response.json();
     if (tokens?.code === 401) {
       errorToast({ msg: "Token expired" });
-      clearStorage();
+      clearUserStorage();
       setTimeout(() => {
         redirect("/");
       }, 2000);
       return;
     } else {
-      setLocalStorageKey("tokens", tokens);
+      setLocalStorageKey(storageAttributes.tokens, tokens);
     }
     return tokens.access.token;
   } catch (err) {

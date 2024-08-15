@@ -4,13 +4,12 @@ import { appEndPoints } from "@/app/_utils/endpoints";
 import { HTTP_METHODS, makeDataRequest } from "@/app/_services/fetch-service";
 import { errorToast } from "@/app/_utils/toast";
 import { AppDispatch } from "@/lib/store";
-import { setLocalStorageKey } from "@/app/_services/local-storage.service";
-import { setUser } from "@/lib/slices/user/user.slice";
 import {
-  notificationTypes,
-  setNotificationType,
-} from "@/lib/slices/notification/notification.slice";
-import { getNewUserModalProps } from "@/app/layout-components/notifications/new-user";
+  setLocalStorageKey,
+  storageAttributes,
+} from "@/app/_services/local-storage.service";
+import { setUser } from "@/lib/slices/user/user.slice";
+import { handleAction } from "@/app/layout-components/notifications/new-user";
 
 const processSuccessResponse = (
   response: any,
@@ -21,19 +20,15 @@ const processSuccessResponse = (
     return;
   }
   const { user, tokens, noInitialPassword, isNewUser } = response;
-  setLocalStorageKey("user", user);
-  setLocalStorageKey("tokens", tokens);
+  setLocalStorageKey(storageAttributes.user, user);
+  setLocalStorageKey(storageAttributes.tokens, tokens);
   onClose();
   if (isNewUser) {
     dispatch(
-      setNotificationType({
-        type: notificationTypes.newUser,
-        modalProps: getNewUserModalProps(),
-        details: {
-          name: user.name,
-          role: user.role,
-          noInitialPassword: noInitialPassword,
-        },
+      handleAction({
+        name: user.name,
+        role: user.role,
+        noInitialPassword: noInitialPassword,
       }),
     );
   }
