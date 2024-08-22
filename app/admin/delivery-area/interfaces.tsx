@@ -52,5 +52,5 @@ export interface MapLayerGroup extends LayerGroup {
 }
 
 export interface LayerCircle extends L.Circle {
-  _leaflet_id: number
+  _leaflet_id: number;
 }

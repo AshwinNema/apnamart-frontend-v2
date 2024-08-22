@@ -8,6 +8,9 @@ import "react-toastify/dist/ReactToastify.css";
 import NotificationModal from "./notifications";
 import { usePromiseTracker } from "react-promise-tracker";
 import { Spinner } from "../_custom-components";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { getUserProfile } from "../profile/api";
+import { usePathname } from "next/navigation";
 
 export default function Layout({
   children,
@@ -18,9 +21,25 @@ export default function Layout({
   const { promiseInProgress } = usePromiseTracker();
   // Prevents warning - Extra attributes from the server: class,style at html at RootLayout (Server) at RedirectErrorBoundary. Reference - https://github.com/pacocoursey/next-themes?tab=readme-ov-file#avoid-hydration-mismatch
   const [mounted, setMounted] = useState(false);
+  const user = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const path = usePathname();
+
+  useEffect(() => {
+    console.log(path, "this is the path ");
+  }, [path]);
+
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    const isUserFetched = window.sessionStorage.getItem("isUserFetched");
+    if (!isUserFetched && user && !path.includes("/profile")) {
+      window.sessionStorage.setItem("isUserFetched", "true");
+      getUserProfile(dispatch);
+    }
+  }, [dispatch, user, path]);
 
   if (!mounted) {
     return null;

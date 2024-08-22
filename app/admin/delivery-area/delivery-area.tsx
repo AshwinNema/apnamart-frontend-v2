@@ -2,7 +2,7 @@
 import { MainMap } from "@/app/_custom-components/leaflet";
 import { setNestedPath } from "@/app/_utils";
 import { Button } from "@nextui-org/react";
-import {  useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { FeatureGroup } from "react-leaflet";
 import { EditControl } from "react-leaflet-draw";
 import {
@@ -24,21 +24,23 @@ const MapAccessComponent = ({ saveMapState, setData }: mapProps) => {
     current: {},
   });
   const featureGroupRef = useRef(null);
-  const isLoaded = useRef(false)
+  const isLoaded = useRef(false);
 
   useEffect(() => {
     if (!isLoaded.current) {
-      isLoaded.current = true
-      getAllDeliveryAreas(setFeatures,featureGroupRef.current! as MapLayerGroup);
+      isLoaded.current = true;
+      getAllDeliveryAreas(
+        setFeatures,
+        featureGroupRef.current! as MapLayerGroup,
+      );
     }
-   
   }, []);
 
   useEffect(() => {
     if (!saveMapState) return;
     setData("saveMapState", false)();
-    const allLayers = featureGroupRef.current! as MapLayerGroup
-    updateMapState(features, allLayers,setFeatures);
+    const allLayers = featureGroupRef.current! as MapLayerGroup;
+    updateMapState(features, allLayers, setFeatures);
   }, [saveMapState]);
   return (
     <FeatureGroup ref={featureGroupRef}>

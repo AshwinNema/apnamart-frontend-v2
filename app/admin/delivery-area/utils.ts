@@ -1,7 +1,7 @@
-import {   EventLayer, featureGroupAreas, } from "./interfaces";
+import { EventLayer, featureGroupAreas } from "./interfaces";
 
-export * from "./interfaces"
-export * from "./apis"
+export * from "./interfaces";
+export * from "./apis";
 
 const formatLayerDetails = (layer: EventLayer) => {
   const radius = layer._mRadius;

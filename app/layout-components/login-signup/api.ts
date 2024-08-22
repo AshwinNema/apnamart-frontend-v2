@@ -49,6 +49,7 @@ export const loginSignUp = async (
     setLocalStorageKey(storageAttributes.user, user);
     setLocalStorageKey(storageAttributes.tokens, tokens);
     onClose();
+    window.sessionStorage.setItem("isUserFetched", "true");
     if (modalType === modalTypes.signUp) {
       dispatch(
         handleAction({

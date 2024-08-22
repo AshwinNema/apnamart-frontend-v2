@@ -3,9 +3,7 @@ import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility
 import "leaflet-defaulticon-compatibility";
 import "leaflet-draw/dist/leaflet.draw.css";
 import { MapContainer, TileLayer } from "react-leaflet";
-import L from "leaflet"
 import React from "react";
-
 
 export interface mapProps {
   center: [number, number];
