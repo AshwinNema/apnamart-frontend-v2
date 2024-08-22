@@ -39,7 +39,10 @@ export const setNestedPath =
     });
   };
 
-export type setKeyVal = (key: string) => (value: any) => void;
+export type setKeyVal = (
+  key: string,
+  toggleVal?: boolean,
+) => (value?: any) => void;
 
 export type setVal = (value: any) => void;
 

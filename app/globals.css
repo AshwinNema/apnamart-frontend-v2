@@ -7,8 +7,12 @@
   border: none;
 }
 
-.hideMapContainer {
+.mainContainer {
   .leaflet-container {
-    z-index: -1;
+    z-index: 1;
   }
+}
+
+.sr-only {
+  display: none;
 }

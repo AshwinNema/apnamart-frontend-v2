@@ -1,8 +1,19 @@
 import "leaflet/dist/leaflet.css";
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css";
 import "leaflet-defaulticon-compatibility";
+import "leaflet-draw/dist/leaflet.draw.css";
 import { MapContainer, TileLayer } from "react-leaflet";
+import L from "leaflet"
 import React from "react";
+
+
+export interface mapProps {
+  center: [number, number];
+  children?: React.ReactNode;
+  className?: string;
+  zoom?: number;
+  scrollWheelZoom?: boolean;
+}
 
 export function MainMap({
   center,
@@ -10,13 +21,7 @@ export function MainMap({
   className,
   zoom,
   scrollWheelZoom,
-}: {
-  center: [number, number];
-  children?: React.ReactNode;
-  className?: string;
-  zoom?: number;
-  scrollWheelZoom?: boolean;
-}) {
+}: mapProps) {
   return (
     <MapContainer
       center={center}

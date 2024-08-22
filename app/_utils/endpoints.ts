@@ -22,4 +22,6 @@ const user = {
 export const appEndPoints = {
   ...auth,
   ...user,
+  UPDATE_DELIVERY_AREA: `${backendService}delivery-area`,
+  GET_ALL_DELIVERY_AREAS: `${backendService}delivery-area`,
 };
