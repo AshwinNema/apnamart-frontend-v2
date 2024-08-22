@@ -6,3 +6,13 @@
   background-color: transparent;
   border: none;
 }
+
+.mainContainer {
+  .leaflet-container {
+    z-index: 1;
+  }
+}
+
+.sr-only {
+  display: none;
+}

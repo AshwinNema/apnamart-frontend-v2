@@ -16,7 +16,6 @@ export default function Layout({
 }>) {
   // For showing UI Loader
   const { promiseInProgress } = usePromiseTracker();
-
   // Prevents warning - Extra attributes from the server: class,style at html at RootLayout (Server) at RedirectErrorBoundary. Reference - https://github.com/pacocoursey/next-themes?tab=readme-ov-file#avoid-hydration-mismatch
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
@@ -31,7 +30,7 @@ export default function Layout({
     <>
       {promiseInProgress && <Spinner />}
       <NextUIProvider>
-        <main>
+        <main className={`mainContainer`}>
           <NextThemesProvider attribute="class">
             <Header />
             {children}

@@ -4,10 +4,11 @@ import { useAppSelector } from "@/lib/hooks";
 import { ReactNode, useEffect } from "react";
 import { CircularProgress } from "@nextui-org/progress";
 import { useRouter } from "next/navigation";
-
+import { UserRole } from "@/lib/slices/user/user.slice";
 export * from "./inputs";
 export * from "./leaflet";
 export * from "./drawer";
+
 export const ImageComponent = ({
   width,
   height,
@@ -59,14 +60,25 @@ export const Spinner = () => {
   );
 };
 
-export const ProtectedRoute = ({ children }: { children: ReactNode }) => {
+export const ProtectedRoute = ({
+  children,
+  allowedRole,
+}: {
+  children: ReactNode;
+  allowedRole?: UserRole;
+}) => {
   const user = useAppSelector((state) => state.user);
-
+  const role = user?.role;
   const router = useRouter();
 
   useEffect(() => {
     !user && router.push("/");
   }, [user]);
+
+  // If allowedRole is given then we check that user is logging in with that allowed role
+  useEffect(() => {
+    !!allowedRole && role != allowedRole && router.push("/");
+  }, [allowedRole, role]);
 
   return <> {user ? children : <Spinner />}</>;
 };

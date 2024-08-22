@@ -7,7 +7,7 @@ import {
 } from "../_services/local-storage.service";
 
 import { browserTheme } from "../layout-components/theme-switch";
-export * from "./routes"
+export * from "./routes";
 export const passwordRegex =
   /(?=.*[A-Z])(?=.*\d).{8,}|(?=.*\d)(?=.*[A-Z]).{8,}/;
 
@@ -39,7 +39,10 @@ export const setNestedPath =
     });
   };
 
-export type setKeyVal = (key: string) => (value: any) => void;
+export type setKeyVal = (
+  key: string,
+  toggleVal?: boolean,
+) => (value?: any) => void;
 
 export type setVal = (value: any) => void;
 
