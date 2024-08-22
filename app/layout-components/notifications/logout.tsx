@@ -19,7 +19,7 @@ import {
 import { setUser } from "@/lib/slices/user/user.slice";
 import { Button, ModalBody, ModalFooter, ModalHeader } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
-
+import { TbLogout } from "react-icons/tb";
 export const handleAction = () =>
   setNotificationType({
     type: notificationTypes.logout,
@@ -73,6 +73,7 @@ export default function Logout({ onClose }: { onClose: () => void }) {
       <ModalFooter>
         <div className="flex flex-col w-full">
           <Button
+          startContent={<TbLogout className="scale-[1.5]"/>}
             onPress={logout}
             className="mb-3"
             color="primary"

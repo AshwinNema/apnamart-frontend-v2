@@ -27,7 +27,7 @@ export const AdminLandingPage = () => {
       icon: <FaMapLocationDot />,
       description:
         "📍 Define and manage delivery zones to ensure our customers receive their orders on time.",
-      title: "Set Delivery Areas",
+      title: "Set Delivery Area",
     },
     {
       key: admin.product,
@@ -45,7 +45,7 @@ export const AdminLandingPage = () => {
           🌟 Welcome to the Admin Dashboard! 🌟
         </CardHeader>
         <CardBody>
-          <div className="text-xl mt-8">
+          <div className="text-xl mt-8 mb-11">
             As the backbone of our eCommerce platform, you play a crucial role
             in ensuring everything runs smoothly! Here, you have the power to:
           </div>
@@ -60,6 +60,7 @@ export const AdminLandingPage = () => {
                   key={item.key}
                   startContent={item.icon}
                   description={item.description}
+                  showDivider
                 >
                   {item.title}
                 </ListboxItem>

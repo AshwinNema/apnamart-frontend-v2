@@ -16,7 +16,6 @@ import { useAppSelector } from "@/lib/hooks";
 
 export default function UserAddress() {
   const user = useAppSelector((data) => data.user);
-  const notificationType = useAppSelector((data) => data.notifications.type);
   const userLatitude = user?.address?.latitude;
   const userLongtitude = user?.address?.longtitude;
   const [config, setConfig] = useState<config>({
@@ -77,11 +76,7 @@ export default function UserAddress() {
     <>
       <Card>
         <MainCardComponent setMultipleData={setMultipleData} config={config} />
-        <CardBody
-          className={`${notificationType !== null && "hideMapContainer"}`}
-        >
-          {displayMap}
-        </CardBody>
+        <CardBody>{displayMap}</CardBody>
         <AddressFooter config={config} setData={setData("addressDetails")} />
       </Card>
     </>
