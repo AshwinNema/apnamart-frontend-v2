@@ -2,7 +2,7 @@ import { Input } from "@nextui-org/react";
 import { ClearIcon } from "@/app/_utils/icons & logos";
 import { useState } from "react";
 import { passwordErrMsg, setVal } from "../../_utils";
-import { loginValidationSchema } from "@/app/_modals/login-signup/constants";
+import { loginValidationSchema } from "@/app/layout-components/login-signup/constants";
 import { IoIosLock } from "react-icons/io";
 import { HiMiniEyeSlash } from "react-icons/hi2";
 import { BsFillEyeFill } from "react-icons/bs";

@@ -73,7 +73,7 @@ export default function Logout({ onClose }: { onClose: () => void }) {
       <ModalFooter>
         <div className="flex flex-col w-full">
           <Button
-          startContent={<TbLogout className="scale-[1.5]"/>}
+            startContent={<TbLogout className="scale-[1.5]" />}
             onPress={logout}
             className="mb-3"
             color="primary"

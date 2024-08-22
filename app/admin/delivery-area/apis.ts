@@ -72,10 +72,7 @@ export const getAllDeliveryAreas = (
           const lat = parseFloat(latitude);
           const lng = parseFloat(longtitude);
           const radius = parseFloat(rad);
-          const area = new L.Circle(
-            L.latLng(lat, lng),
-            radius,
-          ) as LayerCircle;
+          const area = new L.Circle(L.latLng(lat, lng), radius) as LayerCircle;
           allLayers.addLayer(area);
           const leafletId = area._leaflet_id;
           map[leafletId] = {

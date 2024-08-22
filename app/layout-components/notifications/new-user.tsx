@@ -1,4 +1,7 @@
-import { userRoleKeys, userRoles } from "@/app/_modals/login-signup/constants";
+import {
+  userRoleKeys,
+  userRoles,
+} from "@/app/layout-components/login-signup/constants";
 import { tabKeys } from "@/app/profile/utils";
 import { useAppSelector } from "@/lib/hooks";
 import {
