@@ -38,7 +38,7 @@ export interface fetchConfig extends errHandling {
   showLoader?: boolean;
   showToast?: boolean;
   addToken?: boolean;
-  successMsg?: ReactNode
+  successMsg?: ReactNode;
 }
 
 export interface uploadRespHandling extends errHandling {

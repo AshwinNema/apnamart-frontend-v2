@@ -1,6 +1,7 @@
 import { toast, ToastOptions } from "react-toastify";
 import { SuccessIcon } from "../icons & logos";
 import { getBrowserTheme } from "..";
+import { ReactNode } from "react";
 
 export enum toastSuccessIcons {
   rocket = "rocket",
@@ -11,7 +12,7 @@ export const successToast = ({
   msg,
   iconType = toastSuccessIcons.default,
 }: {
-  msg: string;
+  msg: ReactNode;
   iconType?: toastSuccessIcons;
 }) => {
   const toastProps: ToastOptions = { theme: getBrowserTheme() };

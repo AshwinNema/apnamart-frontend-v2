@@ -21,15 +21,19 @@ export default function Footer({
   return (
     <ModalFooter className="flex flex-col">
       {currentStep === 1 ? (
-        <div className="flex justify-between gap-3">
-          <Button fullWidth onClick={() => setData("currentStep")(0)}>
+        <div className="flex justify-between gap-3 mb-5">
+          <Button
+            variant="shadow"
+            fullWidth
+            onClick={() => setData("currentStep")(0)}
+          >
             Go Back
           </Button>
 
           <Button
             fullWidth
             onClick={() => loginSignUp(formData, onClose, modalType, dispatch)}
-            color="primary"
+            color="success"
           >
             {modalType === modalTypes.signUp ? "Sign Up" : "Sign in"}
           </Button>

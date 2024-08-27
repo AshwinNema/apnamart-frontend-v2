@@ -6,6 +6,7 @@ import {
   ValidationErrIcon,
 } from "../icons & logos";
 import { getBrowserTheme } from "..";
+import { ReactNode } from "react";
 
 export enum toastErrorIcons {
   validation = "validation error",
@@ -18,7 +19,7 @@ export const errorToast = ({
   msg,
   iconType = toastErrorIcons.default,
 }: {
-  msg: string;
+  msg: ReactNode;
   iconType?: toastErrorIcons;
 }) => {
   const toastProps: ToastOptions = { theme: getBrowserTheme() };

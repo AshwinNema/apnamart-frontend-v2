@@ -29,6 +29,7 @@ export const handleAction = () =>
       backdrop: "blur",
       hideCloseButton: true,
       isDismissable: false,
+      className: `${modalProps.className}`,
     },
   });
 
@@ -76,7 +77,7 @@ export default function Logout({ onClose }: { onClose: () => void }) {
             startContent={<TbLogout className="scale-[1.5]" />}
             onPress={logout}
             className="mb-3"
-            color="primary"
+            color="warning"
             fullWidth={true}
           >
             Log out

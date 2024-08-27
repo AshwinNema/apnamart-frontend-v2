@@ -43,7 +43,7 @@ export default function Header() {
         }}
       >
         <NavbarBrand className="flex items-center gap-4">
-          {user && <UserRoleMenu />}
+          {user ? <UserRoleMenu /> : null}
 
           <Link href="/">
             <div className="flex gap-3">
@@ -57,7 +57,7 @@ export default function Header() {
           <NavbarItem>
             <ThemeSwitch />
           </NavbarItem>
-          {!user && (
+          {!user ? (
             <>
               <NavbarItem>
                 <Button
@@ -74,13 +74,13 @@ export default function Header() {
                 </Button>
               </NavbarItem>
             </>
-          )}
+          ) : null}
 
-          {!!user && (
+          {!!user ? (
             <NavbarItem>
               <UserProfile />
             </NavbarItem>
-          )}
+          ) : null}
         </NavbarContent>
       </Navbar>
       <LoginSignUpModal

@@ -10,7 +10,7 @@ import {
 } from "./helper";
 
 export * from "./helper";
-export * from "./upload-handler"
+export * from "./upload-handler";
 
 export const makeDataRequest = async (
   method: HTTP_METHODS,

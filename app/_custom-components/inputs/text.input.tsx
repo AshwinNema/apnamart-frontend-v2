@@ -1,14 +1,13 @@
 import { Input } from "@nextui-org/react";
-import { ReactNode, useEffect, useState } from "react";
-import { ZodSchema } from "zod";
+import { useEffect, useState } from "react";
 import {
   getZodErrMsg,
   keyVals,
   setMultiplePaths,
   setNestedPath,
-  setVal,
 } from "@/app/_utils";
 import { ClearIcon } from "@/app/_utils/icons & logos";
+import { TextInputProps } from "./interfaces";
 
 export const TextInput = ({
   value,
@@ -18,21 +17,13 @@ export const TextInput = ({
   label,
   placeholder,
   className = "",
+  classNames,
   alternateText,
   variant = "bordered",
   autoFocus = false,
-}: {
-  value: string;
-  setData: setVal;
-  validationSchema?: ZodSchema;
-  Icon?: () => ReactNode;
-  label?: string;
-  placeholder?: string;
-  className?: string;
-  alternateText?: string;
-  variant?: "bordered" | "flat" | "faded" | "underlined";
-  autoFocus?: boolean;
-}) => {
+  labelPlacement = "inside",
+  fullWidth = false,
+}: TextInputProps) => {
   const [config, setConfig] = useState({
     invalid: false,
     errorMsg: "",
@@ -77,13 +68,16 @@ export const TextInput = ({
 
   return (
     <Input
+      classNames={classNames}
       autoFocus={autoFocus}
       startContent={<>{Icon && <Icon />}</>}
       value={value}
       isInvalid={config.invalid}
       color={config.invalid ? "danger" : "default"}
+      labelPlacement={labelPlacement}
       errorMessage={`${config.errorMsg}`}
       isClearable={false}
+      fullWidth={fullWidth}
       onFocus={() => {
         setDataFunc("isFocussed")(true);
       }}

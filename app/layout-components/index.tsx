@@ -26,10 +26,6 @@ export default function Layout({
   const path = usePathname();
 
   useEffect(() => {
-    console.log(path, "this is the path ");
-  }, [path]);
-
-  useEffect(() => {
     setMounted(true);
   }, []);
 

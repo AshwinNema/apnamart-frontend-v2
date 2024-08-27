@@ -79,7 +79,7 @@ export default function AddressDetailsDrawer({
                     </Button>
                   );
                 })}
-                {config.addressType === addressType.others && (
+                {config.addressType === addressType.others ? (
                   <TextInput
                     value={config.otherAddress}
                     validationSchema={z.string()}
@@ -87,7 +87,7 @@ export default function AddressDetailsDrawer({
                     placeholder="Save as"
                     variant="underlined"
                   />
-                )}
+                ) : null}
               </div>
               <Button
                 className="mt-3"

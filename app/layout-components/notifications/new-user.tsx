@@ -43,7 +43,7 @@ export default function NewUserNotification({
         Hi {details?.name} 👋
       </ModalHeader>
       <ModalBody>{userRoles?.[details?.role]?.userSignedUpText} </ModalBody>
-      {details?.noInitialPassword && (
+      {details?.noInitialPassword ? (
         <ModalFooter>
           <p className="italic">
             <span className="font-bold">Please note :</span> Your inital
@@ -54,7 +54,7 @@ export default function NewUserNotification({
             </Link>
           </p>
         </ModalFooter>
-      )}
+      ) : null}
     </>
   );
 }

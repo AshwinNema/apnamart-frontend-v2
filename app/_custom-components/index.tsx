@@ -8,7 +8,7 @@ import { UserRole } from "@/lib/slices/user/user.slice";
 export * from "./inputs";
 export * from "./leaflet";
 export * from "./drawer";
-
+export * from "./table";
 export const ImageComponent = ({
   width,
   height,

@@ -42,11 +42,13 @@ export default function NotificationModal() {
       <ModalContent>
         {(onClose) => (
           <>
-            {type === notificationTypes.newUser && (
+            {type === notificationTypes.newUser ? (
               <NewUserNotification onClose={onClose} />
-            )}
+            ) : null}
 
-            {type === notificationTypes.logout && <Logout onClose={onClose} />}
+            {type === notificationTypes.logout ? (
+              <Logout onClose={onClose} />
+            ) : null}
           </>
         )}
       </ModalContent>

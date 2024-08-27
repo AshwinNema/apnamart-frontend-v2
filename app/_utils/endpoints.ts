@@ -19,9 +19,19 @@ const user = {
   UPDATE_USER_PROFILE: `${backendService}user/profile`,
 };
 
+const category = {
+  CREATE_CATEGORY: `${backendService}category`,
+  UPDATE_CATEGORY: `${backendService}category/`,
+  QUERY_CATEGORIES: `${backendService}category`,
+  UPDATE_CATEGORY_IMAGE: `${backendService}category/image/`,
+  DELETE_CATEGORY: `${backendService}category/`,
+  GET_CATEGORY_NAME_LIST: `${backendService}category/name-list`,
+};
+
 export const appEndPoints = {
   ...auth,
   ...user,
   UPDATE_DELIVERY_AREA: `${backendService}delivery-area`,
   GET_ALL_DELIVERY_AREAS: `${backendService}delivery-area`,
+  ...category,
 };
