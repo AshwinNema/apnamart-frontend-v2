@@ -1,8 +1,4 @@
-import {
-  Autocomplete,
-  AutocompleteItem,
-  useAutocomplete,
-} from "@nextui-org/react";
+import { Autocomplete, AutocompleteItem, Avatar } from "@nextui-org/react";
 import { useAsyncList } from "@react-stately/data";
 import * as _ from "lodash";
 import { useCallback, useRef, useState } from "react";
@@ -76,7 +72,22 @@ export const AutoCompleteComponent = ({
       >
         {itemList.map((item) => {
           return (
-            <AutocompleteItem key={item.id}>{item.label}</AutocompleteItem>
+            <AutocompleteItem
+              startContent={
+                <>
+                  {item.photo ? (
+                    <Avatar
+                      alt={item.label}
+                      className="w-6 h-6"
+                      src={item.photo}
+                    />
+                  ) : null}
+                </>
+              }
+              key={item.id}
+            >
+              {item.label}
+            </AutocompleteItem>
           );
         })}
       </Autocomplete>

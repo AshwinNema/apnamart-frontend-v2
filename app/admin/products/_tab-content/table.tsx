@@ -1,8 +1,11 @@
 import { useCallback } from "react";
 import {
-  categoryComponentState,
   categoryTableColumns,
-  categoryTableData,
+  categoryTableDataElement,
+  subCatTableDataElement,
+  tabComponentState,
+  tabKeys,
+  tableDataDataElement,
 } from "../helper";
 import { ImageComponent, RenderTable } from "@/app/_custom-components";
 import { TableActions } from "../_components/actions";
@@ -13,15 +16,19 @@ export const CatTable = ({
   loadData,
   onOpen,
   config,
+  tabType
 }: {
   setData: setKeyVal;
-  loadData: (page?: number) => void;
+  loadData: (page?: number, id?: number) => void;
   onOpen: () => void;
-  config: categoryComponentState;
+  config: tabComponentState<categoryTableDataElement | subCatTableDataElement>;
+  tabType: tabKeys
 }) => {
   const renderCell = useCallback(
-    (category: categoryTableData, columnKey: React.Key) => {
-      const cellValue = category[columnKey as keyof categoryTableData];
+    (data: Partial<tableDataDataElement>, columnKey: React.Key) => {
+      const cellValue = tabType === tabKeys.category ?  data[columnKey as keyof categoryTableDataElement]:
+      data[columnKey as keyof subCatTableDataElement]
+      ;
       switch (columnKey) {
         case "name":
           return (
@@ -29,7 +36,7 @@ export const CatTable = ({
               <ImageComponent
                 width={100}
                 height={100}
-                src={category.photo}
+                src={data.photo as string}
                 alt="category image"
                 isBlurred={true}
               />{" "}
@@ -39,11 +46,11 @@ export const CatTable = ({
         case "actions":
           return (
             <TableActions
-              id={category.id}
+              id={data.id as number}
               fetchData={loadData}
               type="category"
               onClick={() => {
-                setData("modalDetails")(category);
+                setData("modalDetails")(data);
                 onOpen();
               }}
             />

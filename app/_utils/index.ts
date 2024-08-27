@@ -48,6 +48,8 @@ export type setVal = (value: any) => void;
 
 export type keyVals = [string, any];
 
+export type valueOf<T> = T[keyof T];
+
 export const setMultiplePaths =
   (setDataFunc: Dispatch<SetStateAction<any>>) => (pathValList: keyVals[]) => {
     setDataFunc((prevVal: Object) => {

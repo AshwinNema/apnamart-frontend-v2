@@ -3,13 +3,12 @@ import {
   makeDataRequest,
   makeUploadDataRequest,
 } from "@/app/_services/fetch-service";
-import { createUpdateCat, getCategoryQuery } from "../interfaces & enums";
+import { createUpdateParams, tabKeys } from "../interfaces & enums";
 import { errorToast, toastErrorIcons } from "@/app/_utils/toast";
 import { appEndPoints } from "@/app/_utils/endpoints";
 import * as _ from "lodash";
-import { setKeyVal } from "@/app/_utils";
 
-export const createUpdateCategory = (data: createUpdateCat) => {
+export const createUpdateData = (data: createUpdateParams) => {
   const errors = [];
   const { name, id, files, successCallback } = data;
   if (!name.trim()) {
@@ -62,33 +61,23 @@ export const createUpdateCategory = (data: createUpdateCat) => {
       });
 };
 
-export const getCategories = (
-  query: getCategoryQuery,
-  setData: (...arg: any[]) => void,
-) => {
-  makeDataRequest(HTTP_METHODS.GET, appEndPoints.QUERY_CATEGORIES, undefined, {
-    ...query,
-  }).then((res) => {
-    if (!res) return;
-
-    setData(res);
-  });
-};
-
-export const updateCatImg = ({
+export const updateMainImg = ({
   id,
   file,
   onSuccess,
   uploadSuccessCallback,
+  tabType
 }: {
   id: number;
   file: File;
   onSuccess: () => void;
   uploadSuccessCallback: (photo: string) => void;
+  tabType: tabKeys
 }) => {
+  const url = tabType === tabKeys.category ? `${appEndPoints.UPDATE_CATEGORY_IMAGE}${id}`: ''
   makeUploadDataRequest(
     HTTP_METHODS.PUT,
-    `${appEndPoints.UPDATE_CATEGORY_IMAGE}${id}`,
+    url,
     { file },
     undefined,
     {

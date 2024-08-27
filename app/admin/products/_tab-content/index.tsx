@@ -1,23 +1,26 @@
 import { Button, useDisclosure } from "@nextui-org/react";
 import { MdCategory } from "react-icons/md";
 import React, { useEffect, useState } from "react";
-import CategoryModal from "../_modals/category";
 import {
-  categoryComponentState,
-  defaultCatTableConfig as defaultConfig,
-  getCategories,
+  tabComponentState,
+  defaultConfig,
+  getQueryDataApi,
+  categoryTableDataElement,
+  subCatTableDataElement,
+  tabKeys
 } from "../helper";
 import { setNestedPath } from "@/app/_utils";
 import { CatTable } from "./table";
-import { Autocomplete } from "@/app/_custom-components";
-import { HTTP_METHODS, makeDataRequest } from "@/app/_services/fetch-service";
-import { appEndPoints } from "@/app/_utils/endpoints";
 
-export default function Category() {
+import Autocomplete from "./autocomplete";
+import CreateUpdateModal from "../_modals/create-update";
+
+export default function TabContent({ tabType }: { tabType: tabKeys }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [config, setConfig] = useState<categoryComponentState>(
-    structuredClone(defaultConfig),
-  );
+
+  const [config, setConfig] = useState<
+    tabComponentState<categoryTableDataElement | subCatTableDataElement>
+  >(structuredClone(defaultConfig));
   const setData = setNestedPath(setConfig);
   const loadData = (page?: number, id?: number) => {
     const params: { page: number; limit: number; id?: number } = {
@@ -27,56 +30,35 @@ export default function Category() {
     if (id) {
       params.id = id;
     }
-    getCategories(params, setData("table"));
+    getQueryDataApi(tabType, params, setData("table"));
   };
 
   useEffect(() => {
-    getCategories(
+    getQueryDataApi(
+      tabType,
       { page: defaultConfig.table.page, limit: defaultConfig.table.limit },
       setData("table"),
     );
-  }, []);
+  }, [tabType]);
   useEffect(() => {
     !isOpen && setData("modalDetails")(null);
   }, [isOpen]);
 
-  const getInputSearch = (name: string) => {
-    return makeDataRequest(
-      HTTP_METHODS.GET,
-      appEndPoints.GET_CATEGORY_NAME_LIST,
-      undefined,
-      { name },
-    )
-      .then((res) => {
-        if (!res) return [];
-        return res.map((item: { id: number; name: string }) => {
-          return {
-            id: item.id,
-            label: item.name,
-          };
-        });
-      })
-      .catch(() => []);
-  };
-
   return (
     <div>
       <div className="flex justify-between gap-3 items-center">
-        <Autocomplete
-          getListItems={(name: string) => getInputSearch(name)}
-          label="Search by name"
-          size="sm"
-          color="primary"
-          onSelectionChange={(id) => {
-            loadData(1, id as number);
-          }}
-          variant="faded"
-        />
+        <Autocomplete tabType={tabType} loadData={loadData} />
         <Button onPress={onOpen} startContent={<MdCategory />} color="primary">
-          Create Category
+          Create{" "}
+          {tabType === tabKeys.category
+            ? "Category"
+            : tabType === tabKeys.subCategory
+              ? "Sub Category"
+              : "Item"}
         </Button>
       </div>
-      <CategoryModal
+      <CreateUpdateModal
+        tabType={tabType}
         modalDetails={config.modalDetails}
         uploadSuccessCallback={(photo: string) => {
           setData("modalDetails.photo")(photo);
@@ -93,6 +75,7 @@ export default function Category() {
         loadData={loadData}
         onOpen={onOpen}
         config={config}
+        tabType={tabType}
       />
     </div>
   );

@@ -22,6 +22,7 @@ export interface TextInputProps {
 export interface autoCompleteListItem {
   id: string | number;
   label: string;
+  photo?: string;
 }
 
 export interface AutoCompleteProps {
