@@ -1,82 +1,67 @@
 import { Button, useDisclosure } from "@nextui-org/react";
 import { MdCategory } from "react-icons/md";
-import React, { useEffect, useState } from "react";
-import {
-  tabComponentState,
-  defaultConfig,
-  getQueryDataApi,
-  categoryTableDataElement,
-  subCatTableDataElement,
-  tabKeys
-} from "../helper";
-import { setNestedPath } from "@/app/_utils";
-import { CatTable } from "./table";
-
+import React, { useEffect } from "react";
+import { queryTableData } from "../helper";
+import DataTable from "./table";
 import Autocomplete from "./autocomplete";
 import CreateUpdateModal from "../_modals/create-update";
+import { useProductDispatch, useProductSelector } from "@/lib/product/hooks";
+import {
+  setDetails,
+  tabKeys,
+} from "@/lib/product/slices/component-details.slice";
+import { clearModalDetails } from "@/lib/product/slices/modal-details.slice";
 
-export default function TabContent({ tabType }: { tabType: tabKeys }) {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
-  const [config, setConfig] = useState<
-    tabComponentState<categoryTableDataElement | subCatTableDataElement>
-  >(structuredClone(defaultConfig));
-  const setData = setNestedPath(setConfig);
+export default function TabContent() {
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const {
+    componentDetails: { tab, id, refreshData, closeModal },
+    table,
+  } = useProductSelector((state) => state);
+  const dispatch = useProductDispatch();
   const loadData = (page?: number, id?: number) => {
     const params: { page: number; limit: number; id?: number } = {
-      page: page || config.table.page,
-      limit: config.table.limit,
+      page: page || table.page,
+      limit: table.limit,
     };
     if (id) {
       params.id = id;
     }
-    getQueryDataApi(tabType, params, setData("table"));
+    queryTableData(tab, params, dispatch);
   };
 
   useEffect(() => {
-    getQueryDataApi(
-      tabType,
-      { page: defaultConfig.table.page, limit: defaultConfig.table.limit },
-      setData("table"),
-    );
-  }, [tabType]);
+    loadData(id ? 1 : table.page, id ? id : undefined);
+  }, [tab, id, refreshData]);
+
   useEffect(() => {
-    !isOpen && setData("modalDetails")(null);
-  }, [isOpen]);
+    !isOpen && dispatch(clearModalDetails());
+  }, [isOpen, dispatch]);
+
+  useEffect(() => {
+    if (!closeModal) return;
+    onClose();
+    setDetails({ closeModal: false });
+  }, [closeModal]);
 
   return (
     <div>
       <div className="flex justify-between gap-3 items-center">
-        <Autocomplete tabType={tabType} loadData={loadData} />
+        <Autocomplete />
         <Button onPress={onOpen} startContent={<MdCategory />} color="primary">
           Create{" "}
-          {tabType === tabKeys.category
+          {tab === tabKeys.category
             ? "Category"
-            : tabType === tabKeys.subCategory
+            : tab === tabKeys.subCategory
               ? "Sub Category"
               : "Item"}
         </Button>
       </div>
       <CreateUpdateModal
-        tabType={tabType}
-        modalDetails={config.modalDetails}
-        uploadSuccessCallback={(photo: string) => {
-          setData("modalDetails.photo")(photo);
-        }}
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        successCallback={(closeModal?: boolean) => {
-          closeModal && onOpenChange();
-          loadData();
-        }}
       />
-      <CatTable
-        setData={setData}
-        loadData={loadData}
-        onOpen={onOpen}
-        config={config}
-        tabType={tabType}
-      />
+      <DataTable loadData={loadData} onOpen={onOpen} />
     </div>
   );
 }

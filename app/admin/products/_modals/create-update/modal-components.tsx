@@ -1,22 +1,26 @@
 import { Button, ModalFooter } from "@nextui-org/react";
 import {
-  categoryTableDataElement,
-  subCatTableDataElement,
   UploadDetails,
   createUpdateData,
+  tableDataDataElement,
 } from "../../helper";
+import { useProductDispatch, useProductSelector } from "@/lib/product/hooks";
+import { setDetails } from "@/lib/product/slices/component-details.slice";
 
 export const Footer = ({
   onClose,
   config,
-  modalDetails,
-  successCallback,
 }: {
   onClose: () => void;
   config: UploadDetails;
-  modalDetails: categoryTableDataElement | subCatTableDataElement | null;
-  successCallback: () => void;
 }) => {
+  const dispatch = useProductDispatch()
+  const {componentDetails:{
+    refreshData,
+  }} = useProductSelector(state => state)
+  const modalDetails = useProductSelector(
+    (state) => state.modalDetails,
+  ) as unknown as tableDataDataElement;
   return (
     <ModalFooter>
       <Button fullWidth color="danger" variant="flat" onPress={onClose}>
@@ -29,8 +33,10 @@ export const Footer = ({
             name: config.name,
             files: config.upload,
             successCallback: () => {
-              onClose();
-              successCallback();
+              dispatch(setDetails({
+                refreshData: !refreshData,
+                closeModal: true
+              }))
             },
           })
         }

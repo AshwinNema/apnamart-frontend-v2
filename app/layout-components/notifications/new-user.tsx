@@ -3,12 +3,12 @@ import {
   userRoles,
 } from "@/app/layout-components/login-signup/constants";
 import { tabKeys } from "@/app/profile/utils";
-import { useAppSelector } from "@/lib/hooks";
+import { useAppSelector } from "@/lib/main/hooks";
 import {
   modalProps,
   notificationTypes,
   setNotificationType,
-} from "@/lib/slices/notification/notification.slice";
+} from "@/lib/main/slices/notification/notification.slice";
 import { ModalBody, ModalFooter, ModalHeader } from "@nextui-org/react";
 import { Link } from "@nextui-org/react";
 

@@ -1,7 +1,7 @@
 "use client";
 
-import { useAppSelector } from "@/lib/hooks";
-import { UserRole } from "@/lib/slices/user/user.slice";
+import { useAppSelector } from "@/lib/main/hooks";
+import { UserRole } from "@/lib/main/slices/user/user.slice";
 import { AdminLandingPage } from "./main-page/admin";
 
 export default function Home() {

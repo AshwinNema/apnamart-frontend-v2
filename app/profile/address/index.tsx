@@ -12,7 +12,7 @@ import MainCardComponent from "./components/main-card";
 import * as _ from "lodash";
 import AddressFooter from "./components/address-details";
 import LocationMarker from "./components/location-marker";
-import { useAppSelector } from "@/lib/hooks";
+import { useAppSelector } from "@/lib/main/hooks";
 
 export default function UserAddress() {
   const user = useAppSelector((data) => data.user);

@@ -1,6 +1,6 @@
 "use client";
 
-import { AppStore, makeStore } from "@/lib/main/store";
+import { makeStore, ProductStore } from "@/lib/product/store";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import { ReactNode, useEffect, useRef } from "react";
 import { Provider } from "react-redux";
@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const StoreProvider = ({ children }: Props) => {
-  const storeRef = useRef<AppStore | null>(null);
+  const storeRef = useRef<ProductStore | null>(null);
 
   if (!storeRef.current) {
     storeRef.current = makeStore();

@@ -1,34 +1,30 @@
 import { useCallback } from "react";
 import {
   categoryTableColumns,
-  categoryTableDataElement,
-  subCatTableDataElement,
-  tabComponentState,
-  tabKeys,
+  getCellValue,
   tableDataDataElement,
-} from "../helper";
+} from "../../helper";
 import { ImageComponent, RenderTable } from "@/app/_custom-components";
-import { TableActions } from "../_components/actions";
-import { setKeyVal } from "@/app/_utils";
+import { TableActions } from "./actions";
+import { tabKeys } from "@/lib/product/slices/component-details.slice";
+import { useProductDispatch, useProductSelector } from "@/lib/product/hooks";
+import { updateTableData } from "@/lib/product/slices/table.slice";
+import { setModalDetails } from "@/lib/product/slices/modal-details.slice";
 
-export const CatTable = ({
-  setData,
+const DataTable = ({
   loadData,
   onOpen,
-  config,
-  tabType
 }: {
-  setData: setKeyVal;
   loadData: (page?: number, id?: number) => void;
   onOpen: () => void;
-  config: tabComponentState<categoryTableDataElement | subCatTableDataElement>;
-  tabType: tabKeys
 }) => {
+  const { componentDetails:{tab}, table } = useProductSelector((state) => state);
+  const dispatch = useProductDispatch();
+
   const renderCell = useCallback(
     (data: Partial<tableDataDataElement>, columnKey: React.Key) => {
-      const cellValue = tabType === tabKeys.category ?  data[columnKey as keyof categoryTableDataElement]:
-      data[columnKey as keyof subCatTableDataElement]
-      ;
+      const cellValue = getCellValue(tab, data, columnKey);
+
       switch (columnKey) {
         case "name":
           return (
@@ -48,9 +44,8 @@ export const CatTable = ({
             <TableActions
               id={data.id as number}
               fetchData={loadData}
-              type="category"
               onClick={() => {
-                setData("modalDetails")(data);
+                dispatch(setModalDetails(data));
                 onOpen();
               }}
             />
@@ -66,15 +61,23 @@ export const CatTable = ({
     <RenderTable
       ariaLabel="Category Table"
       columns={categoryTableColumns}
-      items={config.table.results}
+      items={table.results}
       renderCell={renderCell}
-      page={config.table.page}
-      totalPages={config.table.totalPages}
+      page={table.page}
+      totalPages={table.totalPages}
       setPage={(page: number) => {
-        setData("table.page")(page);
+        dispatch(updateTableData({ page }));
         loadData(page);
       }}
-      emptyContent="No categories found"
+      emptyContent={`No ${
+        tab === tabKeys.category
+          ? "categories"
+          : tab === tabKeys.subCategory
+            ? "sub categories"
+            : "items"
+      } found`}
     />
   );
 };
+
+export default DataTable;

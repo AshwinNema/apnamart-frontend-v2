@@ -13,7 +13,7 @@ import {
   onTwitterFailure,
   onTwitterSuccess,
 } from "./util";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch } from "@/lib/main/hooks";
 import TwitterLogin from "./twitter-login";
 import { appEndPoints } from "@/app/_utils/endpoints";
 

@@ -1,14 +1,13 @@
 "use client";
 import { Card, CardBody, Tab, Tabs } from "@nextui-org/react";
-import { tabKeys, tabList, tabOption } from "./helper";
-import { useState } from "react";
-import { setNestedPath } from "@/app/_utils";
+import { tabList, tabOption } from "./helper";
+import { setTab } from "@/lib/product/slices/component-details.slice";
+import { StoreProvider } from "./storeProvider";
+import { useProductDispatch, useProductSelector } from "@/lib/product/hooks";
 
-export default function Page() {
-  const [config, setConfig] = useState({
-    selectedTab: tabKeys.category,
-  });
-  const setProperty = setNestedPath(setConfig);
+const MainComponent = () => {
+  const dispatch = useProductDispatch();
+  const tab = useProductSelector((state) => state.componentDetails.tab);
   return (
     <div className="flex w-full flex-col">
       <Tabs
@@ -16,9 +15,9 @@ export default function Page() {
         color="primary"
         variant="underlined"
         fullWidth
-        selectedKey={config.selectedTab}
+        selectedKey={tab}
         onSelectionChange={(key) => {
-          setProperty("selectedTab")(key);
+          dispatch(setTab(key));
         }}
       >
         {tabList.map((tab: tabOption) => {
@@ -35,5 +34,15 @@ export default function Page() {
         })}
       </Tabs>
     </div>
+  );
+};
+
+export default function Page() {
+  return (
+    <>
+      <StoreProvider>
+        <MainComponent />
+      </StoreProvider>
+    </>
   );
 }

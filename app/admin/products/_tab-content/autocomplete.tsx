@@ -1,18 +1,28 @@
 import { HTTP_METHODS, makeDataRequest } from "@/app/_services/fetch-service";
-import { tabKeys } from "../helper";
 import { appEndPoints } from "@/app/_utils/endpoints";
 import { Autocomplete as AutoCompleteComponent } from "@/app/_custom-components/inputs";
+import { useProductDispatch, useProductSelector } from "@/lib/product/hooks";
+import { setId, tabKeys } from "@/lib/product/slices/component-details.slice";
+import { updateTableData } from "@/lib/product/slices/table.slice";
 
-export default function Autocomplete({
-  tabType,
-  loadData,
-}: {
-  tabType: tabKeys;
-  loadData: (pahe: number, id: number) => void;
-}) {
+export default function Autocomplete() {
+  const tab = useProductSelector((state) => state.componentDetails.tab);
+  const dispatch = useProductDispatch();
   const getInputSearch = (name: string) => {
-    const url =
-      tabType === tabKeys.category ? appEndPoints.GET_CATEGORY_NAME_LIST : "";
+    let url = "";
+    switch (tab) {
+      case tabKeys.category:
+        url = appEndPoints.SEARCH_CATEGORY_BY_NAME;
+        break;
+
+      case tabKeys.subCategory:
+        url = appEndPoints.SEARCH_SUB_CATEGORY_BY_NAME;
+        break;
+
+      default:
+        break;
+    }
+
     return makeDataRequest(HTTP_METHODS.GET, url, undefined, { name })
       .then((res) => {
         if (!res) return [];
@@ -33,7 +43,8 @@ export default function Autocomplete({
       size="sm"
       color="primary"
       onSelectionChange={(id) => {
-        loadData(1, id as number);
+        dispatch(setId(id));
+        dispatch(updateTableData({ page: 1 }));
       }}
       variant="faded"
     />

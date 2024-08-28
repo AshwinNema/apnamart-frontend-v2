@@ -2,7 +2,7 @@ import { BiSolidBuildingHouse } from "react-icons/bi";
 import { MdOutlineWork } from "react-icons/md";
 import { GrLocation } from "react-icons/gr";
 import { z } from "zod";
-import { UserInterface } from "@/lib/slices/user/user.slice";
+import { UserInterface } from "@/lib/main/slices/user/user.slice";
 import * as _ from "lodash";
 
 export interface location {

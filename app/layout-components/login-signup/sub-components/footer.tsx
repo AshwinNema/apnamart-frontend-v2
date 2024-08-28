@@ -1,7 +1,7 @@
 import { Button, ModalFooter } from "@nextui-org/react";
 import { loginConfig, modalTypes } from "../constants";
 import { loginSignUp } from "../api";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch } from "@/lib/main/hooks";
 
 export default function Footer({
   changeModalType,

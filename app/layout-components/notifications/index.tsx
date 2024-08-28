@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/main/hooks";
 import { useDisclosure } from "@nextui-org/react";
 import { useEffect } from "react";
 import { Modal, ModalContent } from "@nextui-org/react";
@@ -6,7 +6,7 @@ import NewUserNotification from "./new-user";
 import {
   notificationTypes,
   resetNotifications,
-} from "@/lib/slices/notification/notification.slice";
+} from "@/lib/main/slices/notification/notification.slice";
 import Logout from "./logout";
 import styles from "./styles.module.css";
 

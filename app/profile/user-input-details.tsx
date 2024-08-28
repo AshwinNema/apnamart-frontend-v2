@@ -1,6 +1,6 @@
 import { Button, Card, CardBody, user } from "@nextui-org/react";
 import { PasswordInput, TextInput } from "@/app/_custom-components/inputs";
-import { UserInterface } from "@/lib/slices/user/user.slice";
+import { UserInterface } from "@/lib/main/slices/user/user.slice";
 import { setKeyVal } from "../_utils";
 import { Avatar, AvatarIcon } from "@nextui-org/react";
 import { IoIosMail } from "react-icons/io";
@@ -8,7 +8,7 @@ import { z } from "zod";
 import { tabKeys, userInputPage } from "./utils";
 import { IoSaveSharp } from "react-icons/io5";
 import * as _ from "lodash";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch } from "@/lib/main/hooks";
 import { updateUserDetails } from "./api";
 
 export default function BasicDetails({

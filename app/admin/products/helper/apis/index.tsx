@@ -1,38 +1,35 @@
 import { HTTP_METHODS, makeDataRequest } from "@/app/_services/fetch-service";
-import { getDataQuery, tabKeys } from "../interfaces & enums";
+import { getDataQuery } from "../interfaces & enums";
 import { appEndPoints } from "@/app/_utils/endpoints";
+import { ProductDispatch } from "@/lib/product/store";
+import { updateTableData } from "@/lib/product/slices/table.slice";
+import { tabKeys } from "@/lib/product/slices/component-details.slice";
 
 export * from "./modal-apis";
 
 export const queryTableData = (
-  type: tabKeys,
-  query: {
-    limit: number;
-    page: number;
-    id?: number;
-  },
-  setData: (...arg: any[]) => void,
-) => {
-  const url = type === tabKeys.category ? appEndPoints.QUERY_CATEGORIES : "";
-  makeDataRequest(HTTP_METHODS.GET, url, undefined, {
-    ...query,
-  }).then((res) => {
-    if (!res) return;
-    setData(res);
-  });
-};
-
-export const getQueryDataApi = (
   tabKey: tabKeys,
   query: getDataQuery,
-  setData: (...arg: any[]) => void,
+  dispatch: ProductDispatch,
 ) => {
-  const url = tabKey === tabKeys.category ? appEndPoints.QUERY_CATEGORIES : "";
+  let url = "";
+  switch (tabKey) {
+    case tabKeys.category:
+      url = appEndPoints.QUERY_CATEGORIES;
+      break;
+
+    case tabKeys.subCategory:
+      url = appEndPoints.QUERY_SUB_CATEGORIES;
+      break;
+
+    default:
+      break;
+  }
+
   makeDataRequest(HTTP_METHODS.GET, url, undefined, {
     ...query,
   }).then((res) => {
     if (!res) return;
-
-    setData(res);
+    dispatch(updateTableData(res));
   });
 };

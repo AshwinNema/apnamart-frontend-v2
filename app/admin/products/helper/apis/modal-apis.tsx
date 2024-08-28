@@ -3,10 +3,13 @@ import {
   makeDataRequest,
   makeUploadDataRequest,
 } from "@/app/_services/fetch-service";
-import { createUpdateParams, tabKeys } from "../interfaces & enums";
+import { createUpdateParams } from "../interfaces & enums";
 import { errorToast, toastErrorIcons } from "@/app/_utils/toast";
 import { appEndPoints } from "@/app/_utils/endpoints";
 import * as _ from "lodash";
+import { setDetails, tabKeys } from "@/lib/product/slices/component-details.slice";
+import { ProductDispatch } from "@/lib/product/store";
+import { setModalDetails } from "@/lib/product/slices/modal-details.slice";
 
 export const createUpdateData = (data: createUpdateParams) => {
   const errors = [];
@@ -64,28 +67,29 @@ export const createUpdateData = (data: createUpdateParams) => {
 export const updateMainImg = ({
   id,
   file,
-  onSuccess,
-  uploadSuccessCallback,
-  tabType
+  refreshData,
+  tabType,
+  dispatch,
 }: {
   id: number;
   file: File;
-  onSuccess: () => void;
-  uploadSuccessCallback: (photo: string) => void;
-  tabType: tabKeys
+  refreshData:boolean;
+  tabType: tabKeys;
+  dispatch: ProductDispatch;
 }) => {
-  const url = tabType === tabKeys.category ? `${appEndPoints.UPDATE_CATEGORY_IMAGE}${id}`: ''
-  makeUploadDataRequest(
-    HTTP_METHODS.PUT,
-    url,
-    { file },
-    undefined,
-    {
-      successMsg: "Category Image uploaded successfully",
-      successCallback: onSuccess,
-    },
-  ).then((response) => {
+  const url =
+    tabType === tabKeys.category
+      ? `${appEndPoints.UPDATE_CATEGORY_IMAGE}${id}`
+      : "";
+  makeUploadDataRequest(HTTP_METHODS.PUT, url, { file }, undefined, {
+    successMsg: "Category Image uploaded successfully",
+  }).then((response) => {
     if (!response) return;
-    uploadSuccessCallback(response.photo);
+    dispatch(
+      setModalDetails({
+        photo: response.photo,
+      }),
+    );
+    dispatch(setDetails({refreshData:!refreshData}))
   });
 };

@@ -1,22 +1,24 @@
 import { Button } from "@nextui-org/react";
-import { modalBody } from "../../../helper";
 import { getDefaultConfig, modalBodyconfig } from "../modal-body";
 import { infoToast } from "@/app/_utils/toast";
 import { Dispatch, SetStateAction } from "react";
+import { useProductSelector } from "@/lib/product/hooks";
+import { tableDataDataElement } from "../../../helper";
 
 export const ModalImgButtons = ({
-  modalDetails,
   config,
   setConfig,
   setModalCrtState,
   uploadFile,
 }: {
-  modalDetails: modalBody["modalDetails"];
   config: modalBodyconfig;
   setConfig: Dispatch<SetStateAction<modalBodyconfig>>;
   setModalCrtState: () => void;
   uploadFile: () => void;
 }) => {
+  const modalDetails = useProductSelector(
+    (state) => state.modalDetails,
+  ) as unknown as tableDataDataElement;
   return (
     <>
       {modalDetails?.photo ? (

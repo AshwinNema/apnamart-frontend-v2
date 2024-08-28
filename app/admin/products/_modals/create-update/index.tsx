@@ -1,40 +1,42 @@
 import { Modal, ModalContent, ModalHeader } from "@nextui-org/react";
-import { useEffect, useState } from "react";
-import { tabKeys, UploadDetails } from "../../helper";
-import { setNestedPath } from "@/app/_utils";
+import {
+  createContext,
+  useEffect,
+  useState,
+} from "react";
+import { UploadDetails } from "../../helper";
+import { setKeyVal, setNestedPath } from "@/app/_utils";
 import { MainModalBody } from "./modal-body";
 import * as _ from "lodash";
 import { Footer } from "./modal-components";
-import {
-  categoryTableDataElement,
-  subCatTableDataElement,
-  tabComponentState,
-} from "../../helper";
+import { useProductSelector } from "@/lib/product/hooks";
+import { tabKeys } from "@/lib/product/slices/component-details.slice";
+import { tableDataDataElement } from "../../helper/interfaces & enums";
+
+export const MainCreateUpdateContext = createContext<null | {
+  config: UploadDetails;
+  setMainData: setKeyVal;
+}>(null);
 
 const CreateUpdateModal = ({
   isOpen,
   onOpenChange,
-  modalDetails,
-  successCallback,
-  uploadSuccessCallback,
-  tabType
 }: {
   isOpen: boolean;
   onOpenChange: (isOpen?: boolean) => void;
-  modalDetails: tabComponentState<
-    categoryTableDataElement | subCatTableDataElement
-  >["modalDetails"];
-  successCallback: () => void;
-  uploadSuccessCallback: (photo: string) => void;
-  tabType: tabKeys
 }) => {
+  const {
+    componentDetails: { tab },
+  } = useProductSelector((state) => state);
+  const modalDetails = useProductSelector(
+    (state) => state.modalDetails,
+  ) as unknown as tableDataDataElement;
   const getDefaultState = () => ({
     name: "",
     upload: null,
   });
 
-  const [config, setConfig] =
-    useState<UploadDetails>(getDefaultState());
+  const [config, setConfig] = useState<UploadDetails>(getDefaultState());
 
   const setData = setNestedPath(setConfig);
 
@@ -64,25 +66,22 @@ const CreateUpdateModal = ({
           {(onClose) => (
             <>
               <ModalHeader className="flex justify-center">
-                Create {
-                  tabType === tabKeys.category ? "Category" :
-                  tabType === tabKeys.subCategory ? "Sub Category": "Item"
-                }
+                {modalDetails?.id ? "Update" : "Create"}{" "}
+                {tab === tabKeys.category
+                  ? "Category"
+                  : tab === tabKeys.subCategory
+                    ? "Sub Category"
+                    : "Item"}
               </ModalHeader>
-              <MainModalBody
-                tabType={tabType}
-                modalDetails={modalDetails}
-                setMainData={setData}
-                mainConfig={config}
-                successCallback={successCallback}
-                uploadSuccessCallback={uploadSuccessCallback}
-              />
-              <Footer
-                successCallback={successCallback}
-                modalDetails={modalDetails}
-                onClose={onClose}
-                config={config}
-              />
+              <MainCreateUpdateContext.Provider
+                value={{
+                  config,
+                  setMainData:setData,
+                }}
+              >
+                <MainModalBody />
+                <Footer onClose={onClose} config={config} />
+              </MainCreateUpdateContext.Provider>
             </>
           )}
         </ModalContent>

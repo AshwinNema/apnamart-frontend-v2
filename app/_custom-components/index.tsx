@@ -1,10 +1,10 @@
 import { Image, Modal, ModalContent, useDisclosure } from "@nextui-org/react";
 import NextImage from "next/image";
-import { useAppSelector } from "@/lib/hooks";
+import { useAppSelector } from "@/lib/main/hooks";
 import { ReactNode, useEffect } from "react";
 import { CircularProgress } from "@nextui-org/progress";
 import { useRouter } from "next/navigation";
-import { UserRole } from "@/lib/slices/user/user.slice";
+import { UserRole } from "@/lib/main/slices/user/user.slice";
 export * from "./inputs";
 export * from "./leaflet";
 export * from "./drawer";

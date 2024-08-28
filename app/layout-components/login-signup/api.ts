@@ -11,8 +11,8 @@ import {
   setLocalStorageKey,
   storageAttributes,
 } from "@/app/_services/local-storage.service";
-import { setUser } from "@/lib/slices/user/user.slice";
-import { AppDispatch } from "@/lib/store";
+import { setUser } from "@/lib/main/slices/user/user.slice";
+import { AppDispatch } from "@/lib/main/store";
 import { errorToast, toastErrorIcons } from "@/app/_utils/toast";
 import { handleAction } from "@/app/layout-components/notifications/new-user";
 

@@ -1,19 +1,18 @@
 export * from "./interfaces & enums";
 export * from "./apis";
-export * from "./constants";
-
-import { tabKeys, tabOption } from "./interfaces & enums";
+export * from "./table";
+import { tabOption } from "./interfaces & enums";
 import TabComponent from "../_tab-content";
 import { columns } from "@/app/_custom-components";
+import { tabKeys } from "@/lib/product/slices/component-details.slice";
 
 export const tabList: tabOption[] = [
   {
     title: "Category",
-    Content: (props: any) => {
-      const allProps = { ...props, tabType: tabKeys.category };
+    Content: () => {
       return (
         <>
-          <TabComponent {...allProps} />
+          <TabComponent />
         </>
       );
     },
@@ -21,7 +20,13 @@ export const tabList: tabOption[] = [
   },
   {
     title: "Sub Category",
-    Content: (props: any) => <></>,
+    Content: () => {
+      return (
+        <>
+          <TabComponent />
+        </>
+      );
+    },
     key: tabKeys.subCategory,
   },
   {

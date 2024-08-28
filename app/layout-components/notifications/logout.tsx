@@ -10,13 +10,13 @@ import {
   storageAttributes,
 } from "@/app/_services/local-storage.service";
 import { appEndPoints } from "@/app/_utils/endpoints";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch } from "@/lib/main/hooks";
 import {
   modalProps,
   notificationTypes,
   setNotificationType,
-} from "@/lib/slices/notification/notification.slice";
-import { setUser } from "@/lib/slices/user/user.slice";
+} from "@/lib/main/slices/notification/notification.slice";
+import { setUser } from "@/lib/main/slices/user/user.slice";
 import { Button, ModalBody, ModalFooter, ModalHeader } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { TbLogout } from "react-icons/tb";

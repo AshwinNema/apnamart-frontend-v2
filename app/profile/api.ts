@@ -1,4 +1,4 @@
-import { setUser, UserInterface } from "@/lib/slices/user/user.slice";
+import { setUser, UserInterface } from "@/lib/main/slices/user/user.slice";
 import {
   HTTP_METHODS,
   makeDataRequest,
@@ -10,7 +10,7 @@ import {
   setLocalStorageKey,
   storageAttributes,
 } from "../_services/local-storage.service";
-import { AppDispatch } from "@/lib/store";
+import { AppDispatch } from "@/lib/main/store";
 import { z } from "zod";
 import { tabKeys, userInputPage } from "./utils";
 import { getZodErrMsg, passwordErrMsg, passwordRegex } from "../_utils";

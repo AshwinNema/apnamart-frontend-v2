@@ -11,7 +11,7 @@ import ThemeSwitch from "../theme-switch";
 import LoginSignUpModal from "@/app/layout-components/login-signup";
 import { modalTypes } from "@/app/layout-components/login-signup/constants";
 import { setNestedPath } from "@/app/_utils";
-import { useAppSelector } from "@/lib/hooks";
+import { useAppSelector } from "@/lib/main/hooks";
 import { GiShop } from "react-icons/gi";
 import UserProfile from "../user-profile";
 import Link from "next/link";

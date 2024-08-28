@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { setNestedPath } from "../_utils";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { getUserProfile, uploadProfileImage } from "./api";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/main/hooks";
 import { useSearchParams } from "next/navigation";
 
 function Page() {
