@@ -1,5 +1,6 @@
-import { setKeyVal } from "@/app/_utils";
-import { subCatTableDataElement, categoryTableDataElement } from "@/lib/product/slices/table.slice";
+import {
+  subCatTableDataElement,
+} from "@/lib/product/slices/table.slice";
 import { tabKeys } from "@/lib/product/slices/component-details.slice";
 import { FileUploadWithPreview } from "file-upload-with-preview";
 

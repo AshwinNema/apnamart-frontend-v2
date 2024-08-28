@@ -57,10 +57,7 @@ export default function TabContent() {
               : "Item"}
         </Button>
       </div>
-      <CreateUpdateModal
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}
-      />
+      <CreateUpdateModal isOpen={isOpen} onOpenChange={onOpenChange} />
       <DataTable loadData={loadData} onOpen={onOpen} />
     </div>
   );

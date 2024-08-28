@@ -18,11 +18,15 @@ export default function MainBodyImg({
   setConfig: Dispatch<SetStateAction<modalBodyconfig>>;
   setModalCrtState: () => void;
 }) {
-  const mainData = useContext(MainCreateUpdateContext)
-  if (!mainData) return null
-  const {config:mainConfig, setMainData} = mainData
-  const modalDetails = useProductSelector(state => state.modalDetails) as unknown as tableDataDataElement
-  const {componentDetails:{tab, refreshData}} = useProductSelector((state) => state);
+  const mainData = useContext(MainCreateUpdateContext);
+  if (!mainData) return null;
+  const { config: mainConfig, setMainData } = mainData;
+  const modalDetails = useProductSelector(
+    (state) => state.modalDetails,
+  ) as unknown as tableDataDataElement;
+  const {
+    componentDetails: { tab, refreshData },
+  } = useProductSelector((state) => state);
   const dispatch = useProductDispatch();
   return (
     <>

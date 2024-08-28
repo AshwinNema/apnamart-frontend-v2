@@ -33,7 +33,15 @@ export const componentDetailsSlice = createSlice({
     setDetails(state, { payload }) {
       Object.assign(state, payload);
     },
+    resetDetails(_, { payload }) {
+      const newState = structuredClone(initialState);
+      if (payload) {
+        Object.assign(newState, payload);
+      }
+      return newState;
+    },
   },
 });
 
-export const { setTab, setId, setDetails } = componentDetailsSlice.actions;
+export const { setTab, setId, setDetails, resetDetails } =
+  componentDetailsSlice.actions;

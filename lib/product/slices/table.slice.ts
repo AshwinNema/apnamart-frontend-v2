@@ -36,7 +36,10 @@ export const tableSlice = createSlice({
     updateTableData(state, { payload }) {
       Object.assign(state, payload);
     },
+    resetTable() {
+      return initialState;
+    },
   },
 });
 
-export const { updateTableData } = tableSlice.actions;
+export const { updateTableData, resetTable } = tableSlice.actions;

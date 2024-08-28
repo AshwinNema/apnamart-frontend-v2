@@ -1,9 +1,5 @@
 import { Modal, ModalContent, ModalHeader } from "@nextui-org/react";
-import {
-  createContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, useEffect, useState } from "react";
 import { UploadDetails } from "../../helper";
 import { setKeyVal, setNestedPath } from "@/app/_utils";
 import { MainModalBody } from "./modal-body";
@@ -76,7 +72,7 @@ const CreateUpdateModal = ({
               <MainCreateUpdateContext.Provider
                 value={{
                   config,
-                  setMainData:setData,
+                  setMainData: setData,
                 }}
               >
                 <MainModalBody />

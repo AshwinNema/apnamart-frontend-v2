@@ -7,7 +7,10 @@ import { createUpdateParams } from "../interfaces & enums";
 import { errorToast, toastErrorIcons } from "@/app/_utils/toast";
 import { appEndPoints } from "@/app/_utils/endpoints";
 import * as _ from "lodash";
-import { setDetails, tabKeys } from "@/lib/product/slices/component-details.slice";
+import {
+  setDetails,
+  tabKeys,
+} from "@/lib/product/slices/component-details.slice";
 import { ProductDispatch } from "@/lib/product/store";
 import { setModalDetails } from "@/lib/product/slices/modal-details.slice";
 
@@ -73,7 +76,7 @@ export const updateMainImg = ({
 }: {
   id: number;
   file: File;
-  refreshData:boolean;
+  refreshData: boolean;
   tabType: tabKeys;
   dispatch: ProductDispatch;
 }) => {
@@ -90,6 +93,6 @@ export const updateMainImg = ({
         photo: response.photo,
       }),
     );
-    dispatch(setDetails({refreshData:!refreshData}))
+    dispatch(setDetails({ refreshData: !refreshData }));
   });
 };

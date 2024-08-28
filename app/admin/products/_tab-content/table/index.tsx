@@ -18,7 +18,10 @@ const DataTable = ({
   loadData: (page?: number, id?: number) => void;
   onOpen: () => void;
 }) => {
-  const { componentDetails:{tab}, table } = useProductSelector((state) => state);
+  const {
+    componentDetails: { tab },
+    table,
+  } = useProductSelector((state) => state);
   const dispatch = useProductDispatch();
 
   const renderCell = useCallback(

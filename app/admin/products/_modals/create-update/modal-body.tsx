@@ -17,8 +17,8 @@ export type modalBodyconfig = ReturnType<typeof getDefaultConfig>;
 
 export const MainModalBody = () => {
   const mainData = useContext(MainCreateUpdateContext);
-  if (!mainData) return null
-  const {config:mainConfig, setMainData} = mainData
+  if (!mainData) return null;
+  const { config: mainConfig, setMainData } = mainData;
   const modalDetails = useProductSelector(
     (state) => state.modalDetails,
   ) as unknown as tableDataDataElement;

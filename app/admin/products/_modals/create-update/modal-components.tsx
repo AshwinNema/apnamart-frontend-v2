@@ -14,10 +14,10 @@ export const Footer = ({
   onClose: () => void;
   config: UploadDetails;
 }) => {
-  const dispatch = useProductDispatch()
-  const {componentDetails:{
-    refreshData,
-  }} = useProductSelector(state => state)
+  const dispatch = useProductDispatch();
+  const {
+    componentDetails: { refreshData },
+  } = useProductSelector((state) => state);
   const modalDetails = useProductSelector(
     (state) => state.modalDetails,
   ) as unknown as tableDataDataElement;
@@ -33,10 +33,12 @@ export const Footer = ({
             name: config.name,
             files: config.upload,
             successCallback: () => {
-              dispatch(setDetails({
-                refreshData: !refreshData,
-                closeModal: true
-              }))
+              dispatch(
+                setDetails({
+                  refreshData: !refreshData,
+                  closeModal: true,
+                }),
+              );
             },
           })
         }
