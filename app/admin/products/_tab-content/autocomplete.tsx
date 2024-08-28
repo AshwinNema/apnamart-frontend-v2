@@ -47,6 +47,9 @@ export default function Autocomplete() {
         dispatch(updateTableData({ page: 1 }));
       }}
       variant="faded"
+      onInputClear={() => {
+        dispatch(setId(null));
+      }}
     />
   );
 }

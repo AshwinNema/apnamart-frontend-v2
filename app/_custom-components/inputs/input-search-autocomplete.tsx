@@ -11,6 +11,7 @@ export const AutoCompleteComponent = ({
   variant = "flat",
   color = "default",
   onSelectionChange,
+  onInputClear,
 }: AutoCompleteProps): React.JSX.Element => {
   const trackSelection = useRef(false);
   const autoCompleteRef = useRef<HTMLInputElement>(null);
@@ -37,6 +38,7 @@ export const AutoCompleteComponent = ({
       const trimmedText = input?.trim();
       if (!trimmedText) {
         setItemList([]);
+        onInputClear && onInputClear();
         return { items: [] };
       }
       if (trackSelection.current) {
@@ -55,6 +57,7 @@ export const AutoCompleteComponent = ({
         label={label}
         variant={variant}
         ref={autoCompleteRef}
+        allowsEmptyCollection={false}
         size={size}
         color={color}
         inputValue={asyncList.filterText}

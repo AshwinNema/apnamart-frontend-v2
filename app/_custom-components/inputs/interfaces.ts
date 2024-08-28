@@ -38,4 +38,5 @@ export interface AutoCompleteProps {
     | "warning"
     | "danger";
   onSelectionChange: (key: string | number) => any;
+  onInputClear?: () => void;
 }
