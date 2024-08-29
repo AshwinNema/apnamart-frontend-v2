@@ -1,4 +1,4 @@
-import { TextInput } from "@/app/_custom-components";
+import { AutoComplete, TextInput } from "@/app/_custom-components";
 import { setMultiplePaths, setNestedPath } from "@/app/_utils";
 import { ModalBody } from "@nextui-org/react";
 import { tableDataDataElement } from "../../helper";
@@ -6,11 +6,14 @@ import { useContext, useEffect, useState } from "react";
 import MainBodyImg from "./sub-parts/main-body-img";
 import { useProductSelector } from "@/lib/product/hooks";
 import { MainCreateUpdateContext } from ".";
+import { tabKeys } from "@/lib/product/slices/component-details.slice";
+import { appEndPoints } from "@/app/_utils/endpoints";
 
 export const getDefaultConfig = () => ({
   img: "",
   showImage: false,
   showUpdateSaveBtn: false,
+  categoryList: [],
 });
 
 export type modalBodyconfig = ReturnType<typeof getDefaultConfig>;
@@ -22,6 +25,7 @@ export const MainModalBody = () => {
   const modalDetails = useProductSelector(
     (state) => state.modalDetails,
   ) as unknown as tableDataDataElement;
+  const { tab } = useProductSelector((state) => state.componentDetails);
   const [config, setConfig] = useState(getDefaultConfig());
   const setData = setNestedPath(setConfig);
   const setMultiData = setMultiplePaths(setConfig);
@@ -52,11 +56,33 @@ export const MainModalBody = () => {
         }}
         variant="faded"
         fullWidth={true}
-        labelPlacement="outside-left"
         value={mainConfig.name}
         setData={setMainData("name")}
-        label="Name"
+        alternateText="Name"
       />
+
+      {tab !== tabKeys.category && (
+        <AutoComplete
+          label="Category"
+          url={appEndPoints.CATEGORY_LIST}
+          onSelectionChange={(key) => {
+            setMainData("categoryId")(key);
+          }}
+          isClearable={false}
+          selectedKey={mainConfig.categoryId}
+          fullWidth={true}
+          processLogic={(res) => {
+            if (!res) return [];
+            return res.map(
+              (item: { id: number; name: string; photo: string }) => ({
+                id: item.id,
+                label: item.name,
+                photo: item.photo,
+              }),
+            );
+          }}
+        />
+      )}
     </ModalBody>
   );
 };

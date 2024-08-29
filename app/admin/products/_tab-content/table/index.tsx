@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import {
-  categoryTableColumns,
+  getTableColumns,
   getCellValue,
   tableDataDataElement,
 } from "../../helper";
@@ -8,7 +8,10 @@ import { ImageComponent, RenderTable } from "@/app/_custom-components";
 import { TableActions } from "./actions";
 import { tabKeys } from "@/lib/product/slices/component-details.slice";
 import { useProductDispatch, useProductSelector } from "@/lib/product/hooks";
-import { updateTableData } from "@/lib/product/slices/table.slice";
+import {
+  updateTableData,
+  subCatTableDataElement,
+} from "@/lib/product/slices/table.slice";
 import { setModalDetails } from "@/lib/product/slices/modal-details.slice";
 
 const DataTable = ({
@@ -18,10 +21,8 @@ const DataTable = ({
   loadData: (page?: number, id?: number) => void;
   onOpen: () => void;
 }) => {
-  const {
-    componentDetails: { tab },
-    table,
-  } = useProductSelector((state) => state);
+  const tab = useProductSelector((state) => state.componentDetails.tab);
+  const table = useProductSelector((state) => state.table);
   const dispatch = useProductDispatch();
 
   const renderCell = useCallback(
@@ -29,7 +30,8 @@ const DataTable = ({
       const cellValue = getCellValue(tab, data, columnKey);
 
       switch (columnKey) {
-        case "name":
+        case "name": {
+          const name = cellValue as string;
           return (
             <div className="flex items-center gap-3 text-lg">
               <ImageComponent
@@ -39,9 +41,15 @@ const DataTable = ({
                 alt="category image"
                 isBlurred={true}
               />{" "}
-              <div>{cellValue}</div>
+              <div>{name}</div>
             </div>
           );
+        }
+
+        case "category": {
+          const category = cellValue as subCatTableDataElement["category"];
+          return <div className="text-lg">{category.name}</div>;
+        }
         case "actions":
           return (
             <TableActions
@@ -62,8 +70,8 @@ const DataTable = ({
 
   return (
     <RenderTable
-      ariaLabel="Category Table"
-      columns={categoryTableColumns}
+      ariaLabel="Data Table"
+      columns={getTableColumns(tab)}
       items={table.results}
       renderCell={renderCell}
       page={table.page}

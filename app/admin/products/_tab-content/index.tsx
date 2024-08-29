@@ -14,10 +14,10 @@ import { clearModalDetails } from "@/lib/product/slices/modal-details.slice";
 
 export default function TabContent() {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-  const {
-    componentDetails: { tab, id, refreshData, closeModal },
-    table,
-  } = useProductSelector((state) => state);
+  const { tab, id, refreshData, closeModal } = useProductSelector(
+    (state) => state.componentDetails,
+  );
+  const table = useProductSelector((state) => state.table);
   const dispatch = useProductDispatch();
   const loadData = (page?: number, id?: number) => {
     const params: { page: number; limit: number; id?: number } = {

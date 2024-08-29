@@ -13,6 +13,7 @@ export interface columns {
   align?: "start" | "center" | "end";
   key: string;
   label: string;
+  headerClass?: string;
 }
 
 interface tableProps<tableItem> {
@@ -63,7 +64,9 @@ export const RenderTable = <T extends { id: string | number }>({
       <TableHeader columns={columns}>
         {(column) => (
           <TableColumn key={column.key} align={column.align || "start"}>
-            {column.label}
+            <div className={`font-bold text-base  ${column.headerClass || ""}`}>
+              {column.label}
+            </div>
           </TableColumn>
         )}
       </TableHeader>

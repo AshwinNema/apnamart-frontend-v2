@@ -1,9 +1,7 @@
 "use client";
 import { Card, CardBody, Tab, Tabs } from "@nextui-org/react";
 import { tabList, tabOption } from "./helper";
-import {
-  resetDetails,
-} from "@/lib/product/slices/component-details.slice";
+import { resetDetails } from "@/lib/product/slices/component-details.slice";
 import { StoreProvider } from "./storeProvider";
 import { useProductDispatch, useProductSelector } from "@/lib/product/hooks";
 import { resetTable } from "@/lib/product/slices/table.slice";

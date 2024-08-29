@@ -1,6 +1,4 @@
-import {
-  subCatTableDataElement,
-} from "@/lib/product/slices/table.slice";
+import { subCatTableDataElement } from "@/lib/product/slices/table.slice";
 import { tabKeys } from "@/lib/product/slices/component-details.slice";
 import { FileUploadWithPreview } from "file-upload-with-preview";
 
@@ -8,6 +6,7 @@ export interface UploadDetails {
   id?: number;
   name: string;
   upload: FileUploadWithPreview | null;
+  categoryId: null | number;
 }
 
 export interface tabOption {
@@ -17,10 +16,14 @@ export interface tabOption {
 }
 
 export interface createUpdateParams {
-  name: string;
-  id?: number;
-  files?: FileUploadWithPreview | null;
+  payloadData: {
+    name: string;
+    id?: number;
+    files?: FileUploadWithPreview | null;
+    categoryId: null | number;
+  };
   successCallback: () => void;
+  tab: tabKeys;
 }
 
 export interface getDataQuery {

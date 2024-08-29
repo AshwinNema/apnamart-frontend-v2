@@ -36,14 +36,25 @@ export const tabList: tabOption[] = [
   },
 ];
 
-export const categoryTableColumns: columns[] = [
-  {
-    key: "name",
-    label: "Name",
-  },
-  {
+export const getTableColumns = (tab: tabKeys): columns[] => {
+  const columns: columns[] = [
+    {
+      key: "name",
+      label: "Name",
+      headerClass: "ml-20",
+    },
+  ];
+
+  tab !== tabKeys.category &&
+    columns.push({
+      label: "Category",
+      key: "category",
+    });
+
+  columns.push({
     key: "actions",
     label: "Actions",
     align: "end",
-  },
-];
+  });
+  return columns;
+};

@@ -15,12 +15,13 @@ export const Footer = ({
   config: UploadDetails;
 }) => {
   const dispatch = useProductDispatch();
-  const {
-    componentDetails: { refreshData },
-  } = useProductSelector((state) => state);
+  const refreshData = useProductSelector(
+    (state) => state.componentDetails.refreshData,
+  );
   const modalDetails = useProductSelector(
     (state) => state.modalDetails,
   ) as unknown as tableDataDataElement;
+  const tab = useProductSelector((state) => state.componentDetails.tab);
   return (
     <ModalFooter>
       <Button fullWidth color="danger" variant="flat" onPress={onClose}>
@@ -29,9 +30,13 @@ export const Footer = ({
       <Button
         onPress={() =>
           createUpdateData({
-            id: modalDetails?.id,
-            name: config.name,
-            files: config.upload,
+            payloadData: {
+              id: modalDetails?.id,
+              name: config.name,
+              files: config.upload,
+              categoryId: config.categoryId,
+            },
+            tab,
             successCallback: () => {
               dispatch(
                 setDetails({

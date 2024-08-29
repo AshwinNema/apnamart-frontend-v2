@@ -2,7 +2,10 @@ import { Autocomplete, AutocompleteItem, Avatar } from "@nextui-org/react";
 import { useAsyncList } from "@react-stately/data";
 import * as _ from "lodash";
 import { useCallback, useRef, useState } from "react";
-import { autoCompleteListItem, AutoCompleteProps } from "./interfaces";
+import {
+  autoCompleteListItem,
+  AutoCompleteInputSearchProps,
+} from "./interfaces";
 
 export const AutoCompleteComponent = ({
   getListItems,
@@ -12,7 +15,7 @@ export const AutoCompleteComponent = ({
   color = "default",
   onSelectionChange,
   onInputClear,
-}: AutoCompleteProps): React.JSX.Element => {
+}: AutoCompleteInputSearchProps): React.JSX.Element => {
   const trackSelection = useRef(false);
   const autoCompleteRef = useRef<HTMLInputElement>(null);
   const [itemList, setItemList] = useState<autoCompleteListItem[]>([]);

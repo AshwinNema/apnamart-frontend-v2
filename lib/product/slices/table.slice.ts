@@ -7,8 +7,10 @@ export interface categoryTableDataElement {
 }
 
 export interface subCatTableDataElement extends categoryTableDataElement {
-  categoryId: number;
-  categoryName: string;
+  category: {
+    id: number;
+    name: string;
+  };
 }
 
 export interface dataTable<tableElementData> {

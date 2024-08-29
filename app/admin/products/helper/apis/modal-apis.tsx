@@ -13,17 +13,19 @@ import {
 } from "@/lib/product/slices/component-details.slice";
 import { ProductDispatch } from "@/lib/product/store";
 import { setModalDetails } from "@/lib/product/slices/modal-details.slice";
+import { getCreateUpdatePayload, getCreateUrl } from "./utils";
 
 export const createUpdateData = (data: createUpdateParams) => {
   const errors = [];
-  const { name, id, files, successCallback } = data;
-  if (!name.trim()) {
-    errors.push("Name of the category cannot be empty");
-  }
-
-  if (!id && !files?.cachedFileArray?.[0]) {
-    errors.push("Category image has to be added");
-  }
+  const { payloadData, successCallback, tab } = data;
+  const { name, id, files, categoryId } = payloadData;
+  !name.trim() && errors.push("Name cannot be empty");
+  !id &&
+    !files?.cachedFileArray?.[0] &&
+    errors.push(`${tab} image has to be added`);
+  tab !== tabKeys.category &&
+    !categoryId &&
+    errors.push("Category is mandatory");
 
   if (errors.length) {
     errorToast({
@@ -32,13 +34,7 @@ export const createUpdateData = (data: createUpdateParams) => {
     });
     return;
   }
-
-  const payload = id
-    ? { name }
-    : {
-        file: files?.cachedFileArray?.[0],
-        data: JSON.stringify({ name }),
-      };
+  const payload = getCreateUpdatePayload({ name, tab, id, files, categoryId });
 
   id
     ? makeDataRequest(
@@ -53,14 +49,14 @@ export const createUpdateData = (data: createUpdateParams) => {
       })
     : makeUploadDataRequest(
         HTTP_METHODS.POST,
-        appEndPoints.CREATE_CATEGORY,
+        getCreateUrl(tab),
         payload,
         undefined,
         {
           successCallback,
           successMsg: id
-            ? "Category updated successfully"
-            : "Category created successfully",
+            ? `${tab} updated successfully`
+            : `${tab} created successfully`,
         },
       ).then((res) => {
         if (!res) return;

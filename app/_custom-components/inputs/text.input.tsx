@@ -1,13 +1,13 @@
 import { Input } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
-  getZodErrMsg,
   keyVals,
   setMultiplePaths,
   setNestedPath,
 } from "@/app/_utils";
 import { ClearIcon } from "@/app/_utils/icons & logos";
-import { TextInputProps } from "./interfaces";
+import { TextInputProps, TextInputState } from "./interfaces";
+import { alternateTextCheck, invalidTextInputCheck } from "./utils";
 
 export const TextInput = ({
   value,
@@ -24,43 +24,35 @@ export const TextInput = ({
   labelPlacement = "inside",
   fullWidth = false,
 }: TextInputProps) => {
-  const [config, setConfig] = useState({
+  const [config, setConfig] = useState<TextInputState>({
     invalid: false,
     errorMsg: "",
     label: label || "",
     placeholder: `${placeholder ? placeholder : ""}`,
     isFocussed: false,
   });
+  const isInputClicked = useRef(false);
   const setDataFunc = setNestedPath(setConfig);
   const setMultipleDataFunc = setMultiplePaths(setConfig);
 
   useEffect(() => {
-    if (!alternateText) return;
-    const update: keyVals[] = [
-      ["label", ""],
-      ["placeholder", ""],
-    ];
+    const clicked = () => {
+      if (isInputClicked.current) {
+        isInputClicked.current = false;
+        return;
+      }
+      setDataFunc("isFocussed")(false);
+    };
+    document.body.addEventListener("click", clicked);
+    alternateTextCheck(alternateText, value, config, setMultipleDataFunc);
 
-    if (value || config.isFocussed) {
-      update[0][1] = alternateText;
-    } else {
-      update[1][1] = alternateText;
-    }
-    setMultipleDataFunc(update);
+    return () => {
+      document.body.removeEventListener("click", clicked);
+    };
   }, [alternateText, value, config.isFocussed]);
 
-  const isInvalid = () => {
-    if (!value || !validationSchema) {
-      return false;
-    }
-    const validation = validationSchema.safeParse(value);
-    if (validation.error) {
-      const errMsg = getZodErrMsg(validation.error);
-      setDataFunc("errorMsg")(errMsg);
-    }
-
-    return !validation.success;
-  };
+  const isInvalid = () =>
+    invalidTextInputCheck(value, validationSchema, setDataFunc);
 
   const EndContent = () => {
     return !!value ? <ClearIcon onClick={() => setData("")} /> : null;
@@ -78,6 +70,9 @@ export const TextInput = ({
       errorMessage={`${config.errorMsg}`}
       isClearable={false}
       fullWidth={fullWidth}
+      onClick={() => {
+        isInputClicked.current = true;
+      }}
       onFocus={() => {
         setDataFunc("isFocussed")(true);
       }}

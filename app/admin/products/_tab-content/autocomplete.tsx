@@ -1,6 +1,6 @@
 import { HTTP_METHODS, makeDataRequest } from "@/app/_services/fetch-service";
 import { appEndPoints } from "@/app/_utils/endpoints";
-import { Autocomplete as AutoCompleteComponent } from "@/app/_custom-components/inputs";
+import { AutoCompleteInputSearch as AutoCompleteComponent } from "@/app/_custom-components/inputs";
 import { useProductDispatch, useProductSelector } from "@/lib/product/hooks";
 import { setId, tabKeys } from "@/lib/product/slices/component-details.slice";
 import { updateTableData } from "@/lib/product/slices/table.slice";

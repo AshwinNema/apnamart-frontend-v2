@@ -21,15 +21,14 @@ const CreateUpdateModal = ({
   isOpen: boolean;
   onOpenChange: (isOpen?: boolean) => void;
 }) => {
-  const {
-    componentDetails: { tab },
-  } = useProductSelector((state) => state);
+  const tab = useProductSelector((state) => state.componentDetails.tab);
   const modalDetails = useProductSelector(
     (state) => state.modalDetails,
   ) as unknown as tableDataDataElement;
-  const getDefaultState = () => ({
+  const getDefaultState = (): UploadDetails => ({
     name: "",
     upload: null,
+    categoryId: null,
   });
 
   const [config, setConfig] = useState<UploadDetails>(getDefaultState());
@@ -76,8 +75,8 @@ const CreateUpdateModal = ({
                 }}
               >
                 <MainModalBody />
-                <Footer onClose={onClose} config={config} />
               </MainCreateUpdateContext.Provider>
+              <Footer onClose={onClose} config={config} />
             </>
           )}
         </ModalContent>

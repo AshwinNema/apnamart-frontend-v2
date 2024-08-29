@@ -24,9 +24,9 @@ export default function MainBodyImg({
   const modalDetails = useProductSelector(
     (state) => state.modalDetails,
   ) as unknown as tableDataDataElement;
-  const {
-    componentDetails: { tab, refreshData },
-  } = useProductSelector((state) => state);
+  const { tab, refreshData } = useProductSelector(
+    (state) => state.componentDetails,
+  );
   const dispatch = useProductDispatch();
   return (
     <>

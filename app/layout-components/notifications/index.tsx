@@ -8,7 +8,7 @@ import {
   resetNotifications,
 } from "@/lib/main/slices/notification/notification.slice";
 import Logout from "./logout";
-import styles from "./styles.module.css";
+import styles from "../../styles.module.css";
 
 export default function NotificationModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
