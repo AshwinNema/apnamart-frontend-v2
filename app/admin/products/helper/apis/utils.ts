@@ -44,3 +44,20 @@ export const getCreateUrl = (tab: tabKeys) => {
       return "";
   }
 };
+
+export const getUpdateUrl = (tab: tabKeys, id: number) => {
+  let url = "";
+  switch (tab) {
+    case tabKeys.category:
+      url = appEndPoints.UPDATE_CATEGORY;
+      break;
+
+    case tabKeys.subCategory:
+      url = appEndPoints.UPDATE_SUB_CATEGORY;
+      break;
+
+    default:
+      break;
+  }
+  return `${url}${id}`;
+};

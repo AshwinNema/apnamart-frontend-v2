@@ -17,7 +17,7 @@ export const getDeleteActionTexts = (tabType: tabKeys, id?: number) => {
       msg = `Category ${msg}`;
       button = `${button} Category`;
       break;
-    case appEndPoints.DELETE_SUB_CATEGORY:
+    case tabKeys.subCategory:
       url = `${appEndPoints.DELETE_SUB_CATEGORY}${id}`;
       msg = `Sub Category ${msg}`;
       button = `${button} Sub Category`;

@@ -4,9 +4,13 @@ import {
   multiplePathSetter,
   setKeyVal,
 } from "@/app/_utils";
-import { MutableRefObject } from "react";
-import { TextInputState } from "./interfaces";
+import {
+  AutoCompleteProps,
+  autoCompleteState,
+  TextInputState,
+} from "./interfaces";
 import { ZodSchema } from "zod";
+import React from "react";
 
 export const alternateTextCheck = (
   alternateText: string | undefined,
@@ -44,4 +48,24 @@ export const invalidTextInputCheck = (
   }
 
   return !validation.success;
+};
+
+export const onAutoCompleteSelectionChange = (
+  key: React.Key | null,
+  selectionKeyType: autoCompleteState["selectionKeyType"],
+  list: autoCompleteState["itemList"],
+  setMultipleData: multiplePathSetter,
+  onSelectionChange: AutoCompleteProps["onSelectionChange"],
+) => {
+  const convertedKey =
+    !key || selectionKeyType !== "number" ? key : Number(key);
+
+  const label =
+    list.find((item) => {
+      return item.id === convertedKey;
+    })?.label || "";
+    const update:keyVals[] = [["inputValue", label], ["selectedKey", key]]
+    setMultipleData(update)
+
+  onSelectionChange(convertedKey as string | null );
 };

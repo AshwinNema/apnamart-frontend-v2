@@ -41,9 +41,13 @@ const CreateUpdateModal = ({
 
   useEffect(() => {
     if (!modalDetails) return;
-    const details = _.pick(modalDetails, ["name", "id"]);
+    const details = _.pick(modalDetails, ["name", "id", "category"]);
+
     setConfig((prevConfig) => {
-      Object.assign(prevConfig, details);
+      Object.assign(prevConfig, {
+        ...details,
+        categoryId: details?.category?.id || null,
+      });
       return { ...prevConfig };
     });
   }, [modalDetails]);

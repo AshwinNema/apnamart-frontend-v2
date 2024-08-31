@@ -1,9 +1,10 @@
 import { Autocomplete, AutocompleteItem, Avatar } from "@nextui-org/react";
 import * as _ from "lodash";
-import React, { useEffect, useRef, useState } from "react";
-import { autoCompleteListItem, AutoCompleteProps } from "./interfaces";
+import React, { Key, useEffect, useState } from "react";
+import { AutoCompleteProps, autoCompleteState } from "./interfaces";
 import { HTTP_METHODS, makeDataRequest } from "@/app/_services/fetch-service";
-import { setNestedPath } from "@/app/_utils";
+import { keyVals, setMultiplePaths, setNestedPath } from "@/app/_utils";
+import { onAutoCompleteSelectionChange } from "./utils";
 
 export const AutoCompleteComponent = ({
   label,
@@ -19,17 +20,24 @@ export const AutoCompleteComponent = ({
   labelPlacement = "inside",
   fullWidth,
   allowsCustomValue,
-  selectedKey,
+  selectedKey = null,
 }: AutoCompleteProps): React.JSX.Element => {
-  const autoCompleteRef = useRef<HTMLInputElement>(null);
-  const [config, setConfig] = useState<{
-    itemList: autoCompleteListItem[];
-  }>({
+  const [config, setConfig] = useState<autoCompleteState>({
     itemList: [],
+    inputValue: "",
+    selectionKeyType: null,
+    selectedKey: null,
   });
 
   const setData = setNestedPath(setConfig);
-  const { itemList } = config;
+  const setMultipleData = setMultiplePaths(setConfig);
+  const { itemList, inputValue, selectionKeyType } = config;
+
+  useEffect(() => {
+    selectedKey &&
+      !selectionKeyType &&
+      setData("selectionKeyType")(typeof selectedKey);
+  }, [selectedKey, selectionKeyType]);
 
   useEffect(() => {
     list && setData("itemList")(list);
@@ -38,49 +46,65 @@ export const AutoCompleteComponent = ({
   useEffect(() => {
     url &&
       processLogic &&
-      makeDataRequest(method, url).then((res) =>
-        setData("itemList")(processLogic(res)),
-      );
+      makeDataRequest(method, url).then((res) => {
+        const { data, inputVal } = processLogic(res);
+        const update: keyVals[] = [
+          ["itemList", data],
+          ["inputValue", inputVal],
+        ];
+        selectedKey && update.push(["selectedKey", selectedKey]);
+        setMultipleData(update);
+      });
   }, [url]);
+
   return (
     <>
       <Autocomplete
         label={label}
         variant={variant}
-        ref={autoCompleteRef}
         allowsEmptyCollection={false}
         fullWidth={!!fullWidth}
         size={size}
         color={color}
-        selectedKey={selectedKey}
+        selectedKey={config.selectedKey}
+        inputValue={inputValue}
+        onInputChange={(val: string) => {
+          setData("inputValue")(val);
+          !val && onSelectionChange(null);
+        }}
+
         isClearable={!!isClearable}
         allowsCustomValue={allowsCustomValue}
         items={itemList}
         labelPlacement={labelPlacement}
-        onSelectionChange={(key) => {
-          onSelectionChange(key);
+        onSelectionChange={(key: Key | null) => {
+          onAutoCompleteSelectionChange(
+            key,
+            selectionKeyType,
+            itemList,
+            setMultipleData,
+            onSelectionChange,
+          );
         }}
       >
-        {itemList.map((item) => {
-          return (
-            <AutocompleteItem
-              startContent={
-                <>
-                  {item.photo ? (
-                    <Avatar
-                      alt={item.label}
-                      className="w-6 h-6"
-                      src={item.photo}
-                    />
-                  ) : null}
-                </>
-              }
-              key={item.id}
-            >
-              {item.label}
-            </AutocompleteItem>
-          );
-        })}
+        {(item: any) => (
+          <AutocompleteItem
+            startContent={
+              <>
+                {item.photo ? (
+                  <Avatar
+                    alt={item.label}
+                    className="w-6 h-6"
+                    src={item.photo}
+                  />
+                ) : null}
+              </>
+            }
+            key={item.id}
+          >
+            {item.label}
+          </AutocompleteItem>
+        )}
       </Autocomplete>
     </>
   );

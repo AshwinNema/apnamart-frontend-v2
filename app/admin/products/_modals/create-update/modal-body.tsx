@@ -72,14 +72,19 @@ export const MainModalBody = () => {
           selectedKey={mainConfig.categoryId}
           fullWidth={true}
           processLogic={(res) => {
-            if (!res) return [];
-            return res.map(
-              (item: { id: number; name: string; photo: string }) => ({
-                id: item.id,
-                label: item.name,
-                photo: item.photo,
-              }),
+            if (!res) return { data: [], inputVal: "" };
+            let inputVal: string = "";
+            const data = res.map(
+              (item: { id: number; name: string; photo: string }) => {
+                if (modalDetails?.category?.id === item.id) inputVal = item.name;
+                return {
+                  id: item.id,
+                  label: item.name,
+                  photo: item.photo,
+                };
+              },
             );
+            return { data, inputVal };
           }}
         />
       )}

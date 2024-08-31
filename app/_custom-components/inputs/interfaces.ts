@@ -65,10 +65,20 @@ export interface AutoCompleteProps {
   list?: autoCompleteListItem[];
   method?: HTTP_METHODS;
   url?: string;
-  processLogic?: (res: any) => autoCompleteListItem[];
+  processLogic?: (res: any) => {
+    data: autoCompleteListItem[];
+    inputVal: string;
+  };
   isClearable?: boolean;
   labelPlacement?: "inside" | "outside" | "outside-left";
   fullWidth?: boolean;
   allowsCustomValue?: boolean;
   selectedKey: string | number | null;
+}
+
+export interface autoCompleteState {
+  itemList: autoCompleteListItem[];
+  inputValue: string;
+  selectionKeyType: "string" | "number" | null,
+  selectedKey: string | null
 }

@@ -13,7 +13,7 @@ import {
 } from "@/lib/product/slices/component-details.slice";
 import { ProductDispatch } from "@/lib/product/store";
 import { setModalDetails } from "@/lib/product/slices/modal-details.slice";
-import { getCreateUpdatePayload, getCreateUrl } from "./utils";
+import { getCreateUpdatePayload, getCreateUrl, getUpdateUrl } from "./utils";
 
 export const createUpdateData = (data: createUpdateParams) => {
   const errors = [];
@@ -39,10 +39,10 @@ export const createUpdateData = (data: createUpdateParams) => {
   id
     ? makeDataRequest(
         HTTP_METHODS.PUT,
-        `${appEndPoints.UPDATE_CATEGORY}${id}`,
+        getUpdateUrl(tab, id),
         payload,
         undefined,
-        { successMsg: "Category updated successfully" },
+        { successMsg: `${tab} updated successfully` },
       ).then((res) => {
         if (!res) return;
         successCallback();
