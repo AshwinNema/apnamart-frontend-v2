@@ -6,7 +6,7 @@ import {
   DropdownItem,
   User,
 } from "@nextui-org/react";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/main/hooks";
 import { useRouter } from "next/navigation";
 import { handleAction } from "./notifications/logout";
 

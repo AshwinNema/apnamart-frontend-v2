@@ -7,8 +7,8 @@ import {
   successToast,
   toastSuccessIcons,
 } from "@/app/_utils/toast";
-import { setUser, UserInterface } from "@/lib/slices/user/user.slice";
-import { AppDispatch } from "@/lib/store";
+import { setUser, UserInterface } from "@/lib/main/slices/user/user.slice";
+import { AppDispatch } from "@/lib/main/store";
 import {
   setLocalStorageKey,
   storageAttributes,

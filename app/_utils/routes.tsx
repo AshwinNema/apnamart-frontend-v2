@@ -1,4 +1,4 @@
-import { UserRole } from "@/lib/slices/user/user.slice";
+import { UserRole } from "@/lib/main/slices/user/user.slice";
 
 export const routes = {
   [UserRole.merchant]: {},

@@ -1,14 +1,14 @@
 import { Image, Modal, ModalContent, useDisclosure } from "@nextui-org/react";
 import NextImage from "next/image";
-import { useAppSelector } from "@/lib/hooks";
+import { useAppSelector } from "@/lib/main/hooks";
 import { ReactNode, useEffect } from "react";
 import { CircularProgress } from "@nextui-org/progress";
 import { useRouter } from "next/navigation";
-import { UserRole } from "@/lib/slices/user/user.slice";
+import { UserRole } from "@/lib/main/slices/user/user.slice";
 export * from "./inputs";
 export * from "./leaflet";
 export * from "./drawer";
-
+export * from "./table";
 export const ImageComponent = ({
   width,
   height,
@@ -42,7 +42,7 @@ export const Spinner = () => {
 
   useEffect(() => {
     onOpen();
-  }, []);
+  }, [onOpen]);
 
   return (
     <Modal
@@ -73,12 +73,12 @@ export const ProtectedRoute = ({
 
   useEffect(() => {
     !user && router.push("/");
-  }, [user]);
+  }, [user, router]);
 
   // If allowedRole is given then we check that user is logging in with that allowed role
   useEffect(() => {
     !!allowedRole && role != allowedRole && router.push("/");
-  }, [allowedRole, role]);
+  }, [allowedRole, role, router]);
 
   return <> {user ? children : <Spinner />}</>;
 };

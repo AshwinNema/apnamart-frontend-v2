@@ -16,7 +16,7 @@ import {
   MapLayerGroup,
 } from "./utils";
 import { FaMapLocationDot } from "react-icons/fa6";
-import { LayerGroup } from "leaflet";
+
 const MapAccessComponent = ({ saveMapState, setData }: mapProps) => {
   const [features, setFeatures] = useState<featureGroupAreas>({
     created: {},
@@ -99,7 +99,7 @@ export default function DeliveryMap() {
       <div>{deliveryMap}</div>
       <div className="flex justify-end mt-3">
         <Button
-          color="primary"
+          color="success"
           endContent={<FaMapLocationDot className="scale-[1.3]" />}
           onPress={() => {
             setData("saveMapState")(true);

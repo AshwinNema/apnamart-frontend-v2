@@ -17,7 +17,7 @@ export default function Form({
   return (
     <>
       <p className="italic text-sm">Please enter your credentials</p>
-      {modalType === modalTypes.signUp && (
+      {modalType === modalTypes.signUp ? (
         <>
           <TextInput
             value={formData.name}
@@ -33,7 +33,7 @@ export default function Form({
             placeholder="Please enter your name"
           />
         </>
-      )}
+      ) : null}
       <TextInput
         value={formData.email}
         setData={setData("email")}

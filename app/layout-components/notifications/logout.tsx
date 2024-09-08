@@ -10,13 +10,13 @@ import {
   storageAttributes,
 } from "@/app/_services/local-storage.service";
 import { appEndPoints } from "@/app/_utils/endpoints";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch } from "@/lib/main/hooks";
 import {
   modalProps,
   notificationTypes,
   setNotificationType,
-} from "@/lib/slices/notification/notification.slice";
-import { setUser } from "@/lib/slices/user/user.slice";
+} from "@/lib/main/slices/notification/notification.slice";
+import { setUser } from "@/lib/main/slices/user/user.slice";
 import { Button, ModalBody, ModalFooter, ModalHeader } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { TbLogout } from "react-icons/tb";
@@ -29,6 +29,7 @@ export const handleAction = () =>
       backdrop: "blur",
       hideCloseButton: true,
       isDismissable: false,
+      className: `${modalProps.className}`,
     },
   });
 
@@ -76,7 +77,7 @@ export default function Logout({ onClose }: { onClose: () => void }) {
             startContent={<TbLogout className="scale-[1.5]" />}
             onPress={logout}
             className="mb-3"
-            color="primary"
+            color="warning"
             fullWidth={true}
           >
             Log out

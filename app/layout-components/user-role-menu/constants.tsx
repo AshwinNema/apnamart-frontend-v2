@@ -1,4 +1,4 @@
-import { UserRole } from "@/lib/slices/user/user.slice";
+import { UserRole } from "@/lib/main/slices/user/user.slice";
 import { AiFillProduct } from "react-icons/ai";
 import { FcBusinessman } from "react-icons/fc";
 import { FaChartArea } from "react-icons/fa";
