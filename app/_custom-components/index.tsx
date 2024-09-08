@@ -42,7 +42,7 @@ export const Spinner = () => {
 
   useEffect(() => {
     onOpen();
-  }, []);
+  }, [onOpen]);
 
   return (
     <Modal
@@ -73,12 +73,12 @@ export const ProtectedRoute = ({
 
   useEffect(() => {
     !user && router.push("/");
-  }, [user]);
+  }, [user, router]);
 
   // If allowedRole is given then we check that user is logging in with that allowed role
   useEffect(() => {
     !!allowedRole && role != allowedRole && router.push("/");
-  }, [allowedRole, role]);
+  }, [allowedRole, role, router]);
 
   return <> {user ? children : <Spinner />}</>;
 };

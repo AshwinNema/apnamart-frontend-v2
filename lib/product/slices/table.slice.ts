@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
+// This contains the data for the main enity table
 export interface categoryTableDataElement {
   photo: string;
   id: number;
@@ -8,6 +8,13 @@ export interface categoryTableDataElement {
 
 export interface subCatTableDataElement extends categoryTableDataElement {
   category: {
+    id: number;
+    name: string;
+  };
+}
+
+export interface itemTableDataElement extends subCatTableDataElement {
+  subCategory: {
     id: number;
     name: string;
   };
@@ -22,7 +29,7 @@ export interface dataTable<tableElementData> {
 }
 
 const initialState: dataTable<
-  categoryTableDataElement | subCatTableDataElement
+  categoryTableDataElement | subCatTableDataElement | itemTableDataElement
 > = {
   limit: 2,
   page: 1,

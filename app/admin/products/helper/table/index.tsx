@@ -1,11 +1,12 @@
+// Note - this file contains data related to main table
 import { appEndPoints } from "@/app/_utils/endpoints";
-import { tableDataDataElement } from "./interfaces & enums";
+import { tableDataDataElement } from "../interfaces & enums";
 import { tabKeys } from "@/lib/product/slices/component-details.slice";
 import {
   categoryTableDataElement,
   subCatTableDataElement,
 } from "@/lib/product/slices/table.slice";
-
+export * from "./table-columns";
 export const getDeleteActionTexts = (tabType: tabKeys, id?: number) => {
   let url = "",
     msg = "deleted successfully",
@@ -21,6 +22,12 @@ export const getDeleteActionTexts = (tabType: tabKeys, id?: number) => {
       url = `${appEndPoints.DELETE_SUB_CATEGORY}${id}`;
       msg = `Sub Category ${msg}`;
       button = `${button} Sub Category`;
+      break;
+
+    case tabKeys.items:
+      url = `${appEndPoints.DELETE_ITEM}${id}`;
+      msg = `Item ${msg}`;
+      button = `${button} Item`;
       break;
     default:
       break;
@@ -44,6 +51,10 @@ export const getCellValue = (
       break;
 
     case tabKeys.subCategory:
+      cellValue = data[columnKey as keyof subCatTableDataElement];
+      break;
+
+    case tabKeys.items:
       cellValue = data[columnKey as keyof subCatTableDataElement];
       break;
     default:

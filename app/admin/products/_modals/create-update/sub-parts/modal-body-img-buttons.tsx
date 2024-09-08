@@ -1,9 +1,12 @@
 import { Button } from "@nextui-org/react";
-import { getDefaultConfig, modalBodyconfig } from "../modal-body";
 import { infoToast } from "@/app/_utils/toast";
 import { Dispatch, SetStateAction } from "react";
 import { useProductSelector } from "@/lib/product/hooks";
-import { tableDataDataElement } from "../../../helper";
+import {
+  defaultModalBodyConfig,
+  tableDataDataElement,
+  modalBodyconfig,
+} from "../../../helper";
 
 export const ModalImgButtons = ({
   config,
@@ -38,7 +41,7 @@ export const ModalImgButtons = ({
                   ),
                 });
 
-                setConfig(getDefaultConfig());
+                setConfig(defaultModalBodyConfig());
               }}
               color="primary"
             >

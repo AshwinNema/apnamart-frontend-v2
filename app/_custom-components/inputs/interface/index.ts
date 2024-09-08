@@ -1,8 +1,8 @@
-import { HTTP_METHODS } from "@/app/_services/fetch-service";
 import { setVal } from "@/app/_utils";
 import { InputSlots, SlotsToClasses } from "@nextui-org/react";
 import { ReactNode } from "react";
 import { ZodSchema } from "zod";
+export * from "./auto-complete.props";
 
 export interface TextInputProps {
   value: string;
@@ -50,35 +50,8 @@ export interface AutoCompleteInputSearchProps {
   onInputClear?: () => void;
 }
 
-export interface AutoCompleteProps {
-  label: string;
-  size?: "sm" | "md" | "lg";
-  variant?: "flat" | "bordered" | "faded" | "underlined";
-  color?:
-    | "default"
-    | "primary"
-    | "secondary"
-    | "success"
-    | "warning"
-    | "danger";
-  onSelectionChange: (key: string | number | null) => any;
-  list?: autoCompleteListItem[];
-  method?: HTTP_METHODS;
-  url?: string;
-  processLogic?: (res: any) => {
-    data: autoCompleteListItem[];
-    inputVal: string;
-  };
-  isClearable?: boolean;
-  labelPlacement?: "inside" | "outside" | "outside-left";
-  fullWidth?: boolean;
-  allowsCustomValue?: boolean;
-  selectedKey: string | number | null;
-}
-
 export interface autoCompleteState {
   itemList: autoCompleteListItem[];
   inputValue: string;
-  selectionKeyType: "string" | "number" | null,
-  selectedKey: string | null
+  selectedKey: string | null;
 }

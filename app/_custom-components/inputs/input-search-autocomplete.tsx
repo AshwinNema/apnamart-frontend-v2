@@ -5,7 +5,7 @@ import { useCallback, useRef, useState } from "react";
 import {
   autoCompleteListItem,
   AutoCompleteInputSearchProps,
-} from "./interfaces";
+} from "./interface";
 
 export const AutoCompleteComponent = ({
   getListItems,

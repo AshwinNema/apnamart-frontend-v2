@@ -8,9 +8,10 @@ import {
   AutoCompleteProps,
   autoCompleteState,
   TextInputState,
-} from "./interfaces";
+} from "../interface";
 import { ZodSchema } from "zod";
 import React from "react";
+import { HTTP_METHODS, makeDataRequest } from "@/app/_services/fetch-service";
 
 export const alternateTextCheck = (
   alternateText: string | undefined,
@@ -52,20 +53,45 @@ export const invalidTextInputCheck = (
 
 export const onAutoCompleteSelectionChange = (
   key: React.Key | null,
-  selectionKeyType: autoCompleteState["selectionKeyType"],
   list: autoCompleteState["itemList"],
   setMultipleData: multiplePathSetter,
   onSelectionChange: AutoCompleteProps["onSelectionChange"],
+  setInputVal: AutoCompleteProps["setInputVal"],
 ) => {
-  const convertedKey =
-    !key || selectionKeyType !== "number" ? key : Number(key);
-
   const label =
     list.find((item) => {
-      return item.id === convertedKey;
+      return item.id == key;
     })?.label || "";
-    const update:keyVals[] = [["inputValue", label], ["selectedKey", key]]
-    setMultipleData(update)
-
-  onSelectionChange(convertedKey as string | null );
+  const update: keyVals[] = [
+    ["inputValue", label],
+    ["selectedKey", key],
+  ];
+  setInputVal && setInputVal(label);
+  setMultipleData(update);
+  onSelectionChange(key as string | null);
 };
+
+export const autoCompleteFetchData = (
+  processLogic: AutoCompleteProps["processLogic"],
+  method: AutoCompleteProps["method"] = HTTP_METHODS.GET,
+  setMultipleData: multiplePathSetter,
+  url?: string,
+) => {
+  url &&
+    processLogic &&
+    makeDataRequest(method, url).then((res) => {
+      const { data, inputVal, selectedKey } = processLogic(res);
+      const update: keyVals[] = [
+        ["itemList", data],
+        ["inputValue", inputVal],
+        ["selectedKey", selectedKey],
+      ];
+      setMultipleData(update);
+    });
+};
+
+export const getDefultAutcompleteState = () => ({
+  itemList: [],
+  inputValue: "",
+  selectedKey: null,
+});

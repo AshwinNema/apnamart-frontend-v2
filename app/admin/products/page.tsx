@@ -20,6 +20,7 @@ const MainComponent = () => {
         fullWidth
         selectedKey={tab}
         onSelectionChange={(key) => {
+          if (key === tab) return;
           dispatch(clearModalDetails());
           dispatch(resetTable());
           dispatch(

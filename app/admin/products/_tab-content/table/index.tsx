@@ -3,16 +3,17 @@ import {
   getTableColumns,
   getCellValue,
   tableDataDataElement,
+  getDeleteActionTexts,
 } from "../../helper";
-import { ImageComponent, RenderTable } from "@/app/_custom-components";
-import { TableActions } from "./actions";
-import { tabKeys } from "@/lib/product/slices/component-details.slice";
+import { RenderTable, TableActions } from "@/app/_custom-components";
 import { useProductDispatch, useProductSelector } from "@/lib/product/hooks";
 import {
   updateTableData,
   subCatTableDataElement,
+  itemTableDataElement,
 } from "@/lib/product/slices/table.slice";
 import { setModalDetails } from "@/lib/product/slices/modal-details.slice";
+import { getEmptyContent, NameComponent } from "./render-helper";
 
 const DataTable = ({
   loadData,
@@ -24,41 +25,41 @@ const DataTable = ({
   const tab = useProductSelector((state) => state.componentDetails.tab);
   const table = useProductSelector((state) => state.table);
   const dispatch = useProductDispatch();
-
   const renderCell = useCallback(
     (data: Partial<tableDataDataElement>, columnKey: React.Key) => {
       const cellValue = getCellValue(tab, data, columnKey);
-
+      const { url, msg, button } = getDeleteActionTexts(tab, data.id);
       switch (columnKey) {
         case "name": {
           const name = cellValue as string;
           return (
-            <div className="flex items-center gap-3 text-lg">
-              <ImageComponent
-                width={100}
-                height={100}
-                src={data.photo as string}
-                alt="category image"
-                isBlurred={true}
-              />{" "}
-              <div>{name}</div>
-            </div>
+            <NameComponent
+              photo={(data?.photo || "category image") as string}
+              name={name}
+            />
           );
         }
-
         case "category": {
           const category = cellValue as subCatTableDataElement["category"];
-          return <div className="text-lg">{category.name}</div>;
+          return <div className="text-lg">{category?.name}</div>;
+        }
+        case "subCategory": {
+          const subCategory = cellValue as itemTableDataElement["subCategory"];
+          return <div className="text-lg">{subCategory?.name}</div>;
         }
         case "actions":
           return (
             <TableActions
-              id={data.id as number}
-              fetchData={loadData}
+              deleteUrl={url}
+              deleteSuccessMsg={msg}
+              deleteBtnText={button}
+              onDeleteSuccess={loadData}
               onClick={() => {
                 dispatch(setModalDetails(data));
                 onOpen();
               }}
+              editTooltipText={`Edit ${tab}`}
+              deleteToolTipText={`Delete ${tab}`}
             />
           );
         default:
@@ -74,19 +75,14 @@ const DataTable = ({
       columns={getTableColumns(tab)}
       items={table.results}
       renderCell={renderCell}
+      isStriped={true}
       page={table.page}
       totalPages={table.totalPages}
       setPage={(page: number) => {
         dispatch(updateTableData({ page }));
         loadData(page);
       }}
-      emptyContent={`No ${
-        tab === tabKeys.category
-          ? "categories"
-          : tab === tabKeys.subCategory
-            ? "sub categories"
-            : "items"
-      } found`}
+      emptyContent={getEmptyContent(tab)}
     />
   );
 };

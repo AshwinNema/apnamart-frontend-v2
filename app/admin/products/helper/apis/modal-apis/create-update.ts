@@ -3,9 +3,7 @@ import {
   makeDataRequest,
   makeUploadDataRequest,
 } from "@/app/_services/fetch-service";
-import { createUpdateParams } from "../interfaces & enums";
-import { errorToast, toastErrorIcons } from "@/app/_utils/toast";
-import { appEndPoints } from "@/app/_utils/endpoints";
+import { createUpdateParams } from "../../interfaces & enums";
 import * as _ from "lodash";
 import {
   setDetails,
@@ -13,29 +11,21 @@ import {
 } from "@/lib/product/slices/component-details.slice";
 import { ProductDispatch } from "@/lib/product/store";
 import { setModalDetails } from "@/lib/product/slices/modal-details.slice";
-import { getCreateUpdatePayload, getCreateUrl, getUpdateUrl } from "./utils";
+import {
+  getCreateUpdatePayload,
+  getCreateUrl,
+  getUpdateUrl,
+  getUploadUrl,
+  validateCreateUpdatePayload,
+} from "../utils";
 
 export const createUpdateData = (data: createUpdateParams) => {
-  const errors = [];
-  const { payloadData, successCallback, tab } = data;
-  const { name, id, files, categoryId } = payloadData;
-  !name.trim() && errors.push("Name cannot be empty");
-  !id &&
-    !files?.cachedFileArray?.[0] &&
-    errors.push(`${tab} image has to be added`);
-  tab !== tabKeys.category &&
-    !categoryId &&
-    errors.push("Category is mandatory");
+  const { successCallback, tab, config } = data;
+  const { id } = config;
+  const err = validateCreateUpdatePayload(config, tab);
 
-  if (errors.length) {
-    errorToast({
-      msg: errors.join(", "),
-      iconType: toastErrorIcons.validation,
-    });
-    return;
-  }
-  const payload = getCreateUpdatePayload({ name, tab, id, files, categoryId });
-
+  if (err) return;
+  const payload = getCreateUpdatePayload({ tab, config });
   id
     ? makeDataRequest(
         HTTP_METHODS.PUT,
@@ -76,12 +66,9 @@ export const updateMainImg = ({
   tabType: tabKeys;
   dispatch: ProductDispatch;
 }) => {
-  const url =
-    tabType === tabKeys.category
-      ? `${appEndPoints.UPDATE_CATEGORY_IMAGE}${id}`
-      : "";
+  const url = getUploadUrl(tabType, id);
   makeUploadDataRequest(HTTP_METHODS.PUT, url, { file }, undefined, {
-    successMsg: "Category Image uploaded successfully",
+    successMsg: `${tabType} Image uploaded successfully`,
   }).then((response) => {
     if (!response) return;
     dispatch(

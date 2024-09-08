@@ -11,40 +11,41 @@ import {
 } from "@nextui-org/react";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { getDeleteActionTexts } from "../../helper";
-import { useProductSelector } from "@/lib/product/hooks";
+import { TableActionProps } from ".";
 
 export const TableActions = ({
   onClick,
-  id,
-  fetchData,
-}: {
-  onClick: () => void;
-  id: number;
-  fetchData: () => void;
-}) => {
-  const tab = useProductSelector((state) => state.componentDetails.tab);
+  deleteBtnText = "Delete",
+  modalBodyMsg = "Are you sure you want to delete?",
+  deleteMethod = HTTP_METHODS.DELETE,
+  deleteUrl,
+  deleteSuccessMsg,
+  onDeleteSuccess,
+  onDelete,
+  editTooltipText = "",
+  deleteToolTipText = "",
+}: TableActionProps) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { button } = getDeleteActionTexts(tab);
   const deleteData = (onClose: () => void) => {
-    const { url, msg } = getDeleteActionTexts(tab, id);
-    makeDataRequest(HTTP_METHODS.DELETE, url, undefined, undefined, {
-      successMsg: msg,
-    }).then((res) => {
-      if (!res) return;
-      onClose();
-      fetchData();
-    });
+    deleteUrl &&
+      makeDataRequest(deleteMethod, deleteUrl, undefined, undefined, {
+        successMsg: deleteSuccessMsg,
+      }).then((res) => {
+        if (!res) return;
+        onClose();
+        onDeleteSuccess && onDeleteSuccess();
+      });
+    onDelete && onDelete(onClose);
   };
   return (
     <>
       <div className="flex justify-end items-center gap-4">
-        <Tooltip color="primary" content="Edit category">
+        <Tooltip color="primary" content={editTooltipText}>
           <span className="cursor-pointer">
             <FaRegEdit className="scale-[1.3]" onClick={onClick} />
           </span>
         </Tooltip>
-        <Tooltip color="danger" content="Delete category">
+        <Tooltip color="danger" content={deleteToolTipText}>
           <span className="cursor-pointer">
             <RiDeleteBin6Line
               onClick={onOpen}
@@ -58,10 +59,10 @@ export const TableActions = ({
           {(onClose) => (
             <>
               <ModalHeader className="flex justify-center font-weight text-4xl">
-                {button}
+                {deleteBtnText}
               </ModalHeader>
 
-              <ModalBody>Are you sure you want to delete?</ModalBody>
+              <ModalBody>{modalBodyMsg}</ModalBody>
 
               <ModalFooter>
                 <Button

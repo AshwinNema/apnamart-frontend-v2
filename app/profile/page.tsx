@@ -12,6 +12,11 @@ import { useSearchParams } from "next/navigation";
 
 function Page() {
   const user = useAppSelector((state) => state.user);
+  const [config, setConfig] = useState({
+    selectedTab: tabKeys.basicDetails,
+    user: { ...user } || {},
+  });
+  const setProperty = setNestedPath(setConfig);
   const params = useSearchParams();
   const selectedTab = params.get("selectedTab");
   useEffect(() => {
@@ -19,19 +24,13 @@ function Page() {
     if (selectedTab in tabKeys && selectedTab !== tabKeys.profile) {
       setProperty("selectedTab")(selectedTab);
     }
-  }, [selectedTab]);
+  }, [selectedTab, setProperty]);
 
   const dispatch = useAppDispatch();
-  const [config, setConfig] = useState({
-    selectedTab: tabKeys.basicDetails,
-    user: { ...user } || {},
-  });
 
   useEffect(() => {
     getUserProfile(dispatch);
-  }, [dispatch]);
-
-  const setProperty = setNestedPath(setConfig);
+  }, [dispatch, setProperty]);
 
   return (
     <div className="mt-11">
@@ -76,8 +75,9 @@ function Page() {
             if (key === tabKeys.profile) {
               return;
             }
-
-            setProperty("selectedTab")(key);
+            if (config.selectedTab !== key) {
+              setProperty("selectedTab")(key);
+            }
           }}
         >
           {tabOptions.map((tabOption: tabOption) => {

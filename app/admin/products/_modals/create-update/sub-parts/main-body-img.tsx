@@ -1,12 +1,17 @@
 import { ImageComponent, ImgPreviewInput } from "@/app/_custom-components";
-import { modalBodyconfig } from "../modal-body";
-import { tableDataDataElement, updateMainImg } from "../../../helper";
+import {
+  modalBodyconfig,
+  tableDataDataElement,
+  updateMainImg,
+  MainModalContext,
+} from "../../../helper";
 import { setKeyVal } from "@/app/_utils";
 import { ModalImgButtons } from "./modal-body-img-buttons";
-import { Dispatch, SetStateAction, useContext } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect } from "react";
 import { useProductDispatch, useProductSelector } from "@/lib/product/hooks";
-import { MainCreateUpdateContext } from "..";
 
+// This component deals with the create and update of the main image for the entity.
+// config.showImage is true when we are updating an entity
 export default function MainBodyImg({
   config,
   setData,
@@ -18,9 +23,7 @@ export default function MainBodyImg({
   setConfig: Dispatch<SetStateAction<modalBodyconfig>>;
   setModalCrtState: () => void;
 }) {
-  const mainData = useContext(MainCreateUpdateContext);
-  if (!mainData) return null;
-  const { config: mainConfig, setMainData } = mainData;
+  const mainData = useContext(MainModalContext);
   const modalDetails = useProductSelector(
     (state) => state.modalDetails,
   ) as unknown as tableDataDataElement;
@@ -28,6 +31,9 @@ export default function MainBodyImg({
     (state) => state.componentDetails,
   );
   const dispatch = useProductDispatch();
+  if (!mainData) return null;
+  const { config: mainConfig, setMainData } = mainData;
+
   return (
     <>
       {config.showImage ? (
@@ -43,6 +49,7 @@ export default function MainBodyImg({
         <ImgPreviewInput
           setUpload={setMainData("upload")}
           dataUploadId="upload-image"
+          value={mainConfig.upload}
           imgChangeCallback={() => {
             setData("showUpdateSaveBtn")(true);
           }}

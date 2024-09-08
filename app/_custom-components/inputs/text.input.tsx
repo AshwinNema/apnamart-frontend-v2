@@ -1,12 +1,8 @@
 import { Input } from "@nextui-org/react";
 import { useEffect, useRef, useState } from "react";
-import {
-  keyVals,
-  setMultiplePaths,
-  setNestedPath,
-} from "@/app/_utils";
+import { keyVals, setMultiplePaths, setNestedPath } from "@/app/_utils";
 import { ClearIcon } from "@/app/_utils/icons & logos";
-import { TextInputProps, TextInputState } from "./interfaces";
+import { TextInputProps, TextInputState } from "./interface";
 import { alternateTextCheck, invalidTextInputCheck } from "./utils";
 
 export const TextInput = ({

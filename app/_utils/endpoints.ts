@@ -36,6 +36,17 @@ const subcategory = {
   UPDATE_SUB_CATEGORY_IMAGE: `${backendService}subcategory/image/`,
   DELETE_SUB_CATEGORY: `${backendService}subcategory/`,
   SEARCH_SUB_CATEGORY_BY_NAME: `${backendService}subcategory/search-by-name`,
+  SUB_CATEGORY_LIST: `${backendService}subcategory/list`,
+};
+
+const items = {
+  CREATE_ITEM: `${backendService}item`,
+  UPDATE_ITEM: `${backendService}item/`,
+  QUERY_ITEMS: `${backendService}item`,
+  UPDATE_ITEM_IMAGE: `${backendService}item/image/`,
+  DELETE_ITEM: `${backendService}item/`,
+  SEARCH_ITEM_BY_NAME: `${backendService}item/search-by-name`,
+  GET_ITEM_FILTERS_BY_ITEM_ID: `${backendService}item/item-filter/by-item-id/`,
 };
 
 export const appEndPoints = {
@@ -45,4 +56,5 @@ export const appEndPoints = {
   GET_ALL_DELIVERY_AREAS: `${backendService}delivery-area`,
   ...category,
   ...subcategory,
+  ...items,
 };

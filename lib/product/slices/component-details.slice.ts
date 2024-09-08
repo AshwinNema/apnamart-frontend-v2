@@ -1,4 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+// This slice stores the main state of component. Given below are the values it has -
+
+// tab: The main entity tab that user is on. On the product page, user is on category tab by default
+// id: When user performs search by name and selects an option, we store that id of the selected option here
+// refreshData: If the data in the main entity table has to be reloaded, we can just toggle this value(as it is a boolean). Since the component is extremely nested, it really helps in reloading data.
+// closeModal: Used for closing the entity create/ update modal if it is open
+// isOpen: For tracking whether create update modal is open or not
 
 export enum tabKeys {
   category = "Category",
@@ -10,7 +17,8 @@ interface componentDetails {
   tab: tabKeys;
   id: number | null;
   refreshData: boolean;
-  closeModal: false;
+  closeModal: boolean;
+  isOpen: boolean;
 }
 
 const initialState: componentDetails = {
@@ -18,6 +26,7 @@ const initialState: componentDetails = {
   id: null,
   refreshData: false,
   closeModal: false,
+  isOpen: false,
 };
 
 export const componentDetailsSlice = createSlice({
@@ -33,6 +42,9 @@ export const componentDetailsSlice = createSlice({
     setDetails(state, { payload }) {
       Object.assign(state, payload);
     },
+    setIsOpen(state, { payload }) {
+      state.isOpen = payload;
+    },
     resetDetails(_, { payload }) {
       const newState = structuredClone(initialState);
       if (payload) {
@@ -43,5 +55,5 @@ export const componentDetailsSlice = createSlice({
   },
 });
 
-export const { setTab, setId, setDetails, resetDetails } =
+export const { setTab, setId, setDetails, resetDetails, setIsOpen } =
   componentDetailsSlice.actions;

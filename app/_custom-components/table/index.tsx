@@ -8,25 +8,9 @@ import {
   TableRow,
 } from "@nextui-org/react";
 import React from "react";
-
-export interface columns {
-  align?: "start" | "center" | "end";
-  key: string;
-  label: string;
-  headerClass?: string;
-}
-
-interface tableProps<tableItem> {
-  ariaLabel: string;
-  columns: columns[];
-  items: tableItem[];
-  renderCell: (data: tableItem, columnKey: React.Key) => React.JSX.Element;
-  emptyContent?: string;
-  isStriped?: boolean;
-  totalPages?: number;
-  page?: number;
-  setPage?: (page: number) => void;
-}
+import { tableProps } from "./interfaces";
+export * from "./interfaces";
+export * from "./table-actions";
 
 export const RenderTable = <T extends { id: string | number }>({
   ariaLabel,
@@ -38,11 +22,13 @@ export const RenderTable = <T extends { id: string | number }>({
   totalPages,
   page,
   setPage,
+  className,
 }: tableProps<T>) => {
   return (
     <Table
       isStriped={isStriped}
       aria-label={ariaLabel}
+      className={`${className}`}
       bottomContent={
         <>
           {totalPages && page && setPage ? (

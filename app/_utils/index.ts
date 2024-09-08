@@ -8,6 +8,10 @@ import {
 
 import { browserTheme } from "../layout-components/theme-switch";
 export * from "./routes";
+export * from "./icons & logos";
+export * from "./toast";
+export * from "./endpoints";
+
 export const passwordRegex =
   /(?=.*[A-Z])(?=.*\d).{8,}|(?=.*\d)(?=.*[A-Z]).{8,}/;
 
@@ -69,3 +73,7 @@ export const getZodErrMsg = (error: ZodError<any>) => {
 export const getBrowserTheme = (): browserTheme => {
   return getLocalStorageKey(storageAttributes.theme) || browserTheme.light;
 };
+
+export enum variants {
+  goBackBtn = "shadow",
+}

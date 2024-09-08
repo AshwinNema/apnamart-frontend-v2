@@ -1,10 +1,16 @@
 export * from "./interfaces & enums";
 export * from "./apis";
 export * from "./table";
-import { tabOption } from "./interfaces & enums";
+export * from "./create-update-modal";
+import {
+  ItemFilterConfig,
+  MainModalState,
+  tabOption,
+} from "./interfaces & enums";
 import TabComponent from "../_tab-content";
-import { columns } from "@/app/_custom-components";
 import { tabKeys } from "@/lib/product/slices/component-details.slice";
+import { createContext, Dispatch, SetStateAction } from "react";
+import { setKeyVal } from "@/app/_utils";
 
 export const tabList: tabOption[] = [
   {
@@ -31,30 +37,19 @@ export const tabList: tabOption[] = [
   },
   {
     title: "Items",
-    Content: (props: any) => <></>,
+    Content: () => <TabComponent />,
     key: tabKeys.items,
   },
 ];
 
-export const getTableColumns = (tab: tabKeys): columns[] => {
-  const columns: columns[] = [
-    {
-      key: "name",
-      label: "Name",
-      headerClass: "ml-20",
-    },
-  ];
+export const MainModalContext = createContext<null | {
+  config: MainModalState;
+  setMainData: setKeyVal;
+  setAllData: Dispatch<SetStateAction<MainModalState>>;
+}>(null);
 
-  tab !== tabKeys.category &&
-    columns.push({
-      label: "Category",
-      key: "category",
-    });
-
-  columns.push({
-    key: "actions",
-    label: "Actions",
-    align: "end",
-  });
-  return columns;
-};
+// When  user clicks on Show Item Filter/ icon or the right side of the top menu, user can see all the filters for that item. This component covers that state
+export const FilterContext = createContext<{
+  mainConfig: ItemFilterConfig;
+  setMainConfig: Dispatch<SetStateAction<ItemFilterConfig>>;
+} | null>(null);

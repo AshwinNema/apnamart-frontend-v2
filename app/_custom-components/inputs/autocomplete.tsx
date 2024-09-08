@@ -1,11 +1,11 @@
 import { Autocomplete, AutocompleteItem, Avatar } from "@nextui-org/react";
 import * as _ from "lodash";
 import React, { Key, useEffect, useState } from "react";
-import { AutoCompleteProps, autoCompleteState } from "./interfaces";
-import { HTTP_METHODS, makeDataRequest } from "@/app/_services/fetch-service";
-import { keyVals, setMultiplePaths, setNestedPath } from "@/app/_utils";
-import { onAutoCompleteSelectionChange } from "./utils";
-
+import { AutoCompleteProps, autoCompleteState } from "./interface";
+import { HTTP_METHODS } from "@/app/_services/fetch-service";
+import { setMultiplePaths } from "@/app/_utils";
+import { autoCompleteFetchData, onAutoCompleteSelectionChange } from "./utils";
+// Note - For documentation regarding this component please refer AutoCompleteProps(type definition of props for this component)
 export const AutoCompleteComponent = ({
   label,
   size = "md",
@@ -20,41 +20,20 @@ export const AutoCompleteComponent = ({
   labelPlacement = "inside",
   fullWidth,
   allowsCustomValue,
-  selectedKey = null,
+  selectedKey,
+  inputVal,
+  setInputVal,
 }: AutoCompleteProps): React.JSX.Element => {
   const [config, setConfig] = useState<autoCompleteState>({
     itemList: [],
     inputValue: "",
-    selectionKeyType: null,
     selectedKey: null,
   });
-
-  const setData = setNestedPath(setConfig);
   const setMultipleData = setMultiplePaths(setConfig);
-  const { itemList, inputValue, selectionKeyType } = config;
+  const { itemList, inputValue } = config;
 
   useEffect(() => {
-    selectedKey &&
-      !selectionKeyType &&
-      setData("selectionKeyType")(typeof selectedKey);
-  }, [selectedKey, selectionKeyType]);
-
-  useEffect(() => {
-    list && setData("itemList")(list);
-  }, [list]);
-
-  useEffect(() => {
-    url &&
-      processLogic &&
-      makeDataRequest(method, url).then((res) => {
-        const { data, inputVal } = processLogic(res);
-        const update: keyVals[] = [
-          ["itemList", data],
-          ["inputValue", inputVal],
-        ];
-        selectedKey && update.push(["selectedKey", selectedKey]);
-        setMultipleData(update);
-      });
+    autoCompleteFetchData(processLogic, method, setMultipleData, url);
   }, [url]);
 
   return (
@@ -66,24 +45,30 @@ export const AutoCompleteComponent = ({
         fullWidth={!!fullWidth}
         size={size}
         color={color}
-        selectedKey={config.selectedKey}
-        inputValue={inputValue}
+        selectedKey={
+          selectedKey !== undefined ? selectedKey : config.selectedKey
+        }
+        inputValue={typeof inputVal === "string" ? inputVal : inputValue}
         onInputChange={(val: string) => {
-          setData("inputValue")(val);
+          setConfig((prevConfig) => {
+            prevConfig.inputValue = val;
+            if (!val) prevConfig.selectedKey = null;
+            return { ...prevConfig };
+          });
           !val && onSelectionChange(null);
+          setInputVal && setInputVal(val);
         }}
-
         isClearable={!!isClearable}
         allowsCustomValue={allowsCustomValue}
-        items={itemList}
+        items={list ? list : itemList}
         labelPlacement={labelPlacement}
         onSelectionChange={(key: Key | null) => {
           onAutoCompleteSelectionChange(
             key,
-            selectionKeyType,
-            itemList,
+            list ? list : itemList,
             setMultipleData,
             onSelectionChange,
+            setInputVal,
           );
         }}
       >

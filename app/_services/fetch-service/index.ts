@@ -61,7 +61,6 @@ export const makeDataRequest = async (
         }
         return;
       }
-      successMsg && successToast({ msg: successMsg });
       if (response.status === 204) {
         return Promise.resolve("ok");
       }
@@ -76,6 +75,7 @@ export const makeDataRequest = async (
 
         return null;
       }
+      successMsg && successToast({ msg: successMsg });
       return dataResponse;
     })
     .catch((err) => {

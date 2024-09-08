@@ -8,9 +8,11 @@ import CreateUpdateModal from "../_modals/create-update";
 import { useProductDispatch, useProductSelector } from "@/lib/product/hooks";
 import {
   setDetails,
+  setIsOpen,
   tabKeys,
 } from "@/lib/product/slices/component-details.slice";
 import { clearModalDetails } from "@/lib/product/slices/modal-details.slice";
+import styles from "../../../styles.module.css";
 
 export default function TabContent() {
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
@@ -36,19 +38,27 @@ export default function TabContent() {
 
   useEffect(() => {
     !isOpen && dispatch(clearModalDetails());
+    dispatch(setIsOpen(isOpen));
   }, [isOpen, dispatch]);
 
   useEffect(() => {
     if (!closeModal) return;
     onClose();
-    setDetails({ closeModal: false });
-  }, [closeModal]);
+    dispatch(setDetails({ closeModal: false }));
+  }, [closeModal, dispatch]);
 
   return (
     <div>
-      <div className="flex justify-between gap-3 items-center">
+      <div
+        className={`flex justify-between gap-3 items-center ${styles["product-autocomplete-container"]}`}
+      >
         <Autocomplete />
-        <Button onPress={onOpen} startContent={<MdCategory />} color="primary">
+        <Button
+          onPress={onOpen}
+          startContent={<MdCategory />}
+          color="primary"
+          fullWidth
+        >
           Create{" "}
           {tab === tabKeys.category
             ? "Category"
