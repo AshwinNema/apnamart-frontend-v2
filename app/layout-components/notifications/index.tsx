@@ -1,4 +1,4 @@
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/main/hooks";
 import { useDisclosure } from "@nextui-org/react";
 import { useEffect } from "react";
 import { Modal, ModalContent } from "@nextui-org/react";
@@ -6,9 +6,9 @@ import NewUserNotification from "./new-user";
 import {
   notificationTypes,
   resetNotifications,
-} from "@/lib/slices/notification/notification.slice";
+} from "@/lib/main/slices/notification/notification.slice";
 import Logout from "./logout";
-import styles from "./styles.module.css";
+import styles from "../../styles.module.css";
 
 export default function NotificationModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -42,11 +42,13 @@ export default function NotificationModal() {
       <ModalContent>
         {(onClose) => (
           <>
-            {type === notificationTypes.newUser && (
+            {type === notificationTypes.newUser ? (
               <NewUserNotification onClose={onClose} />
-            )}
+            ) : null}
 
-            {type === notificationTypes.logout && <Logout onClose={onClose} />}
+            {type === notificationTypes.logout ? (
+              <Logout onClose={onClose} />
+            ) : null}
           </>
         )}
       </ModalContent>

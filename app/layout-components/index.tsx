@@ -8,7 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import NotificationModal from "./notifications";
 import { usePromiseTracker } from "react-promise-tracker";
 import { Spinner } from "../_custom-components";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/main/hooks";
 import { getUserProfile } from "../profile/api";
 import { usePathname } from "next/navigation";
 
@@ -24,10 +24,6 @@ export default function Layout({
   const user = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const path = usePathname();
-
-  useEffect(() => {
-    console.log(path, "this is the path ");
-  }, [path]);
 
   useEffect(() => {
     setMounted(true);

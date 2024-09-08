@@ -5,16 +5,15 @@ import { Card, CardBody, CardHeader } from "@nextui-org/react";
 import { useTheme } from "next-themes";
 import dynamic from "next/dynamic";
 
-export const DeliveryAddress = dynamic(
-  () => import("@/app/admin/delivery-area/delivery-area"),
-  {
-    ssr: false,
-    loading: () => <Spinner />,
-  },
-);
-
 export default function Page() {
   const { theme } = useTheme();
+  const DeliveryAddress = dynamic(
+    () => import("@/app/admin/delivery-area/delivery-area"),
+    {
+      ssr: false,
+      loading: () => <Spinner />,
+    },
+  );
   return (
     <>
       <Card

@@ -6,7 +6,7 @@ import AddressDetailsDrawer from "./drawer";
 import { drawerValidation, mainConfig, updateUserAddress } from "../../utils";
 import { getZodErrMsg, setVal } from "@/app/_utils";
 import { errorToast, toastErrorIcons } from "@/app/_utils/toast";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/main/hooks";
 export default function AddressFooter({
   config,
   setData,

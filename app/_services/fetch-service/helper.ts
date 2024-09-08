@@ -4,6 +4,7 @@ import {
   storageAttributes,
 } from "../local-storage.service";
 import { getRefreshToken } from "./helper-apis";
+import { ReactNode } from "react";
 
 export enum HTTP_METHODS {
   POST = "POST",
@@ -37,6 +38,7 @@ export interface fetchConfig extends errHandling {
   showLoader?: boolean;
   showToast?: boolean;
   addToken?: boolean;
+  successMsg?: ReactNode;
 }
 
 export interface uploadRespHandling extends errHandling {

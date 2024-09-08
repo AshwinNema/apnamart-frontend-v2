@@ -1,7 +1,8 @@
 import { Button, ModalFooter } from "@nextui-org/react";
 import { loginConfig, modalTypes } from "../constants";
 import { loginSignUp } from "../api";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch } from "@/lib/main/hooks";
+import { variants } from "@/app/_utils";
 
 export default function Footer({
   changeModalType,
@@ -21,15 +22,19 @@ export default function Footer({
   return (
     <ModalFooter className="flex flex-col">
       {currentStep === 1 ? (
-        <div className="flex justify-between gap-3">
-          <Button fullWidth onClick={() => setData("currentStep")(0)}>
+        <div className="flex justify-between gap-3 mb-5">
+          <Button
+            variant={variants.goBackBtn}
+            fullWidth
+            onClick={() => setData("currentStep")(0)}
+          >
             Go Back
           </Button>
 
           <Button
             fullWidth
             onClick={() => loginSignUp(formData, onClose, modalType, dispatch)}
-            color="primary"
+            color="success"
           >
             {modalType === modalTypes.signUp ? "Sign Up" : "Sign in"}
           </Button>

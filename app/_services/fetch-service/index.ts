@@ -6,10 +6,11 @@ import {
   getToken,
   HTTP_METHODS,
   addQuery,
-  uploadRespHandling,
   fetchConfig,
 } from "./helper";
+
 export * from "./helper";
+export * from "./upload-handler";
 
 export const makeDataRequest = async (
   method: HTTP_METHODS,
@@ -32,6 +33,7 @@ export const makeDataRequest = async (
     showLoader = true,
     showToast = true,
     addToken = true,
+    successMsg,
   } = reqConfig;
   const headers: {
     "Content-Type": string;
@@ -73,6 +75,7 @@ export const makeDataRequest = async (
 
         return null;
       }
+      successMsg && successToast({ msg: successMsg });
       return dataResponse;
     })
     .catch((err) => {
@@ -82,71 +85,4 @@ export const makeDataRequest = async (
     return trackPromise(promise);
   }
   return promise;
-};
-
-export const makeUploadDataRequest = async (
-  method: HTTP_METHODS,
-  url: string,
-  data: object,
-  params?: params,
-  responseHandling: uploadRespHandling = {
-    showToastAndRedirect: true,
-    iconType: toastErrorIcons.default,
-    throwErr: false,
-    successMsg: "",
-  },
-) => {
-  const {
-    showToastAndRedirect = true,
-    iconType = toastErrorIcons.default,
-    throwErr,
-    successCallback,
-    successMsg,
-  } = responseHandling;
-  const headers = {
-    Authorization: `Bearer ${await getToken()}`,
-  };
-  url += addQuery(params);
-  const formData = new FormData();
-
-  Object.entries(data).forEach(([key, val]) => {
-    formData.append(key, val);
-  });
-
-  return trackPromise(
-    fetch(url, {
-      method,
-      body: formData,
-      headers,
-    })
-      .then(async (response) => {
-        if (response.status === 401) {
-          if (showToastAndRedirect) {
-            errorToast({ msg: "Token expired" });
-            clearUserStorage();
-            redirect("/");
-          }
-          return;
-        }
-
-        if (response.status === 204) {
-          return Promise.resolve("ok");
-        }
-
-        const dataResponse = await response.json();
-        if (dataResponse?.statusCode >= 400) {
-          if (throwErr) {
-            throw new Error(dataResponse.message);
-          }
-          errorToast({ msg: dataResponse.message, iconType });
-          return null;
-        }
-        successToast({ msg: successMsg });
-        successCallback && successCallback();
-        return dataResponse;
-      })
-      .catch((err) => {
-        errorToast({ msg: err.message });
-      }),
-  );
 };

@@ -34,13 +34,13 @@ export const RoleCard = ({
         <b className="flex justify-center">{roleHeader}</b>
       </CardBody>
       <CardFooter className="text-small relative overflow-visible">
-        {selectedRole === role && (
+        {selectedRole === role ? (
           <Checkbox
             isSelected={selectedRole === role}
             className="absolute bottom-0 right-[-0.75rem]"
             radius="full"
           />
-        )}
+        ) : null}
       </CardFooter>
     </Card>
   );
@@ -58,7 +58,7 @@ export default function Roles({
   return (
     <>
       <p className="text-2xl flex justify-center mb-3">Choose Account Type</p>
-      {modalType !== modalTypes.signUp && (
+      {modalType !== modalTypes.signUp ? (
         <div>
           <div className="flex justify-center mb-10">
             <RoleCard
@@ -68,7 +68,7 @@ export default function Roles({
             />
           </div>
         </div>
-      )}
+      ) : null}
 
       <div className="flex justify-between">
         <RoleCard
