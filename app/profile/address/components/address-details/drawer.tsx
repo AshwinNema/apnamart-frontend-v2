@@ -2,7 +2,7 @@ import { TextInput } from "@/app/_custom-components";
 import CustomDrawer from "@/app/_custom-components/drawer";
 import { setMultiplePaths, setNestedPath, setVal } from "@/app/_utils";
 import { Button, ModalBody } from "@nextui-org/react";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import { z } from "zod";
 import { addressTypeList, mainConfig, saveDrawerDetails } from "../../utils";
 import { drawerInitialVal, addressType } from "../../utils";
@@ -19,8 +19,8 @@ export default function AddressDetailsDrawer({
   setMainData: setVal;
 }) {
   const [config, setConfig] = useState(structuredClone(drawerInitialVal));
-  const setData = setNestedPath(setConfig);
-  const setMultipleData = setMultiplePaths(setConfig);
+  const setData = useCallback(setNestedPath(setConfig), [setConfig]);
+  const setMultipleData = useCallback(setMultiplePaths(setConfig), [setConfig]);
 
   useEffect(() => {
     setConfig(structuredClone(addressDetails));

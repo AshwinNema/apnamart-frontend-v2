@@ -3,7 +3,7 @@
 import { IconInput, ProtectedRoute } from "../_custom-components";
 import { Tabs, Tab, Badge, Avatar } from "@nextui-org/react";
 import { tabKeys, tabOption, tabOptions } from "./utils";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { setNestedPath } from "../_utils";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { getUserProfile, uploadProfileImage } from "./api";
@@ -16,7 +16,7 @@ function Page() {
     selectedTab: tabKeys.basicDetails,
     user: { ...user } || {},
   });
-  const setProperty = setNestedPath(setConfig);
+  const setProperty = useCallback(setNestedPath(setConfig), [setConfig]);
   const params = useSearchParams();
   const selectedTab = params.get("selectedTab");
   useEffect(() => {
