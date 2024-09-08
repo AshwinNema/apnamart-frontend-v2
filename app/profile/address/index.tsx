@@ -29,8 +29,8 @@ export default function UserAddress() {
     longtitude: 77.5526110768168,
   });
 
-  const setMultipleData = setMultiplePaths(setConfig);
-  const setData = setNestedPath(setConfig);
+  const setMultipleData = useCallback(setMultiplePaths(setConfig), [setConfig]);
+  const setData = useCallback(setNestedPath(setConfig), [setConfig]);
 
   const getLocationAddress = useCallback(
     _.debounce((lat: number, lng: number) => {

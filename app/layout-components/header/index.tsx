@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -25,7 +25,7 @@ export default function Header() {
     modalType: null,
   });
 
-  const setDataFunc = setNestedPath(setConfig);
+  const setDataFunc = useCallback(setNestedPath(setConfig), [setConfig]);
 
   const openModal = (modalType: modalTypes) => () => {
     setDataFunc("modalType")(modalType);

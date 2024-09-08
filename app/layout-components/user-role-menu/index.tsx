@@ -1,5 +1,5 @@
 import { useAppSelector } from "@/lib/main/hooks";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { IoMenuOutline } from "react-icons/io5";
 import {
   Dropdown,
@@ -21,7 +21,7 @@ export const UserRoleMenu = () => {
     itemList: [],
     toggleIcon: true,
   });
-  const setData = setNestedPath(setConfig);
+  const setData = useCallback(setNestedPath(setConfig), [setConfig]);
   const user = useAppSelector((state) => state.user);
   const router = useRouter();
   const path = usePathname();

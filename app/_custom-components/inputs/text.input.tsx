@@ -1,5 +1,5 @@
 import { Input } from "@nextui-org/react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { keyVals, setMultiplePaths, setNestedPath } from "@/app/_utils";
 import { ClearIcon } from "@/app/_utils/icons & logos";
 import { TextInputProps, TextInputState } from "./interface";
@@ -28,8 +28,10 @@ export const TextInput = ({
     isFocussed: false,
   });
   const isInputClicked = useRef(false);
-  const setDataFunc = setNestedPath(setConfig);
-  const setMultipleDataFunc = setMultiplePaths(setConfig);
+  const setDataFunc = useCallback(setNestedPath(setConfig), [setConfig]);
+  const setMultipleDataFunc = useCallback(setMultiplePaths(setConfig), [
+    setConfig,
+  ]);
 
   useEffect(() => {
     const clicked = () => {

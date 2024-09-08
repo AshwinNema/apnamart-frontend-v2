@@ -1,6 +1,6 @@
 import { Autocomplete, AutocompleteItem, Avatar } from "@nextui-org/react";
 import * as _ from "lodash";
-import React, { Key, useEffect, useState } from "react";
+import React, { Key, useCallback, useEffect, useState } from "react";
 import { AutoCompleteProps, autoCompleteState } from "./interface";
 import { HTTP_METHODS } from "@/app/_services/fetch-service";
 import { setMultiplePaths } from "@/app/_utils";
@@ -29,7 +29,7 @@ export const AutoCompleteComponent = ({
     inputValue: "",
     selectedKey: null,
   });
-  const setMultipleData = setMultiplePaths(setConfig);
+  const setMultipleData = useCallback(setMultiplePaths(setConfig), [setConfig]);
   const { itemList, inputValue } = config;
 
   useEffect(() => {
