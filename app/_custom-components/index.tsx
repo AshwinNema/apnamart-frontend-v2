@@ -1,4 +1,10 @@
-import { Image, Modal, ModalContent, useDisclosure } from "@nextui-org/react";
+import {
+  Image,
+  Modal,
+  ModalContent,
+  Skeleton,
+  useDisclosure,
+} from "@nextui-org/react";
 import NextImage from "next/image";
 import { useAppSelector } from "@/lib/main/hooks";
 import { ReactNode, useEffect } from "react";
@@ -81,4 +87,16 @@ export const ProtectedRoute = ({
   }, [allowedRole, role, router]);
 
   return <> {user ? children : <Spinner />}</>;
+};
+
+export const ComponentSkeleton = ({
+  height = "h-svh",
+}: {
+  height?: string;
+}) => {
+  return (
+    <Skeleton>
+      <div className={`${height}`}></div>
+    </Skeleton>
+  );
 };
