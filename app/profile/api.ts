@@ -3,13 +3,11 @@ import {
   HTTP_METHODS,
   makeDataRequest,
   makeUploadDataRequest,
-} from "../_services/fetch-service";
-import { appEndPoints } from "../_utils/endpoints";
-import {
   getLocalStorageKey,
   setLocalStorageKey,
   storageAttributes,
-} from "../_services/local-storage.service";
+} from "../_services";
+import { appEndPoints } from "../_utils/endpoints";
 import { AppDispatch } from "@/lib/main/store";
 import { z } from "zod";
 import { tabKeys, userInputPage } from "./utils";

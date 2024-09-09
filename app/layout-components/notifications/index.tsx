@@ -2,19 +2,19 @@ import { useAppDispatch, useAppSelector } from "@/lib/main/hooks";
 import { useDisclosure } from "@nextui-org/react";
 import { useEffect } from "react";
 import { Modal, ModalContent } from "@nextui-org/react";
-import NewUserNotification from "./new-user";
 import {
   notificationTypes,
   resetNotifications,
 } from "@/lib/main/slices/notification/notification.slice";
-import Logout from "./logout";
 import styles from "../../styles.module.css";
+import dynamic from "next/dynamic";
 
 export default function NotificationModal() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { type, modalProps } = useAppSelector((state) => state.notifications);
   const dispatch = useAppDispatch();
-
+  const Logout = dynamic(() => import("./logout"));
+  const NewUserNotification = dynamic(() => import("./new-user"));
   useEffect(() => {
     if (!type) return;
     onOpen();

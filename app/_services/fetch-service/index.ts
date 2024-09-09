@@ -1,5 +1,5 @@
 import { trackPromise } from "react-promise-tracker";
-import { clearUserStorage, redirect } from "../local-storage.service";
+import { clearUserStorage, redirect } from "../web-storage.service";
 import { errorToast, successToast, toastErrorIcons } from "../../_utils/toast";
 import {
   params,

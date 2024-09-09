@@ -11,7 +11,7 @@ import {
 } from "../interface";
 import { ZodSchema } from "zod";
 import React from "react";
-import { HTTP_METHODS, makeDataRequest } from "@/app/_services/fetch-service";
+import { HTTP_METHODS, makeDataRequest } from "@/app/_services";
 
 export const alternateTextCheck = (
   alternateText: string | undefined,

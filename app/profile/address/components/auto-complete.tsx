@@ -1,5 +1,5 @@
 "use client";
-import { HTTP_METHODS, makeDataRequest } from "@/app/_services/fetch-service";
+import { HTTP_METHODS, makeDataRequest } from "@/app/_services";
 import { appEndPoints } from "@/app/_utils/endpoints";
 import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import { useAsyncList } from "@react-stately/data";
