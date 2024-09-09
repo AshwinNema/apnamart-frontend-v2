@@ -19,7 +19,6 @@ export default function LoginSignUpModal({
   const { formData } = config;
   const setData = useCallback(setNestedPath(setConfig), [setConfig]);
   const setMultipleData = useCallback(setMultiplePaths(setConfig), [setConfig]);
-  
   useEffect(() => {
     if (!isOpen) {
       setConfig(structuredClone(defaultConfig));
