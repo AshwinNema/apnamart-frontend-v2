@@ -7,7 +7,7 @@ import {
   redirect,
   setLocalStorageKey,
   storageAttributes,
-} from "../local-storage.service";
+} from "../web-storage.service";
 
 export const getRefreshToken = async (refreshToken: string) => {
   try {

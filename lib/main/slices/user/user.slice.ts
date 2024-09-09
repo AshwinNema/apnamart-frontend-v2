@@ -1,7 +1,7 @@
 import {
   getLocalStorageKey,
   storageAttributes,
-} from "@/app/_services/local-storage.service";
+} from "@/app/_services/web-storage.service";
 import { addressType } from "@/app/profile/address/utils";
 import { createSlice } from "@reduxjs/toolkit";
 

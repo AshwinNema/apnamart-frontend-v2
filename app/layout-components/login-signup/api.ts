@@ -5,12 +5,13 @@ import {
   signUpValidationSchema,
 } from "./constants";
 import { appEndPoints } from "@/app/_utils/endpoints";
-import { HTTP_METHODS, makeDataRequest } from "@/app/_services/fetch-service";
-import { getZodErrMsg } from "@/app/_utils";
 import {
+  HTTP_METHODS,
+  makeDataRequest,
   setLocalStorageKey,
   storageAttributes,
-} from "@/app/_services/local-storage.service";
+} from "@/app/_services";
+import { getZodErrMsg } from "@/app/_utils";
 import { setUser } from "@/lib/main/slices/user/user.slice";
 import { AppDispatch } from "@/lib/main/store";
 import { errorToast, toastErrorIcons } from "@/app/_utils/toast";

@@ -1,4 +1,10 @@
-import { HTTP_METHODS, makeDataRequest } from "@/app/_services/fetch-service";
+import {
+  HTTP_METHODS,
+  makeDataRequest,
+  setLocalStorageKey,
+  storageAttributes,
+} from "@/app/_services";
+
 import { keyVals } from "@/app/_utils";
 import { appEndPoints } from "@/app/_utils/endpoints";
 import { addressPayload } from "./interfaces-enums-default vals-schemas";
@@ -9,10 +15,6 @@ import {
 } from "@/app/_utils/toast";
 import { setUser, UserInterface } from "@/lib/main/slices/user/user.slice";
 import { AppDispatch } from "@/lib/main/store";
-import {
-  setLocalStorageKey,
-  storageAttributes,
-} from "@/app/_services/local-storage.service";
 
 export const getAddress = (
   latLng: { lat: number; lng: number },

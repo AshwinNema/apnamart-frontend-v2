@@ -1,14 +1,13 @@
+import { GiShop } from "react-icons/gi";
 import {
   HTTP_METHODS,
   makeDataRequest,
   token,
-} from "@/app/_services/fetch-service";
-import { GiShop } from "react-icons/gi";
-import {
   clearUserStorage,
   getLocalStorageKey,
   storageAttributes,
-} from "@/app/_services/local-storage.service";
+} from "@/app/_services";
+
 import { appEndPoints } from "@/app/_utils/endpoints";
 import { useAppDispatch } from "@/lib/main/hooks";
 import {
