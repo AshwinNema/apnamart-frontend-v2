@@ -66,10 +66,7 @@ export default function Logout({ onClose }: { onClose: () => void }) {
         </div>
         <div className="flex justify-center">Logout of Apnamart?</div>
       </ModalHeader>
-      <ModalBody>
-        You can always log back in at any time. If you just want to switch
-        accounts, you can do that by adding an existing account.
-      </ModalBody>
+      <ModalBody>You can always log back in at any time.</ModalBody>
       <ModalFooter>
         <div className="flex flex-col w-full">
           <Button

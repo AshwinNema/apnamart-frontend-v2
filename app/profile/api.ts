@@ -10,7 +10,7 @@ import {
 import { appEndPoints } from "../_utils/endpoints";
 import { AppDispatch } from "@/lib/main/store";
 import { z } from "zod";
-import { tabKeys, userInputPage } from "./utils";
+import { checkMerchantRegistration, tabKeys, userInputPage } from "./utils";
 import { getZodErrMsg, passwordErrMsg, passwordRegex } from "../_utils";
 import {
   errorToast,
@@ -28,6 +28,7 @@ export const getUserProfile = (dispatch: AppDispatch) => {
     user = { ...user, ...res };
     dispatch(setUser(user));
     setLocalStorageKey(storageAttributes.user, user);
+    checkMerchantRegistration(user, dispatch);
   });
 };
 

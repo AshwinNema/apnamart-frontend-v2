@@ -33,6 +33,17 @@ export interface UserInterface {
   updatedAt: Date;
   isBlackListed: boolean;
   archive: boolean;
+  merchantDetails?: {
+    id: number;
+    isMerchantBlocked: boolean;
+    isRegistreationCompleted: boolean;
+    latitude: number;
+    longtitude: number;
+    addressLine1: string;
+    addressLine2: string;
+    bankAcNo: string;
+    gstIn: string;
+  } | null;
 }
 
 export const userSlice = createSlice({

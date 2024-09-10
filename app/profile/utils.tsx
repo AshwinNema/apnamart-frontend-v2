@@ -6,6 +6,14 @@ import { RiListSettingsLine } from "react-icons/ri";
 import BasicDetails from "./user-input-details";
 import dynamic from "next/dynamic";
 import { Spinner } from "../_custom-components";
+import { UserInterface, UserRole } from "@/lib/main/slices/user/user.slice";
+import { AppDispatch } from "@/lib/main/store";
+import {
+  getSessionStorageKey,
+  sessionStorageAttributes,
+  setSessionStorageKey,
+} from "../_services";
+import { handleAction } from "../layout-components/notifications/merchant-registration";
 
 const UserAddress = dynamic(() => import("@/app/profile/address/index"), {
   ssr: false,
@@ -64,3 +72,23 @@ export const tabOptions: tabOption[] = [
     key: tabKeys.settings,
   },
 ];
+
+export const checkMerchantRegistration = (
+  user: UserInterface,
+  dispatch: AppDispatch,
+) => {
+  const role = user?.role;
+  if (role !== UserRole.merchant) return;
+  const isRegistreationCompleted =
+    user?.merchantDetails?.isRegistreationCompleted;
+  if (isRegistreationCompleted) return;
+  const isRegistrationNotificationShown = getSessionStorageKey(
+    sessionStorageAttributes.pendingMerchantRegistration,
+  );
+  if (isRegistrationNotificationShown) return;
+  setSessionStorageKey(
+    sessionStorageAttributes.pendingMerchantRegistration,
+    true,
+  );
+  dispatch(handleAction());
+};
