@@ -16,12 +16,16 @@ export default function NotificationModal() {
   const Logout = dynamic(() => import("./logout"));
   const NewUserNotification = dynamic(() => import("./new-user"));
   const MerchantRegistration = dynamic(() => import("./merchant-registration"));
+  const resetReduxState = () => dispatch(resetNotifications());
+
   useEffect(() => {
     if (!type) return;
     onOpen();
   }, [type]);
 
-  const resetReduxState = () => dispatch(resetNotifications());
+  useEffect(() => {
+    !isOpen && resetReduxState();
+  }, [isOpen])
 
   const CurrentNotificationModal = () => {
     switch (type) {
@@ -50,8 +54,7 @@ export default function NotificationModal() {
       placement={`${modalProps?.placement}`}
       hideCloseButton={modalProps.hideCloseButton}
       isDismissable={modalProps.isDismissable}
-      onOpenChange={(isOpen) => {
-        if (!isOpen) resetReduxState();
+      onOpenChange={() => {
         onOpenChange();
       }}
     >
