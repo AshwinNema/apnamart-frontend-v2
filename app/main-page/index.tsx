@@ -7,7 +7,10 @@ import {
   ListboxItem,
 } from "@nextui-org/react";
 import { entityConfig, entityData } from "./entity-config";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import { setNestedPath } from "../_utils";
+import { Spinner } from "../_custom-components";
 
 export const EntityDashboard = ({
   entityKey,
@@ -15,7 +18,21 @@ export const EntityDashboard = ({
   entityKey: keyof entityData;
 }) => {
   const router = useRouter();
+  const path = usePathname();
   const details = entityConfig[entityKey];
+  const [config, setConfig] = useState({
+    showSpinner: false,
+  });
+  const setData = useCallback(setNestedPath(setConfig), [setConfig]);
+
+  useEffect(() => {
+    setData("showSpinner")(false);
+
+    return () => {
+      setData("showSpinner")(false);
+    };
+  }, [path, setData]);
+
   return (
     <>
       <Card className="m-5 mt-11">
@@ -26,6 +43,7 @@ export const EntityDashboard = ({
           <div className="text-xl mt-8 mb-11">{details.description}</div>
           <Listbox
             onAction={(key) => {
+              setNestedPath(setConfig)("showSpinner")(true);
               router.push(key as string);
             }}
           >
@@ -56,6 +74,7 @@ export const EntityDashboard = ({
           </div>
         </CardFooter>
       </Card>
+      {config.showSpinner && <Spinner />}
     </>
   );
 };
