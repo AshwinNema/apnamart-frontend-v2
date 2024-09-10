@@ -11,6 +11,11 @@ import { Spinner } from "../_custom-components";
 import { useAppDispatch, useAppSelector } from "@/lib/main/hooks";
 import { getUserProfile } from "../profile/api";
 import { usePathname } from "next/navigation";
+import {
+  getSessionStorageKey,
+  sessionStorageAttributes,
+  setSessionStorageKey,
+} from "../_services";
 
 export default function Layout({
   children,
@@ -30,9 +35,11 @@ export default function Layout({
   }, []);
 
   useEffect(() => {
-    const isUserFetched = window.sessionStorage.getItem("isUserFetched");
+    const isUserFetched = getSessionStorageKey(
+      sessionStorageAttributes.userFetch,
+    );
     if (!isUserFetched && user && !path.includes("/profile")) {
-      window.sessionStorage.setItem("isUserFetched", "true");
+      setSessionStorageKey(sessionStorageAttributes.userFetch, true);
       getUserProfile(dispatch);
     }
   }, [dispatch, user, path]);

@@ -8,7 +8,9 @@ import { appEndPoints } from "@/app/_utils/endpoints";
 import {
   HTTP_METHODS,
   makeDataRequest,
+  sessionStorageAttributes,
   setLocalStorageKey,
+  setSessionStorageKey,
   storageAttributes,
 } from "@/app/_services";
 import { getZodErrMsg } from "@/app/_utils";
@@ -50,7 +52,7 @@ export const loginSignUp = async (
     setLocalStorageKey(storageAttributes.user, user);
     setLocalStorageKey(storageAttributes.tokens, tokens);
     onClose();
-    window.sessionStorage.setItem("isUserFetched", "true");
+    setSessionStorageKey(sessionStorageAttributes.userFetch, true);
     if (modalType === modalTypes.signUp) {
       dispatch(
         handleAction({
