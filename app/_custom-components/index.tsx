@@ -1,6 +1,4 @@
-import {
-  Image,
-} from "@nextui-org/react";
+import { Image } from "@nextui-org/react";
 import NextImage from "next/image";
 import { useAppSelector } from "@/lib/main/hooks";
 import { ReactNode, useEffect } from "react";
@@ -11,7 +9,7 @@ export * from "./inputs";
 export * from "./leaflet";
 export * from "./drawer";
 export * from "./table";
-export *  from "./loaders"
+export * from "./loaders";
 
 export const ImageComponent = ({
   width,

@@ -1,0 +1,61 @@
+import React from "react";
+import { FcViewDetails } from "react-icons/fc";
+import { FaMapLocationDot } from "react-icons/fa6";
+import { RiListSettingsLine } from "react-icons/ri";
+import BasicDetails from "../user-input-details";
+import { tabKeys, tabOption } from ".";
+import dynamic from "next/dynamic";
+import { UserRole } from "@/lib/main/slices/user/user.slice";
+import { ComponentSkeleton } from "@/app/_custom-components";
+
+export const getTabOptions = (role: UserRole): tabOption[] => {
+  const config: tabOption[] = [
+    {
+      title: (
+        <div className="flex items-center gap-4">
+          <FcViewDetails className="scale-[2]" />
+          Basic Details
+        </div>
+      ),
+      Content: (props) => (
+        <BasicDetails userInputPage={tabKeys.basicDetails} {...props} />
+      ),
+      key: tabKeys.basicDetails,
+    },
+  ];
+
+  role === UserRole.customer &&
+    config.push({
+      title: (
+        <div className="flex items-center gap-4">
+          <FaMapLocationDot className="scale-[2]" />
+          Address
+        </div>
+      ),
+      Content: (props) => {
+        const UserAddress = dynamic(
+          () => import("@/app/profile/address/index"),
+          {
+            ssr: false,
+            loading: () => <ComponentSkeleton />,
+          },
+        );
+        return <UserAddress {...props} />;
+      },
+      key: tabKeys.address,
+    });
+
+  config.push({
+    title: (
+      <div className="flex items-center gap-4">
+        <RiListSettingsLine className="scale-[2]" />
+        Settings
+      </div>
+    ),
+    Content: (props) => (
+      <BasicDetails userInputPage={tabKeys.settings} {...props} />
+    ),
+    key: tabKeys.settings,
+  });
+  return config;
+};

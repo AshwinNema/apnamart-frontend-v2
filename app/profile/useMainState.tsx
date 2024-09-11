@@ -1,5 +1,5 @@
-import { tabKeys } from "./utils";
-import { useCallback, useEffect, useState } from "react";
+import { getTabOptions, tabKeys, tabOption } from "./utils";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { setKeyVal, setNestedPath } from "../_utils";
 import { getUserProfile } from "./api";
 import { useAppDispatch, useAppSelector } from "@/lib/main/hooks";
@@ -11,7 +11,7 @@ export interface stateConfig {
   user: UserInterface;
 }
 
-const useMainState = (): [stateConfig, setKeyVal] => {
+const useMainState = (): [stateConfig, setKeyVal, tabOption[]] => {
   const user = useAppSelector((state) => state.user);
   const [config, setConfig] = useState<stateConfig>({
     selectedTab: tabKeys.basicDetails,
@@ -20,6 +20,7 @@ const useMainState = (): [stateConfig, setKeyVal] => {
   const setProperty = useCallback(setNestedPath(setConfig), [setConfig]);
   const params = useSearchParams();
   const selectedTab = params.get("selectedTab");
+  const tabOptions = useMemo(() => getTabOptions(user.role), [user.role]);
   useEffect(() => {
     if (!selectedTab) return;
     if (selectedTab in tabKeys && selectedTab !== tabKeys.profile) {
@@ -33,7 +34,7 @@ const useMainState = (): [stateConfig, setKeyVal] => {
     getUserProfile(dispatch);
   }, [dispatch]);
 
-  return [config, setProperty];
+  return [config, setProperty, tabOptions];
 };
 
 export default useMainState;

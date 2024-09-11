@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, user } from "@nextui-org/react";
+import { Button, Card, CardBody } from "@nextui-org/react";
 import { PasswordInput, TextInput } from "@/app/_custom-components/inputs";
 import { UserInterface } from "@/lib/main/slices/user/user.slice";
 import { setKeyVal } from "../_utils";

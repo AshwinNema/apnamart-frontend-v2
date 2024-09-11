@@ -1,6 +1,6 @@
 import { IconInput } from "../_custom-components";
 import { Tabs, Tab, Badge, Avatar } from "@nextui-org/react";
-import { tabKeys, tabOption, tabOptions } from "./utils";
+import { tabKeys, tabOption } from "./utils";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { uploadProfileImage } from "./api";
 import { useAppDispatch, useAppSelector } from "@/lib/main/hooks";
@@ -8,7 +8,7 @@ import useMainState from "./useMainState";
 
 function UserProfile() {
   const user = useAppSelector((state) => state.user);
-  const [config, setProperty] = useMainState();
+  const [config, setProperty, tabOptions] = useMainState();
   const dispatch = useAppDispatch();
 
   return (

@@ -25,7 +25,7 @@ export default function NotificationModal() {
 
   useEffect(() => {
     !isOpen && resetReduxState();
-  }, [isOpen])
+  }, [isOpen]);
 
   const CurrentNotificationModal = () => {
     switch (type) {
