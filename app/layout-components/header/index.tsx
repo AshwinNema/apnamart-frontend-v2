@@ -17,6 +17,7 @@ import { GiShop } from "react-icons/gi";
 import UserProfile from "../user-profile";
 
 import { UserRoleMenu } from "../user-role-menu";
+import { SpinnerLink } from "@/app/_custom-components";
 
 export default function Header() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -46,12 +47,12 @@ export default function Header() {
         <NavbarBrand className="flex items-center gap-4">
           {user ? <UserRoleMenu /> : null}
 
-          <Link color="foreground" href="/">
+          <SpinnerLink color="foreground" href="/">
             <div className="flex gap-3">
               <GiShop className="scale-[2]" />
               <div className="font-bold font-serif">Apnamart</div>
             </div>
-          </Link>
+          </SpinnerLink>
         </NavbarBrand>
 
         <NavbarContent justify="end">

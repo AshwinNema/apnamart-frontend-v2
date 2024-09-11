@@ -1,11 +1,13 @@
 import {
+  Link,
   Modal,
   ModalContent,
   Skeleton,
   useDisclosure,
 } from "@nextui-org/react";
-import { useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { CircularProgress } from "@nextui-org/progress";
+import { usePathname } from "next/navigation";
 export const Spinner = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -38,5 +40,43 @@ export const ComponentSkeleton = ({
     <Skeleton>
       <div className={`${height}`}></div>
     </Skeleton>
+  );
+};
+
+export const SpinnerLink = ({
+  children,
+  color = "foreground",
+  href,
+}: {
+  children: ReactNode;
+  color?:
+    | "foreground"
+    | "danger"
+    | "primary"
+    | "secondary"
+    | "warning"
+    | "success";
+  href: string;
+}) => {
+  const [showSpinner, setSpinner] = useState(false);
+  const path = usePathname();
+
+  useEffect(() => {
+    setSpinner(false);
+  }, [path]);
+  return (
+    <>
+      {showSpinner && <Spinner />}
+      <Link
+        onClick={() => {
+          console.log(path, href);
+          path !== href && setSpinner(true);
+        }}
+        color={color}
+        href={href}
+      >
+        {children}
+      </Link>
+    </>
   );
 };
