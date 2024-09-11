@@ -8,16 +8,8 @@ import {
   setSessionStorageKey,
 } from "../../_services";
 import { handleAction } from "../../layout-components/notifications/merchant-registration";
+import { tabKeys } from "@/lib/profile/slices/component-state.slice";
 export * from "./tabs";
-
-export enum tabKeys {
-  profile = "Profile",
-  basicDetails = "Basic details",
-  address = "address",
-  settings = "settings",
-}
-
-export type userInputPage = Omit<tabKeys, tabKeys.profile | tabKeys.address>;
 
 export interface tabOption {
   title: ReactNode;

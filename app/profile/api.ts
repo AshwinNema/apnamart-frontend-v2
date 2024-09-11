@@ -10,7 +10,7 @@ import {
 import { appEndPoints } from "../_utils/endpoints";
 import { AppDispatch } from "@/lib/main/store";
 import { z } from "zod";
-import { checkMerchantRegistration, tabKeys, userInputPage } from "./utils";
+import { checkMerchantRegistration } from "./utils";
 import { getZodErrMsg, passwordErrMsg, passwordRegex } from "../_utils";
 import {
   errorToast,
@@ -18,6 +18,9 @@ import {
   toastErrorIcons,
   toastSuccessIcons,
 } from "../_utils/toast";
+import { ProfileDispatch } from "@/lib/profile/store";
+import { setProfileUser } from "@/lib/profile/slices/user.slice";
+import { tabKeys } from "@/lib/profile/slices/component-state.slice";
 
 export const getUserProfile = (dispatch: AppDispatch) => {
   makeDataRequest(HTTP_METHODS.GET, appEndPoints.PROFILE).then((res) => {
@@ -32,7 +35,7 @@ export const getUserProfile = (dispatch: AppDispatch) => {
   });
 };
 
-export const uploadProfileImage = (file: File, dispatch: AppDispatch) => {
+export const uploadProfileImage = (file: File, dispatch: ProfileDispatch) => {
   makeUploadDataRequest(
     HTTP_METHODS.PUT,
     appEndPoints.UPLOAD_PROFILE_IMG,
@@ -46,15 +49,16 @@ export const uploadProfileImage = (file: File, dispatch: AppDispatch) => {
 
     let user = getLocalStorageKey(storageAttributes.user) as UserInterface;
     user = { ...user, ...res };
-    dispatch(setUser(user));
+    dispatch(setProfileUser(user));
     setLocalStorageKey(storageAttributes.user, user);
   });
 };
 
 export const updateUserDetails = (
   details: { password: string } | { name: string; email: string },
-  type: userInputPage,
-  dispatch: AppDispatch,
+  type: tabKeys,
+  dispatch: ProfileDispatch,
+  mainUserUpdate: (user: UserInterface) => void
 ) => {
   makeDataRequest(
     HTTP_METHODS.PUT,
@@ -85,11 +89,12 @@ export const updateUserDetails = (
     if (!res) return;
     let user = getLocalStorageKey(storageAttributes.user) as UserInterface;
     user = { ...user, ...res };
+    mainUserUpdate(user)
     successToast({
       msg: "User details updated successfully",
       iconType: toastSuccessIcons.rocket,
     });
-    dispatch(setUser(user));
+    dispatch(setProfileUser(user));
     setLocalStorageKey(storageAttributes.user, user);
   });
 };

@@ -13,8 +13,9 @@ import {
   successToast,
   toastSuccessIcons,
 } from "@/app/_utils/toast";
-import { setUser, UserInterface } from "@/lib/main/slices/user/user.slice";
-import { AppDispatch } from "@/lib/main/store";
+import { UserInterface } from "@/lib/main/slices/user/user.slice";
+import { ProfileDispatch } from "@/lib/profile/store";
+import { setProfileUser } from "@/lib/profile/slices/user.slice";
 
 export const getAddress = (
   latLng: { lat: number; lng: number },
@@ -47,13 +48,13 @@ export const getAddress = (
 export const updateUserAddress = (
   payload: addressPayload,
   user: UserInterface,
-  dispatch: AppDispatch,
+  dispatch: ProfileDispatch,
 ) => {
   makeDataRequest(HTTP_METHODS.PUT, appEndPoints.UPDATE_USER_ADDRESS, payload)
     .then((res) => {
       if (!res) return;
       const updatedUser = { ...user, address: res };
-      dispatch(setUser(updatedUser));
+      dispatch(setProfileUser(updatedUser));
       setLocalStorageKey(storageAttributes.user, updatedUser);
       successToast({
         msg: "User address updated successfully",

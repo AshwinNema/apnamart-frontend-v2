@@ -1,15 +1,17 @@
 import { IconInput } from "../_custom-components";
 import { Tabs, Tab, Badge, Avatar } from "@nextui-org/react";
-import { tabKeys, tabOption } from "./utils";
+import { tabOption } from "./utils";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { uploadProfileImage } from "./api";
-import { useAppDispatch, useAppSelector } from "@/lib/main/hooks";
 import useMainState from "./useMainState";
+import { useProfileDispatch, useProfileSelector } from "@/lib/profile/hooks";
+import { setTab, tabKeys } from "@/lib/profile/slices/component-state.slice";
 
 function UserProfile() {
-  const user = useAppSelector((state) => state.user);
-  const [config, setProperty, tabOptions] = useMainState();
-  const dispatch = useAppDispatch();
+  const user = useProfileSelector((state) => state.user);
+  const [tabOptions] = useMainState();
+  const dispatch = useProfileDispatch();
+  const tab = useProfileSelector((state) => state.componentState.tab);
 
   return (
     <div className="mt-11">
@@ -49,13 +51,13 @@ function UserProfile() {
           placement="start"
           className=""
           size="lg"
-          selectedKey={config.selectedTab}
+          selectedKey={tab}
           onSelectionChange={(key) => {
             if (key === tabKeys.profile) {
               return;
             }
-            if (config.selectedTab !== key) {
-              setProperty("selectedTab")(key);
+            if (tab !== key) {
+              dispatch(setTab(key));
             }
           }}
         >
@@ -68,10 +70,8 @@ function UserProfile() {
                 title={tabOption.title}
               >
                 <div className="-mt-[8rem]">
-                  <Content
-                    details={config.user}
-                    setDetails={(key: string) => setProperty(`user.${key}`)}
-                  />
+                  {tabOption.key}
+                  <Content />
                 </div>
               </Tab>
             );

@@ -4,6 +4,7 @@ import { GrLocation } from "react-icons/gr";
 import { z } from "zod";
 import { UserInterface } from "@/lib/main/slices/user/user.slice";
 import * as _ from "lodash";
+import { addressType } from "@/lib/profile/slices/address-slice";
 
 export interface location {
   id: string;
@@ -18,12 +19,6 @@ export interface queryLocationResp {
   };
   description: string;
   place_id: string;
-}
-
-export enum addressType {
-  home = "home",
-  work = "work",
-  others = "others",
 }
 
 export const drawerInitialVal = {
@@ -47,14 +42,10 @@ export const getInitialDrawerVals = (
 };
 
 export interface mainConfig {
-  location: [number, number];
   flyToLocation: [number, number] | null;
   fly: boolean;
-  address: string;
   isAddLoaded: boolean;
-  addressDetails: drawerVal;
-  latitude: number;
-  longtitude: number;
+  address: string;
 }
 
 export interface addressPayload extends drawerVal {

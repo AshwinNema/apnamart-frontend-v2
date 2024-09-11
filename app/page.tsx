@@ -6,8 +6,8 @@ import dynamic from "next/dynamic";
 import { ComponentSkeleton } from "./_custom-components";
 
 export default function Home() {
-  const user = useAppSelector((state) => state.user);
-  const role = user?.role;
+  const role = useAppSelector((state) => state.user?.role);
+
   const EntityDashboard = dynamic(() => import("./main-page"), {
     loading: () => <ComponentSkeleton />,
   });

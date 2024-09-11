@@ -1,40 +1,45 @@
-import { getTabOptions, tabKeys, tabOption } from "./utils";
-import { useCallback, useEffect, useMemo, useState } from "react";
-import { setKeyVal, setNestedPath } from "../_utils";
-import { getUserProfile } from "./api";
-import { useAppDispatch, useAppSelector } from "@/lib/main/hooks";
+import { getTabOptions, tabOption } from "./utils";
+import { useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
-import { UserInterface } from "@/lib/main/slices/user/user.slice";
+import { useProfileDispatch, useProfileSelector } from "@/lib/profile/hooks";
+import { setTab, tabKeys } from "@/lib/profile/slices/component-state.slice";
+import * as _ from "lodash";
+import { setUserDetails } from "@/lib/profile/slices/main-user-details.slice";
+import { setAddressDetails } from "@/lib/profile/slices/address-slice";
 
-export interface stateConfig {
-  selectedTab: tabKeys;
-  user: UserInterface;
-}
-
-const useMainState = (): [stateConfig, setKeyVal, tabOption[]] => {
-  const user = useAppSelector((state) => state.user);
-  const [config, setConfig] = useState<stateConfig>({
-    selectedTab: tabKeys.basicDetails,
-    user: { ...user } || {},
-  });
-  const setProperty = useCallback(setNestedPath(setConfig), [setConfig]);
+const useMainState = (): [tabOption[]] => {
+  const user = useProfileSelector((state) => state.user);
+  const dispatch = useProfileDispatch();
   const params = useSearchParams();
   const selectedTab = params.get("selectedTab");
   const tabOptions = useMemo(() => getTabOptions(user.role), [user.role]);
-  useEffect(() => {
-    if (!selectedTab) return;
-    if (selectedTab in tabKeys && selectedTab !== tabKeys.profile) {
-      setProperty("selectedTab")(selectedTab);
-    }
-  }, [selectedTab, setProperty]);
-
-  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    getUserProfile(dispatch);
-  }, [dispatch]);
+    const details = _.pick(user || {}, ["name", "email"]);
+    dispatch(setUserDetails(details));
+  }, [user, dispatch]);
 
-  return [config, setProperty, tabOptions];
+  useEffect(() => {
+    const details = _.pick(user?.address || {}, [
+      "latitude",
+      "longtitude",
+      "addressLine1",
+      "addressLine2",
+      "addressType",
+      "otherAddress",
+    ]);
+    dispatch(setAddressDetails(details));
+  }, [user?.address]);
+
+  useEffect(() => {
+    selectedTab &&
+      selectedTab in tabKeys &&
+      selectedTab !== tabKeys.profile &&
+      tabOptions.find((item) => item.key === selectedTab) &&
+      dispatch(setTab(selectedTab));
+  }, [selectedTab]);
+
+  return [tabOptions];
 };
 
 export default useMainState;

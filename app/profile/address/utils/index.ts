@@ -5,6 +5,8 @@ import {
   queryLocationResp,
 } from "./interfaces-enums-default vals-schemas";
 import { getZodErrMsg, setVal } from "@/app/_utils";
+import { ProfileDispatch } from "@/lib/profile/store";
+import { setAddressDetails } from "@/lib/profile/slices/address-slice";
 export * from "./interfaces-enums-default vals-schemas";
 export * from "./apis";
 
@@ -69,7 +71,7 @@ export async function getUserLocation(
 export const saveDrawerDetails = (
   details: drawerVal,
   onOpenChange: () => void,
-  setMainData: setVal,
+  dispatch: ProfileDispatch,
 ) => {
   const data = drawerValidation.safeParse(details);
   if (data.error) {
@@ -77,7 +79,7 @@ export const saveDrawerDetails = (
     errorToast({ msg: errMsg, iconType: toastErrorIcons.validation });
     return;
   }
-  setMainData(structuredClone(details));
+  dispatch(setAddressDetails(structuredClone(details)));
   infoToast({
     msg: "Please click on save button on the right bottom of the map to save address details",
   });

@@ -3,10 +3,11 @@ import { FcViewDetails } from "react-icons/fc";
 import { FaMapLocationDot } from "react-icons/fa6";
 import { RiListSettingsLine } from "react-icons/ri";
 import BasicDetails from "../user-input-details";
-import { tabKeys, tabOption } from ".";
+import { tabOption } from ".";
 import dynamic from "next/dynamic";
 import { UserRole } from "@/lib/main/slices/user/user.slice";
 import { ComponentSkeleton } from "@/app/_custom-components";
+import { tabKeys } from "@/lib/profile/slices/component-state.slice";
 
 export const getTabOptions = (role: UserRole): tabOption[] => {
   const config: tabOption[] = [
@@ -17,9 +18,7 @@ export const getTabOptions = (role: UserRole): tabOption[] => {
           Basic Details
         </div>
       ),
-      Content: (props) => (
-        <BasicDetails userInputPage={tabKeys.basicDetails} {...props} />
-      ),
+      Content: () => <BasicDetails />,
       key: tabKeys.basicDetails,
     },
   ];
@@ -32,7 +31,7 @@ export const getTabOptions = (role: UserRole): tabOption[] => {
           Address
         </div>
       ),
-      Content: (props) => {
+      Content: () => {
         const UserAddress = dynamic(
           () => import("@/app/profile/address/index"),
           {
@@ -40,7 +39,7 @@ export const getTabOptions = (role: UserRole): tabOption[] => {
             loading: () => <ComponentSkeleton />,
           },
         );
-        return <UserAddress {...props} />;
+        return <UserAddress />;
       },
       key: tabKeys.address,
     });
@@ -52,9 +51,7 @@ export const getTabOptions = (role: UserRole): tabOption[] => {
         Settings
       </div>
     ),
-    Content: (props) => (
-      <BasicDetails userInputPage={tabKeys.settings} {...props} />
-    ),
+    Content: () => <BasicDetails />,
     key: tabKeys.settings,
   });
   return config;

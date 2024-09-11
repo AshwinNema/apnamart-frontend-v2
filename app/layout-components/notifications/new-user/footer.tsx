@@ -1,9 +1,9 @@
 import { useAppSelector } from "@/lib/main/hooks";
 import { Link, ModalFooter } from "@nextui-org/react";
 import { details } from ".";
-import { tabKeys } from "@/app/profile/utils";
 import { UserRole } from "@/lib/main/slices/user/user.slice";
 import { ReactNode, useEffect, useState } from "react";
+import { tabKeys } from "@/lib/profile/slices/component-state.slice";
 
 enum footerWrapperType {
   container = "container",
