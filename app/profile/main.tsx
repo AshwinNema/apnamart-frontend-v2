@@ -13,6 +13,7 @@ function UserProfile() {
   const dispatch = useProfileDispatch();
   const tab = useProfileSelector((state) => state.componentState.tab);
 
+  if (!user?.role) return null
   return (
     <div className="mt-11">
       <div className="flex ml-11 mb-11">
@@ -70,7 +71,6 @@ function UserProfile() {
                 title={tabOption.title}
               >
                 <div className="-mt-[8rem]">
-                  {tabOption.key}
                   <Content />
                 </div>
               </Tab>

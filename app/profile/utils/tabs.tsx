@@ -8,6 +8,8 @@ import dynamic from "next/dynamic";
 import { UserRole } from "@/lib/main/slices/user/user.slice";
 import { ComponentSkeleton } from "@/app/_custom-components";
 import { tabKeys } from "@/lib/profile/slices/component-state.slice";
+import MerchantRegistration from "../merchant-registration";
+import { FaWpforms } from "react-icons/fa";
 
 export const getTabOptions = (role: UserRole): tabOption[] => {
   const config: tabOption[] = [
@@ -42,6 +44,18 @@ export const getTabOptions = (role: UserRole): tabOption[] => {
         return <UserAddress />;
       },
       key: tabKeys.address,
+    });
+
+  role === UserRole.merchant &&
+    config.push({
+      title: (
+        <div className="flex items-center gap-4">
+          <FaWpforms className="scale-[1.9]" />
+          Registration
+        </div>
+      ),
+      Content: () => <MerchantRegistration />,
+      key: tabKeys.merchantRegistration,
     });
 
   config.push({

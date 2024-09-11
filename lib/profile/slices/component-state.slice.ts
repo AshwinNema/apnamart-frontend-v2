@@ -5,6 +5,7 @@ export enum tabKeys {
   basicDetails = "Basic details",
   address = "address",
   settings = "settings",
+  merchantRegistration = "Merchant Registration",
 }
 
 interface componentState {

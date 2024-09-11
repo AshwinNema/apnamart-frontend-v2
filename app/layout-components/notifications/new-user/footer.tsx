@@ -2,20 +2,19 @@ import { useAppSelector } from "@/lib/main/hooks";
 import { Link, ModalFooter } from "@nextui-org/react";
 import { details } from ".";
 import { UserRole } from "@/lib/main/slices/user/user.slice";
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { tabKeys } from "@/lib/profile/slices/component-state.slice";
-
-enum footerWrapperType {
-  container = "container",
-  element = "element",
-}
+import { FooterElementWrapper, footerWrapperType } from "./sub-compoents";
+import { usePathname } from "next/navigation";
+import { Spinner } from "@/app/_custom-components";
 
 const Footer = ({ onClose }: { onClose: () => void }) => {
   const notificationDetails = useAppSelector(
     (state) => state.notifications.details,
   ) as details;
-
+  const [showSpinner, setShowSpinner] = useState(false);
   const [count, setCount] = useState(0);
+  const path = usePathname();
 
   useEffect(() => {
     let curCount = 0;
@@ -24,31 +23,15 @@ const Footer = ({ onClose }: { onClose: () => void }) => {
     setCount(curCount);
   }, [notificationDetails?.noInitialPassword, notificationDetails?.role]);
 
-  const FooterElementWrapper = ({
-    type,
-    children,
-  }: {
-    type: footerWrapperType;
-    children: ReactNode;
-  }) => {
-    if (!count) return children;
-    switch (type) {
-      case footerWrapperType.container:
-        return (
-          <div>
-            <ul className="list-disc">{children}</ul>
-          </div>
-        );
-
-      case footerWrapperType.element:
-        return <li>{children}</li>;
-      default:
-        return null;
-    }
-  };
+  useEffect(() => {
+    setShowSpinner(false);
+  }, [path]);
 
   const closeLink = () => {
-    count <= 1 && onClose();
+    if (count <= 1) {
+      setShowSpinner(true);
+      onClose();
+    }
   };
 
   return (
@@ -57,14 +40,20 @@ const Footer = ({ onClose }: { onClose: () => void }) => {
         <ModalFooter>
           <p className="italic">
             <span className="font-bold">Please note :</span>
-            <FooterElementWrapper type={footerWrapperType.container}>
+            <FooterElementWrapper
+              type={footerWrapperType.container}
+              count={count}
+            >
               {notificationDetails?.role === UserRole.merchant ? (
-                <FooterElementWrapper type={footerWrapperType.element}>
+                <FooterElementWrapper
+                  type={footerWrapperType.element}
+                  count={count}
+                >
                   To complete your registration, please{" "}
                   <Link
                     isExternal={count > 1}
                     onClick={closeLink}
-                    href={`/profile`}
+                    href={`/profile?selectedTab=${tabKeys.merchantRegistration}`}
                   >
                     click here
                   </Link>
@@ -74,7 +63,10 @@ const Footer = ({ onClose }: { onClose: () => void }) => {
               )}
 
               {notificationDetails?.noInitialPassword ? (
-                <FooterElementWrapper type={footerWrapperType.element}>
+                <FooterElementWrapper
+                  type={footerWrapperType.element}
+                  count={count}
+                >
                   Your inital password is not set, hence you will not be able to
                   sign in using password. You can set it by{" "}
                   <Link
@@ -92,6 +84,8 @@ const Footer = ({ onClose }: { onClose: () => void }) => {
           </p>
         </ModalFooter>
       ) : null}
+
+      {showSpinner && <Spinner />}
     </>
   );
 };

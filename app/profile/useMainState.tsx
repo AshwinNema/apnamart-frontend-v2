@@ -6,13 +6,23 @@ import { setTab, tabKeys } from "@/lib/profile/slices/component-state.slice";
 import * as _ from "lodash";
 import { setUserDetails } from "@/lib/profile/slices/main-user-details.slice";
 import { setAddressDetails } from "@/lib/profile/slices/address-slice";
+import { getLocalStorageKey, storageAttributes } from "../_services";
+import { setProfileUser } from "@/lib/profile/slices/user.slice";
 
 const useMainState = (): [tabOption[]] => {
   const user = useProfileSelector((state) => state.user);
+
   const dispatch = useProfileDispatch();
   const params = useSearchParams();
   const selectedTab = params.get("selectedTab");
-  const tabOptions = useMemo(() => getTabOptions(user.role), [user.role]);
+  const tabOptions = useMemo(() => getTabOptions(user?.role), [user?.role]);
+
+  useEffect(() => {
+    const localStorageUser = getLocalStorageKey(storageAttributes.user);
+    if (!user && localStorageUser) {
+      dispatch(setProfileUser(localStorageUser));
+    }
+  }, [user]);
 
   useEffect(() => {
     const details = _.pick(user || {}, ["name", "email"]);
@@ -33,11 +43,10 @@ const useMainState = (): [tabOption[]] => {
 
   useEffect(() => {
     selectedTab &&
-      selectedTab in tabKeys &&
       selectedTab !== tabKeys.profile &&
       tabOptions.find((item) => item.key === selectedTab) &&
       dispatch(setTab(selectedTab));
-  }, [selectedTab]);
+  }, [selectedTab, tabOptions]);
 
   return [tabOptions];
 };
