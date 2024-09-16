@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactNode } from "react";
+import React, { Dispatch, ReactNode, SetStateAction } from "react";
 import { UserInterface, UserRole } from "@/lib/main/slices/user/user.slice";
 import { AppDispatch } from "@/lib/main/store";
 import {
@@ -9,7 +9,21 @@ import {
 } from "../../_services";
 import { handleAction } from "../../layout-components/notifications/merchant-registration";
 import { tabKeys } from "@/lib/profile/slices/component-state.slice";
+import { FileUploadWithPreview } from "file-upload-with-preview";
+import { createContext } from "react";
 export * from "./tabs";
+
+export interface mainProfileState {
+  businessRegistrationFile: FileUploadWithPreview | null;
+}
+
+export interface MainProfileStateContextInterface {
+  config: mainProfileState;
+  setConfig: Dispatch<SetStateAction<mainProfileState>>;
+}
+
+export const MainProfileStateContext =
+  createContext<MainProfileStateContextInterface | null>(null);
 
 export interface tabOption {
   title: ReactNode;
@@ -24,9 +38,9 @@ export const checkMerchantRegistration = (
 ) => {
   const role = user?.role;
   if (role !== UserRole.merchant) return;
-  const isRegistreationCompleted =
-    user?.merchantDetails?.isRegistreationCompleted;
-  if (isRegistreationCompleted) return;
+  const isRegistreationStarted =
+    user?.merchantDetails?.id;
+  if (isRegistreationStarted) return;
   const isRegistrationNotificationShown = getSessionStorageKey(
     sessionStorageAttributes.pendingMerchantRegistration,
   );

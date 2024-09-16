@@ -13,12 +13,12 @@ import { useContext } from "react";
 import { MainProfileContext } from "./page";
 
 export default function BasicDetails({}: {}) {
-  const mainUserUpdate = useContext(MainProfileContext)
+  const mainUserUpdate = useContext(MainProfileContext);
 
   const dispatch = useProfileDispatch();
   const tab = useProfileSelector((state) => state.componentState.tab);
   const userDetails = useProfileSelector((state) => state.mainUserDetails);
-  if (!mainUserUpdate) return null
+  if (!mainUserUpdate) return null;
   const setDetails = (key: string) => (value: any) => {
     dispatch(setUserDetails({ [key]: value }));
   };

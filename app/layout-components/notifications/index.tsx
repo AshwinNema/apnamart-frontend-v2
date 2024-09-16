@@ -36,7 +36,7 @@ export default function NotificationModal() {
         return <Logout onClose={onClose} />;
 
       case notificationTypes.merchantRegistration:
-        return <MerchantRegistration />;
+        return <MerchantRegistration onClose={onClose} />;
 
       default:
         return null;

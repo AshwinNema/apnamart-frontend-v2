@@ -17,6 +17,7 @@ import { UserInterface } from "@/lib/main/slices/user/user.slice";
 import { ProfileDispatch } from "@/lib/profile/store";
 import { setProfileUser } from "@/lib/profile/slices/user.slice";
 
+// This function is also used in merchant details section
 export const getAddress = (
   latLng: { lat: number; lng: number },
   setMultiPaths: (keyVals: keyVals[]) => void,

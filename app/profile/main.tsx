@@ -1,6 +1,6 @@
 import { IconInput } from "../_custom-components";
 import { Tabs, Tab, Badge, Avatar } from "@nextui-org/react";
-import { tabOption } from "./utils";
+import { MainProfileStateContext, tabOption } from "./utils";
 import { BsPlusCircleFill } from "react-icons/bs";
 import { uploadProfileImage } from "./api";
 import useMainState from "./useMainState";
@@ -9,11 +9,11 @@ import { setTab, tabKeys } from "@/lib/profile/slices/component-state.slice";
 
 function UserProfile() {
   const user = useProfileSelector((state) => state.user);
-  const [tabOptions] = useMainState();
+  const [tabOptions, config, setConfig] = useMainState();
   const dispatch = useProfileDispatch();
   const tab = useProfileSelector((state) => state.componentState.tab);
 
-  if (!user?.role) return null
+  if (!user?.role) return null;
   return (
     <div className="mt-11">
       <div className="flex ml-11 mb-11">
@@ -44,40 +44,47 @@ function UserProfile() {
         </Badge>
       </div>
 
-      <div>
-        <Tabs
-          color="primary"
-          variant="bordered"
-          aria-label="Options"
-          placement="start"
-          className=""
-          size="lg"
-          selectedKey={tab}
-          onSelectionChange={(key) => {
-            if (key === tabKeys.profile) {
-              return;
-            }
-            if (tab !== key) {
-              dispatch(setTab(key));
-            }
-          }}
-        >
-          {tabOptions.map((tabOption: tabOption) => {
-            const { Content } = tabOption;
-            return (
-              <Tab
-                key={tabOption.key}
-                className={`min-h-16 w-full ${tabOption.additionalTabClass || ""}`}
-                title={tabOption.title}
-              >
-                <div className="-mt-[8rem]">
-                  <Content />
-                </div>
-              </Tab>
-            );
-          })}
-        </Tabs>
-      </div>
+      <MainProfileStateContext.Provider
+        value={{
+          config,
+          setConfig,
+        }}
+      >
+        <div>
+          <Tabs
+            color="primary"
+            variant="bordered"
+            aria-label="Options"
+            placement="start"
+            className=""
+            size="lg"
+            selectedKey={tab}
+            onSelectionChange={(key) => {
+              if (key === tabKeys.profile) {
+                return;
+              }
+              if (tab !== key) {
+                dispatch(setTab(key));
+              }
+            }}
+          >
+            {tabOptions.map((tabOption: tabOption) => {
+              const { Content } = tabOption;
+              return (
+                <Tab
+                  key={tabOption.key}
+                  className={`min-h-16 w-full ${tabOption.additionalTabClass || ""}`}
+                  title={tabOption.title}
+                >
+                  <div className="-mt-[8rem]">
+                    <Content />
+                  </div>
+                </Tab>
+              );
+            })}
+          </Tabs>
+        </div>
+      </MainProfileStateContext.Provider>
     </div>
   );
 }

@@ -9,11 +9,14 @@ import { getUserProfile } from "./api";
 import { createContext } from "react";
 import { setUser, UserInterface } from "@/lib/main/slices/user/user.slice";
 
-export const MainProfileContext = createContext<null | ((user: UserInterface) => void)>(null);
+export const MainProfileContext = createContext<
+  null | ((user: UserInterface) => void)
+>(null);
 
 export default function UserProfile() {
   const UserProfile = dynamic(() => import("./main"), {
     loading: () => <ComponentSkeleton />,
+    ssr: false,
   });
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -27,9 +30,7 @@ export default function UserProfile() {
   return (
     <ProtectedRoute>
       <StoreProvider>
-        <MainProfileContext.Provider
-          value={updateUserData}
-        >
+        <MainProfileContext.Provider value={updateUserData}>
           <UserProfile />
         </MainProfileContext.Provider>
       </StoreProvider>

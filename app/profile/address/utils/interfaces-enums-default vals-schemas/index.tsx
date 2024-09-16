@@ -41,13 +41,6 @@ export const getInitialDrawerVals = (
   };
 };
 
-export interface mainConfig {
-  flyToLocation: [number, number] | null;
-  fly: boolean;
-  isAddLoaded: boolean;
-  address: string;
-}
-
 export interface addressPayload extends drawerVal {
   latitude: number;
   longtitude: number;

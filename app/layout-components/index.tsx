@@ -16,6 +16,7 @@ import {
   sessionStorageAttributes,
   setSessionStorageKey,
 } from "../_services";
+import { commonRoleRoutes } from "../_utils";
 
 export default function Layout({
   children,
@@ -38,7 +39,7 @@ export default function Layout({
     const isUserFetched = getSessionStorageKey(
       sessionStorageAttributes.userFetch,
     );
-    if (!isUserFetched && user && !path.includes("/profile")) {
+    if (!isUserFetched && user && !path.includes(commonRoleRoutes.profile)) {
       setSessionStorageKey(sessionStorageAttributes.userFetch, true);
       getUserProfile(dispatch);
     }

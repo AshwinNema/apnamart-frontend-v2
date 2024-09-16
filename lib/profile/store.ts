@@ -8,12 +8,14 @@ import { mainUserDetailsSlice } from "./slices/main-user-details.slice";
 import { userSlice } from "./slices/user.slice";
 import { addressDetailsSlice } from "./slices/address-slice";
 import { componentDetailsSlice } from "./slices/component-state.slice";
+import { merchantDetailsSlice } from "./slices/merchant-details.slice";
 
 const rootReducer = combineSlices(
   userSlice,
   mainUserDetailsSlice,
   addressDetailsSlice,
   componentDetailsSlice,
+  merchantDetailsSlice,
 );
 
 export type RootState = ReturnType<typeof rootReducer>;

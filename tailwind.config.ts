@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import { mainTheme, successTheme, warningTheme } from "./constants";
 const { nextui } = require("@nextui-org/react");
 
 const config: Config = {
@@ -20,6 +21,9 @@ const config: Config = {
       colors: {
         theme:
           "hsl(var(--nextui-primary) / var(--nextui-primary-opacity, var(--tw-bg-opacity)))",
+        mainTheme,
+        successTheme,
+        warningTheme,
       },
       animation: {
         glow: "glow 1.5s linear 3s infinite",

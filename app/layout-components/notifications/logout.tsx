@@ -1,4 +1,3 @@
-import { GiShop } from "react-icons/gi";
 import {
   HTTP_METHODS,
   makeDataRequest,
@@ -7,7 +6,7 @@ import {
   getLocalStorageKey,
   storageAttributes,
 } from "@/app/_services";
-
+import { FcShop } from "react-icons/fc";
 import { appEndPoints } from "@/app/_utils/endpoints";
 import { useAppDispatch } from "@/lib/main/hooks";
 import {
@@ -19,6 +18,7 @@ import { setUser } from "@/lib/main/slices/user/user.slice";
 import { Button, ModalBody, ModalFooter, ModalHeader } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { TbLogout } from "react-icons/tb";
+
 export const handleAction = () =>
   setNotificationType({
     type: notificationTypes.logout,
@@ -62,7 +62,7 @@ export default function Logout({ onClose }: { onClose: () => void }) {
     <>
       <ModalHeader className="text-4l font-bold font-serif flex flex-col">
         <div className="flex justify-center mb-3">
-          <GiShop className="scale-[2]" />
+          <FcShop className="scale-[2]" />
         </div>
         <div className="flex justify-center">Logout of Apnamart?</div>
       </ModalHeader>

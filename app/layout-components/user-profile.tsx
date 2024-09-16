@@ -9,8 +9,10 @@ import {
 import { useAppDispatch, useAppSelector } from "@/lib/main/hooks";
 import { usePathname, useRouter } from "next/navigation";
 import { handleAction } from "./notifications/logout";
-import { setNestedPath } from "../_utils";
+import { commonRoleRoutes, setNestedPath } from "../_utils";
 import { Spinner } from "../_custom-components";
+import { ImProfile } from "react-icons/im";
+import { IoIosLogOut } from "react-icons/io";
 
 export default function UserProfile() {
   const user = useAppSelector((state) => state.user);
@@ -32,10 +34,10 @@ export default function UserProfile() {
   const optionSelect = (key: string | number) => {
     switch (key) {
       case dropDownItemKeys.updateProfile:
-        if (!path.startsWith("/profile")) {
+        if (!path.startsWith(commonRoleRoutes.profile)) {
           setData("showSpinner")(true);
         }
-        router.push("/profile");
+        router.push(commonRoleRoutes.profile);
         break;
       case dropDownItemKeys.logout:
         dispatch(handleAction());
@@ -73,10 +75,19 @@ export default function UserProfile() {
             <p className="font-bold">Signed in as</p>
             <p className="font-bold">{description}</p>
           </DropdownItem>
-          <DropdownItem key={dropDownItemKeys.updateProfile}>
-            Update Profile
+          <DropdownItem
+            startContent={<ImProfile className="scale-[1.5]" />}
+            key={dropDownItemKeys.updateProfile}
+            description="Update your profile details"
+          >
+            Profile
           </DropdownItem>
-          <DropdownItem key={dropDownItemKeys.logout} color="danger">
+          <DropdownItem
+            startContent={<IoIosLogOut className="scale-[1.5]" />}
+            description="Logout of the platform"
+            key={dropDownItemKeys.logout}
+            color="danger"
+          >
             Log Out
           </DropdownItem>
         </DropdownMenu>

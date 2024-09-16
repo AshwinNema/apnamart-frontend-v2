@@ -49,6 +49,12 @@ const items = {
   GET_ITEM_FILTERS_BY_ITEM_ID: `${backendService}item/item-filter/by-item-id/`,
 };
 
+const merchant = {
+  START_MERCHANT_REGISTRATION: `${backendService}merchant/registration`,
+  MERCHANT_REGISTRATION_FILE: `${backendService}merchant/registration/image`,
+  UPDATE_REGISTRATION_DETAILS: `${backendService}merchant/registration`,
+};
+
 export const appEndPoints = {
   ...auth,
   ...user,
@@ -57,4 +63,5 @@ export const appEndPoints = {
   ...category,
   ...subcategory,
   ...items,
+  ...merchant,
 };

@@ -7,6 +7,7 @@ import { tabKeys } from "@/lib/profile/slices/component-state.slice";
 import { FooterElementWrapper, footerWrapperType } from "./sub-compoents";
 import { usePathname } from "next/navigation";
 import { Spinner } from "@/app/_custom-components";
+import { commonRoleRoutes } from "@/app/_utils";
 
 const Footer = ({ onClose }: { onClose: () => void }) => {
   const notificationDetails = useAppSelector(
@@ -53,7 +54,7 @@ const Footer = ({ onClose }: { onClose: () => void }) => {
                   <Link
                     isExternal={count > 1}
                     onClick={closeLink}
-                    href={`/profile?selectedTab=${tabKeys.merchantRegistration}`}
+                    href={`${commonRoleRoutes.profile}?selectedTab=${tabKeys.merchantRegistration}`}
                   >
                     click here
                   </Link>
@@ -72,7 +73,7 @@ const Footer = ({ onClose }: { onClose: () => void }) => {
                   <Link
                     isExternal={count > 1}
                     onClick={closeLink}
-                    href={`/profile?selectedTab=${tabKeys.settings}`}
+                    href={`${commonRoleRoutes.profile}?selectedTab=${tabKeys.settings}`}
                   >
                     clicking here
                   </Link>

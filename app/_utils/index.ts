@@ -1,8 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
 import * as _ from "lodash";
-import { ZodError } from "zod";
+import { ZodError, ZodSchema, z } from "zod";
 import { getLocalStorageKey, storageAttributes } from "../_services";
 import { browserTheme } from "../layout-components/theme-switch";
+import { errorToast } from ".";
+import { toastErrorIcons } from ".";
 export * from "./routes";
 export * from "./icons & logos";
 export * from "./toast";
@@ -64,6 +66,27 @@ export type multiplePathSetter = (pathValList: keyVals[]) => void;
 
 export const getZodErrMsg = (error: ZodError<any>) => {
   return error.issues.map((issue) => issue.message).join(", ");
+};
+
+export const validateZodSchema = (
+  validationData: any,
+  validation: ZodSchema<any>,
+  throwErr?: boolean,
+  errorIcon?: toastErrorIcons,
+) => {
+  const { error, data } = validation.safeParse(validationData);
+  let errMsg = "";
+  if (error) {
+    errMsg = getZodErrMsg(error);
+  }
+  if (error && throwErr) {
+    errorToast({
+      msg: errMsg,
+      iconType: errorIcon,
+    });
+  }
+
+  return { error, data, errMsg };
 };
 
 export const getBrowserTheme = (): browserTheme => {

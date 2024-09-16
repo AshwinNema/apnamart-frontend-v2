@@ -69,7 +69,6 @@ export const SpinnerLink = ({
       {showSpinner && <Spinner />}
       <Link
         onClick={() => {
-          console.log(path, href);
           path !== href && setSpinner(true);
         }}
         color={color}

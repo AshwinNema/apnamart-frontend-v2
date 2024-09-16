@@ -5,7 +5,7 @@ import { Autocomplete, AutocompleteItem } from "@nextui-org/react";
 import { useAsyncList } from "@react-stately/data";
 import * as _ from "lodash";
 import { useCallback, useRef, useState } from "react";
-import { location, processQueryLocations } from "../utils";
+import { location, processQueryLocations } from "../../address/utils";
 
 export default function LocationAutoCompleteInput({
   setLocation,

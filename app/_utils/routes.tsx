@@ -12,3 +12,7 @@ export const routes = {
   },
   [UserRole.customer]: {},
 };
+
+export const commonRoleRoutes = {
+  profile: "/profile",
+};

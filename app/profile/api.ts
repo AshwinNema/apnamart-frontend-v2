@@ -58,7 +58,7 @@ export const updateUserDetails = (
   details: { password: string } | { name: string; email: string },
   type: tabKeys,
   dispatch: ProfileDispatch,
-  mainUserUpdate: (user: UserInterface) => void
+  mainUserUpdate: (user: UserInterface) => void,
 ) => {
   makeDataRequest(
     HTTP_METHODS.PUT,
@@ -89,7 +89,7 @@ export const updateUserDetails = (
     if (!res) return;
     let user = getLocalStorageKey(storageAttributes.user) as UserInterface;
     user = { ...user, ...res };
-    mainUserUpdate(user)
+    mainUserUpdate(user);
     successToast({
       msg: "User details updated successfully",
       iconType: toastSuccessIcons.rocket,

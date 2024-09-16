@@ -39,14 +39,14 @@ export default function AddressDetailsDrawer({
               className="w-full"
               setData={setData("addressLine1")}
               variant="flat"
-              alternateText="Flat No./ House No./Floor/ Building"
+              label="Flat No./ House No./Floor/ Building"
             />
             <TextInput
               value={config.addressLine2}
               validationSchema={z.string()}
               setData={setData("addressLine2")}
               variant="flat"
-              alternateText="Road Name/ Area/ Colony"
+              label="Road Name/ Area/ Colony"
             />
             <div>
               <AddressType
