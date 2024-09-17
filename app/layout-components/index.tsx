@@ -7,7 +7,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NotificationModal from "./notifications";
 import { usePromiseTracker } from "react-promise-tracker";
-import { Spinner } from "../_custom-components";
+import { AppStartLoader, Spinner } from "../_custom-components";
 import { useAppDispatch, useAppSelector } from "@/lib/main/hooks";
 import { getUserProfile } from "../profile/api";
 import { usePathname } from "next/navigation";
@@ -16,7 +16,8 @@ import {
   sessionStorageAttributes,
   setSessionStorageKey,
 } from "../_services";
-import { commonRoleRoutes } from "../_utils";
+import { commonRoleRoutes, setNestedPath } from "../_utils";
+import { UserRole } from "@/lib/main/slices/user/user.slice";
 
 export default function Layout({
   children,
@@ -26,13 +27,20 @@ export default function Layout({
   // For showing UI Loader
   const { promiseInProgress } = usePromiseTracker();
   // Prevents warning - Extra attributes from the server: class,style at html at RootLayout (Server) at RedirectErrorBoundary. Reference - https://github.com/pacocoursey/next-themes?tab=readme-ov-file#avoid-hydration-mismatch
-  const [mounted, setMounted] = useState(false);
   const user = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
+  const [config, setConfig] = useState({
+    mounted: false,
+    showStartLoader: true,
+  });
+  const setData = setNestedPath(setConfig);
   const path = usePathname();
 
   useEffect(() => {
-    setMounted(true);
+    setData("mounted")(true);
+    setTimeout(() => {
+      setData("showStartLoader")(false);
+    }, 2000);
   }, []);
 
   useEffect(() => {
@@ -41,11 +49,11 @@ export default function Layout({
     );
     if (!isUserFetched && user && !path.includes(commonRoleRoutes.profile)) {
       setSessionStorageKey(sessionStorageAttributes.userFetch, true);
-      getUserProfile(dispatch);
+      getUserProfile(dispatch, user?.role === UserRole.merchant);
     }
   }, [dispatch, user, path]);
 
-  if (!mounted) {
+  if (!config.mounted) {
     return null;
   }
 
@@ -55,9 +63,16 @@ export default function Layout({
       <NextUIProvider>
         <main className={`mainContainer`}>
           <NextThemesProvider attribute="class">
-            <Header />
-            {children}
-            <NotificationModal />
+            {config.showStartLoader ? (
+              <AppStartLoader />
+            ) : (
+              <>
+                <Header />
+                {children}
+                <NotificationModal />
+              </>
+            )}
+
             <ToastContainer autoClose={2000} />
           </NextThemesProvider>
         </main>

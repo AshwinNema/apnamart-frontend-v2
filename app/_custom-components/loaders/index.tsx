@@ -4,10 +4,13 @@ import {
   ModalContent,
   Skeleton,
   useDisclosure,
+  CircularProgress,
+  Progress,
 } from "@nextui-org/react";
 import { ReactNode, useEffect, useState } from "react";
-import { CircularProgress } from "@nextui-org/progress";
 import { usePathname } from "next/navigation";
+import { FcShop } from "react-icons/fc";
+
 export const Spinner = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -77,5 +80,19 @@ export const SpinnerLink = ({
         {children}
       </Link>
     </>
+  );
+};
+
+export const AppStartLoader = () => {
+  return (
+    <div className="h-svh flex justify-center mt-52">
+      <div className="flex flex-col w-1/2 gap-5">
+        <span className="w-full flex justify-center gap-5">
+          <FcShop className="scale-[4] mb-5" />
+          <div className="font-bold font-serif text-2xl">Apnamart</div>
+        </span>
+        <Progress className="w-full" isIndeterminate aria-label="Loading..." />
+      </div>
+    </div>
   );
 };
