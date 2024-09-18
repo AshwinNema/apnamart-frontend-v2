@@ -7,7 +7,12 @@ import { useAppDispatch } from "@/lib/main/hooks";
 import { useEffect } from "react";
 import { getUserProfile } from "./api";
 import { createContext } from "react";
-import { setUser, UserInterface } from "@/lib/main/slices/user/user.slice";
+import {
+  setUser,
+  UserInterface,
+  UserRole,
+} from "@/lib/main/slices/user/user.slice";
+import { getLocalStorageKey, storageAttributes } from "../_services";
 
 export const MainProfileContext = createContext<
   null | ((user: UserInterface) => void)
@@ -20,7 +25,8 @@ export default function UserProfile() {
   });
   const dispatch = useAppDispatch();
   useEffect(() => {
-    getUserProfile(dispatch);
+    const user: UserInterface = getLocalStorageKey(storageAttributes.user);
+    getUserProfile(dispatch, user?.role === UserRole.merchant);
   }, [dispatch]);
 
   const updateUserData = (user: UserInterface) => {

@@ -5,7 +5,12 @@ import { MdAccountBalance } from "react-icons/md";
 import { FaFileInvoiceDollar } from "react-icons/fa";
 import { IoCardSharp } from "react-icons/io5";
 import { textInputProps } from "./utils";
+import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
+import { useMemo } from "react";
 export const BankAndTaxDetails = () => {
+  const registrationStatus = useProfileSelector(
+    (state) => state.merchantDetails.registrationStatus,
+  );
   const bankAcNo = useProfileSelector(
     (state) => state.merchantDetails.bankAcNo,
   );
@@ -16,6 +21,12 @@ export const BankAndTaxDetails = () => {
     dispatch(setMerchantDetails({ [key]: value }));
   };
 
+  const inputProps = useMemo(() => {
+    return {
+      isReadOnly: MerchantRegistrationStatus.adminReview === registrationStatus,
+      ...textInputProps,
+    };
+  }, [registrationStatus]);
   return (
     <div className="m-3 min-h-[40dvh]">
       <TextInput
@@ -23,7 +34,7 @@ export const BankAndTaxDetails = () => {
         setData={setData("bankAcNo")}
         Icon={() => <MdAccountBalance />}
         label="Bank A/C No."
-        {...textInputProps}
+        {...inputProps}
       />
 
       <TextInput
@@ -31,7 +42,7 @@ export const BankAndTaxDetails = () => {
         setData={setData("gstIn")}
         Icon={() => <FaFileInvoiceDollar />}
         label="GSTIN"
-        {...textInputProps}
+        {...inputProps}
       />
 
       <TextInput
@@ -39,7 +50,7 @@ export const BankAndTaxDetails = () => {
         setData={setData("panCard")}
         Icon={() => <IoCardSharp />}
         label="PAN Card"
-        {...textInputProps}
+        {...inputProps}
       />
     </div>
   );

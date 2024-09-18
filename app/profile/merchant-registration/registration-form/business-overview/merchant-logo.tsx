@@ -1,37 +1,52 @@
-import { useContext } from "react";
-import { MainProfileStateContext } from "../../utils";
-import { ComponentSkeleton, CustomImagePreviewer } from "@/app/_custom-components";
+import { useContext, useEffect } from "react";
+import { CustomImagePreviewer } from "@/app/_custom-components";
 import { useProfileDispatch, useProfileSelector } from "@/lib/profile/hooks";
 import { setNestedPath } from "@/app/_utils";
 import { setMerchantDetails } from "@/lib/profile/slices/merchant-details.slice";
 import { uploadMerchantLogo } from "../utils";
-import dynamic from "next/dynamic";
+import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
+import { MainProfileStateContext } from "@/app/profile/utils";
 
 const MerchantLogo = () => {
   const mainContext = useContext(MainProfileStateContext);
   const showImage = useProfileSelector(
     (state) => state.merchantDetails.showImage,
   );
+  const showImgChangeBtn = useProfileSelector(
+    (state) => state.merchantDetails.showImgChangeBtn,
+  );
   const imgSrc = useProfileSelector((state) => state.merchantDetails.photo);
+  const registrationStatus = useProfileSelector(
+    (state) => state.merchantDetails.registrationStatus,
+  );
   const showUpdateSaveImgBtn = useProfileSelector(
     (state) => state.merchantDetails.showUpdateSaveImgBtn,
   );
   const dispatch = useProfileDispatch();
- 
-  if (!mainContext) return null;
-  const { config, setConfig } = mainContext;
+
   const dispatchMerchantDetails = (details: object) => {
     dispatch(setMerchantDetails(details));
   };
 
-  // const CustomImagePreviewer = dynamic(() => import('@/app/_custom-components').then(mod => mod.CustomImagePreviewer), {
-  //   ssr: false,
-  //   loading: () => <ComponentSkeleton />
-  // })
+  useEffect(() => {
+    if (registrationStatus === MerchantRegistrationStatus.adminReview) {
+      dispatchMerchantDetails({
+        showImgChangeBtn: false,
+      });
+      return;
+    }
+    dispatchMerchantDetails({
+      showImgChangeBtn: true,
+    });
+  }, [registrationStatus, dispatch]);
+
+  if (!mainContext) return null;
+  const { config, setConfig } = mainContext;
 
   return (
     <CustomImagePreviewer
       showImage={showImage}
+      showImgChangeBtn={showImgChangeBtn}
       imgSrc={imgSrc}
       height={200}
       width={200}

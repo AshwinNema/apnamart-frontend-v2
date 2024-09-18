@@ -4,8 +4,8 @@ import { IoLocation } from "react-icons/io5";
 import { LocationButton } from "./sub-components";
 import { useContext } from "react";
 import { MainCardContext } from "..";
-import MerchantRegistrationAddressDetails from "@/app/profile/merchant-registration/pickup-address/details";
-import { SaveDetailsIcon } from "@/app/profile/merchant-registration/sub-components";
+import MerchantRegistrationAddressDetails from "@/app/profile/merchant-registration/registration-form/pickup-address/details";
+import { SaveDetailsIcon } from "@/app/profile/merchant-registration/registration-form/sub-components";
 
 export default function Header() {
   const context = useContext(MainCardContext);

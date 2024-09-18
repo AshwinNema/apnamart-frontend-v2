@@ -22,8 +22,13 @@ import { ProfileDispatch } from "@/lib/profile/store";
 import { setProfileUser } from "@/lib/profile/slices/user.slice";
 import { tabKeys } from "@/lib/profile/slices/component-state.slice";
 
-export const getUserProfile = (dispatch: AppDispatch) => {
-  makeDataRequest(HTTP_METHODS.GET, appEndPoints.PROFILE).then((res) => {
+export const getUserProfile = (
+  dispatch: AppDispatch,
+  getMerchantDetails: boolean,
+) => {
+  makeDataRequest(HTTP_METHODS.GET, appEndPoints.PROFILE, undefined, {
+    getMerchantDetails,
+  }).then((res) => {
     if (!res) {
       return;
     }

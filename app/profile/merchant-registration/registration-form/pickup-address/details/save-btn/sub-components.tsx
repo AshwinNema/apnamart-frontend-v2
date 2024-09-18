@@ -1,5 +1,5 @@
+import { stepperLastBtnText } from "@/app/profile/merchant-registration";
 import { useProfileSelector } from "@/lib/profile/hooks";
-import { stepperLastBtnText } from "../../..";
 import { SiGooglemybusiness } from "react-icons/si";
 
 export const getSavingInfoContent = (merchantId?: number) => {

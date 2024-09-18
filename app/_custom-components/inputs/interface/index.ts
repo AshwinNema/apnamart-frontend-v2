@@ -20,6 +20,7 @@ export interface TextInputProps {
   classNames?: SlotsToClasses<InputSlots>;
   isRequired?: boolean;
   type?: string;
+  isReadOnly?: boolean;
 }
 
 export interface TextInputState {

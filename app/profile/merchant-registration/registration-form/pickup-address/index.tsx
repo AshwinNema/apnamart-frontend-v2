@@ -3,14 +3,15 @@ import { useProfileSelector } from "@/lib/profile/hooks";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { CardBody } from "@nextui-org/react";
 import * as _ from "lodash";
-import { getAddress } from "../../address/utils";
 import { setMultiplePaths } from "@/app/_utils";
+import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
+import { getAddress } from "@/app/profile/address/utils";
 import {
-  componentTypes,
   EventHandlerAndMarker,
+  componentTypes,
   AddressDisplayState,
   MainCardComponent,
-} from "../../shared-components/shared-map";
+} from "@/app/profile/shared-components/shared-map";
 
 export default function PickUpAddress() {
   const merchantDetails = useProfileSelector((state) => state.merchantDetails);
@@ -46,6 +47,10 @@ export default function PickUpAddress() {
           flyToLocation={config.flyToLocation}
           fly={config.fly}
           setMultipleData={setMultiplePaths(setConfig)}
+          disallowMarkerDrag={
+            merchantDetails.registrationStatus ===
+            MerchantRegistrationStatus.adminReview
+          }
         />
       </MainMap>
     ),

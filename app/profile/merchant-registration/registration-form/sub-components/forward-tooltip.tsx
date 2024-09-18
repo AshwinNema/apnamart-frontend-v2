@@ -1,23 +1,35 @@
 import { useProfileSelector } from "@/lib/profile/hooks";
-import { Tooltip, TooltipProps } from "@nextui-org/react";
+import { Tooltip } from "@nextui-org/react";
 import { ReactNode, useContext, useState } from "react";
-import { stepIcons, stepLabels, stepList, stepValidator } from "../utils";
-import { MainProfileStateContext } from "../../utils";
+import {
+  forwardTooltipProps,
+  stepIcons,
+  stepLabels,
+  stepList,
+  stepValidator,
+} from "../utils";
+import { getAddressDrawerBtntext } from "../pickup-address/details";
+import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
+import { MainProfileStateContext } from "@/app/profile/utils";
 
 export const ForwardToolTip = ({ children }: { children: ReactNode }) => {
   const merchantDetails = useProfileSelector((state) => state.merchantDetails);
-  const { currentStep } = merchantDetails;
+  const { currentStep, registrationStatus } = merchantDetails;
 
-  const [config, setConfig] = useState<{
-    content: ReactNode;
-    color: TooltipProps["color"];
-  }>({
+  const [config, setConfig] = useState<forwardTooltipProps>({
     content: null,
     color: "secondary",
   });
   const context = useContext(MainProfileStateContext);
   const currentStepKey = stepList[currentStep];
   const setToolTipContent = () => {
+    if (registrationStatus === MerchantRegistrationStatus.adminReview) {
+      setConfig({
+        content: "Your profile is currently being reviewed by admin",
+        color: "secondary",
+      });
+      return;
+    }
     if (!context) return;
     const { error, errMsg } = stepValidator(
       currentStepKey,
@@ -32,7 +44,11 @@ export const ForwardToolTip = ({ children }: { children: ReactNode }) => {
               <p className="w-full">
                 Please click on{" "}
                 <span className="font-bold">
-                  Enter complete pick up address details
+                  {getAddressDrawerBtntext(
+                    merchantDetails.registrationStatus ===
+                      MerchantRegistrationStatus.adminReview,
+                    merchantDetails.id,
+                  )}
                 </span>{" "}
                 and enter information to resolve below issues:
               </p>

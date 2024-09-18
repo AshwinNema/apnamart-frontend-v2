@@ -38,8 +38,7 @@ export const checkMerchantRegistration = (
 ) => {
   const role = user?.role;
   if (role !== UserRole.merchant) return;
-  const isRegistreationStarted =
-    user?.merchantDetails?.id;
+  const isRegistreationStarted = user?.merchantDetails?.id;
   if (isRegistreationStarted) return;
   const isRegistrationNotificationShown = getSessionStorageKey(
     sessionStorageAttributes.pendingMerchantRegistration,

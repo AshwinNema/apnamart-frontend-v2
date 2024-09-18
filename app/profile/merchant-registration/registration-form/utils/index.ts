@@ -59,8 +59,8 @@ export const prevStepHandler = (
   details: nextHandlerDetails,
   dispatch: ProfileDispatch,
 ) => {
-  const lastStep = stepList.length - 1
-  const isLastStep = currentStep === lastStep
+  const lastStep = stepList.length - 1;
+  const isLastStep = currentStep === lastStep;
   // nextStep > currentStep - means someone is moving forward which is wrong for this function
   const invalidStep =
     nextStep < 0 || nextStep > currentStep || nextStep >= lastStep;

@@ -18,6 +18,7 @@ export interface EventHandlerAndMarkerProps {
   fly: AddressDisplayState["fly"];
   setMultipleData: multiplePathSetter;
   componentType: componentTypes;
+  disallowMarkerDrag?: boolean;
 }
 
 export interface MainCardProps {

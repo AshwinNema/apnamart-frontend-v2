@@ -7,6 +7,7 @@ import {
   storageAttributes,
 } from "@/app/_services";
 import {
+  createUpdateRegistrationDetails,
   finalDetailsValidation,
   nextHandlerDetails,
   stepList,
@@ -23,6 +24,7 @@ import {
   setMerchantDetails,
 } from "@/lib/profile/slices/merchant-details.slice";
 import { UserInterface } from "@/lib/main/slices/user/user.slice";
+import { createUpdateRegistrationValidation } from "./validations";
 
 const setDetailsOnCreateUpdate = (
   dispatch: ProfileDispatch,
@@ -41,22 +43,13 @@ const setDetailsOnCreateUpdate = (
 };
 
 export const createUpdateRegistration = (
-  allDetails: nextHandlerDetails,
+  allDetails: createUpdateRegistrationDetails,
   dispatch: ProfileDispatch,
   file?: File,
 ) => {
-  const { data, error } = validateZodSchema(
-    allDetails,
-    finalDetailsValidation,
-    true,
-    toastErrorIcons.validation,
-  );
-
-  if (error) return;
   const { id } = allDetails;
-  if (!id && !file) {
-    errorToast({ msg: "Business Logo is mandatory" });
-  }
+  const data = createUpdateRegistrationValidation(allDetails, file);
+  if (!data) return;
 
   id
     ? makeDataRequest(

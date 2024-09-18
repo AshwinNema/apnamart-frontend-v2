@@ -7,6 +7,7 @@ import { TextInput } from "@/app/_custom-components";
 import { z } from "zod";
 import { setNestedPath } from "@/app/_utils";
 import { DrawerSaveBtn } from "./save-btn";
+import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
 
 export default function AddressDrawer({
   isOpen,
@@ -33,6 +34,14 @@ export default function AddressDrawer({
     });
   }, [addressLine1, addressLine2, pinCode, isOpen]);
 
+  const registrationStatus = useProfileSelector(
+    (state) => state.merchantDetails.registrationStatus,
+  );
+  const inputProps = {
+    isRequired: true,
+    isReadOnly: registrationStatus === MerchantRegistrationStatus.adminReview,
+  };
+
   return (
     <CustomDrawer isOpen={isOpen} onOpenChange={onOpenChange}>
       <ModalBody>
@@ -41,13 +50,13 @@ export default function AddressDrawer({
             <TextInput
               value={config.addressLine1}
               label="Shop No/Floor/Street Address"
-              isRequired={true}
+              {...inputProps}
               setData={setData("addressLine1")}
             />
             <TextInput
               value={config.addressLine2}
               label="Area/ Colony/ State/ Province"
-              isRequired={true}
+              {...inputProps}
               setData={setData("addressLine2")}
             />
             <TextInput
@@ -56,7 +65,7 @@ export default function AddressDrawer({
                 message: "Pin code should be a six digit number",
               })}
               type="number"
-              isRequired={true}
+              {...inputProps}
               label="Pin Code"
               setData={(value: string) => {
                 if (value.length > 6) return;

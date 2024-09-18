@@ -21,25 +21,31 @@ const CustomImagePreviewer = (props: ImageViewerProps) => {
       {props.imgSrc ? (
         <div className="flex justify-center mt-4">
           {props.showImage ? (
-            <Button
-              onClick={() => {
-                infoToast({
-                  msg: props.openInputAlertMsg || (
-                    <p>
-                      Please browse your image and click on{" "}
-                      <span className="font-bold">Upload Image</span> to upload
-                      image or click on{" "}
-                      <span className="font-bold">Cancel Upload</span> to cancel
-                      image upload
-                    </p>
-                  ),
-                });
-                props.openInput();
-              }}
-              color="primary"
-            >
-              Change Image
-            </Button>
+            <>
+              {props.showImgChangeBtn ? (
+                <>
+                  <Button
+                    onClick={() => {
+                      infoToast({
+                        msg: props.openInputAlertMsg || (
+                          <p>
+                            Please browse your image and click on{" "}
+                            <span className="font-bold">Upload Image</span> to
+                            upload image or click on{" "}
+                            <span className="font-bold">Cancel Upload</span> to
+                            cancel image upload
+                          </p>
+                        ),
+                      });
+                      props.openInput();
+                    }}
+                    color="primary"
+                  >
+                    Change Image
+                  </Button>
+                </>
+              ) : null}
+            </>
           ) : (
             <div className="flex gap-4">
               {props.showUpdateSaveImgBtn ? (

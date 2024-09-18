@@ -4,14 +4,19 @@ import { RiListSettingsLine } from "react-icons/ri";
 import BasicDetails from "../user-input-details";
 import { tabOption } from ".";
 import dynamic from "next/dynamic";
-import { UserRole } from "@/lib/main/slices/user/user.slice";
+import {
+  MerchantRegistrationStatus,
+  UserInterface,
+  UserRole,
+} from "@/lib/main/slices/user/user.slice";
 import { ComponentSkeleton } from "@/app/_custom-components";
 import { tabKeys } from "@/lib/profile/slices/component-state.slice";
 import { LiaBusinessTimeSolid } from "react-icons/lia";
 import { CgProfile } from "react-icons/cg";
 import MerchantRegistration from "../merchant-registration";
 
-export const getTabOptions = (role: UserRole): tabOption[] => {
+export const getTabOptions = (user: UserInterface): tabOption[] => {
+  const role = user?.role;
   const config: tabOption[] = [
     {
       title: (
@@ -51,7 +56,7 @@ export const getTabOptions = (role: UserRole): tabOption[] => {
       title: (
         <div className="flex items-center gap-4">
           <LiaBusinessTimeSolid className="scale-[2]" />
-          Business Registration
+          Business {user?.merchantDetails?.id ? "Profile" : "Registration"}
         </div>
       ),
       Content: () => <MerchantRegistration />,

@@ -10,6 +10,7 @@ import { ToolTipBtn } from "@/app/_custom-components";
 import { useState } from "react";
 import { infoToast } from "@/app/_utils";
 import { getSavingInfoContent, SuccessToolTipContent } from "./sub-components";
+import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
 
 export const DrawerSaveBtn = ({
   config: allDetails,
@@ -20,12 +21,26 @@ export const DrawerSaveBtn = ({
 }) => {
   const dispatch = useProfileDispatch();
   const merchantId = useProfileSelector((state) => state.merchantDetails.id);
+  const registrationStatus = useProfileSelector(
+    (state) => state.merchantDetails.registrationStatus,
+  );
+  const underAdminReview =
+    registrationStatus === MerchantRegistrationStatus.adminReview;
+  const reviewByAdminMsg =
+    "Your profile is curerntly been reviewed by admin after that you will be able to update all the details";
   const [config, setConfig] = useState<nxtSaveBtnState>({
     toolTipMsg: "",
     toolTipColor: "default",
   });
 
   const updateTooltipState = () => {
+    if (underAdminReview) {
+      setConfig({
+        toolTipColor: "secondary",
+        toolTipMsg: reviewByAdminMsg,
+      });
+      return;
+    }
     const { error, errMsg } = validatePickUpAddress(allDetails);
     if (error) {
       setConfig((prevConfig) => {
@@ -51,6 +66,12 @@ export const DrawerSaveBtn = ({
           className: "mt-3",
           startContent: <IoSaveSharp />,
           onPress: () => {
+            if (underAdminReview) {
+              infoToast({
+                msg: reviewByAdminMsg,
+              });
+              return;
+            }
             const { error, data } = validatePickUpAddress(allDetails, true);
             if (error) {
               return;

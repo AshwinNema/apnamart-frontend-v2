@@ -5,12 +5,16 @@ import MerchantLogo from "./merchant-logo";
 import { SiNamesilo } from "react-icons/si";
 import { textInputProps } from "../utils";
 import { Textarea } from "@nextui-org/react";
+import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
 
 const BusinessOverview = () => {
   const dispatch = useProfileDispatch();
   const name = useProfileSelector((state) => state.merchantDetails.name);
   const description = useProfileSelector(
     (state) => state.merchantDetails.description,
+  );
+  const registrationStatus = useProfileSelector(
+    (state) => state.merchantDetails.registrationStatus,
   );
 
   const setData = (key: string) => (value: any) => {
@@ -20,6 +24,8 @@ const BusinessOverview = () => {
       }),
     );
   };
+  const readOnlyInputs =
+    registrationStatus === MerchantRegistrationStatus.adminReview;
   return (
     <>
       <MerchantLogo />
@@ -29,6 +35,7 @@ const BusinessOverview = () => {
         setData={setData("name")}
         Icon={() => <SiNamesilo />}
         label="Business Name"
+        isReadOnly={readOnlyInputs}
         {...{
           ...textInputProps,
           classNames: {
@@ -41,6 +48,7 @@ const BusinessOverview = () => {
       <Textarea
         label="Business Description"
         value={description}
+        isReadOnly={readOnlyInputs}
         onValueChange={setData("description")}
         {...textInputProps}
       />

@@ -7,15 +7,13 @@ export interface merchantRegistrationDetails extends Merchantdetails {
   zoom: number;
   showImage: boolean;
   showUpdateSaveImgBtn: boolean;
-  isAdminReviewing: boolean;
-  isMerchantEditing: boolean;
+  showImgChangeBtn: boolean;
 }
 
 const initialState: merchantRegistrationDetails = {
   totalCompletedSteps: 0,
   currentStep: 0,
   isMerchantBlocked: false,
-  isRegistreationCompleted: false,
   latitude: 12.923946516889448,
   longtitude: 77.5526110768168,
   addressLine1: "",
@@ -30,8 +28,8 @@ const initialState: merchantRegistrationDetails = {
   name: "",
   description: "",
   photo: "",
-  isAdminReviewing: false,
-  isMerchantEditing: false,
+  registrationStatus: null,
+  showImgChangeBtn: true,
 };
 
 export const merchantDetailsSlice = createSlice({

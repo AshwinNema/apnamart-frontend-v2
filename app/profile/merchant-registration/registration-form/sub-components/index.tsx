@@ -1,10 +1,10 @@
 import { SiGooglemybusiness } from "react-icons/si";
 import { ForwardToolTip } from "./forward-tooltip";
-import { MainProfileStateContext } from "../../utils";
 import { useContext } from "react";
 import { createUpdateRegistration } from "../utils";
 import { useProfileSelector } from "@/lib/profile/hooks";
 import { useProductDispatch } from "@/lib/product/hooks";
+import { MainProfileStateContext } from "@/app/profile/utils";
 
 export * from "./stepper-btns";
 export * from "./stepper-arrows";

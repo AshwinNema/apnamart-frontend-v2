@@ -12,7 +12,7 @@ import {
   merchantRegistrationDetails,
   setMerchantDetails,
 } from "@/lib/profile/slices/merchant-details.slice";
-import { stepList as merchantRegistrationStepList } from "./merchant-registration/utils";
+import { stepList as merchantRegistrationStepList } from "./merchant-registration/registration-form/utils";
 
 const useMainState = (): [
   tabOption[],
@@ -26,7 +26,7 @@ const useMainState = (): [
   const dispatch = useProfileDispatch();
   const params = useSearchParams();
   const selectedTab = params.get("selectedTab");
-  const tabOptions = useMemo(() => getTabOptions(user?.role), [user?.role]);
+  const tabOptions = useMemo(() => getTabOptions(user), [user]);
 
   useEffect(() => {
     const localStorageUser = getLocalStorageKey(storageAttributes.user);
@@ -67,7 +67,7 @@ const useMainState = (): [
         "name",
         "description",
         "isMerchantBlocked",
-        "isRegistreationCompleted",
+        "registrationStatus",
         "latitude",
         "longtitude",
         "addressLine1",

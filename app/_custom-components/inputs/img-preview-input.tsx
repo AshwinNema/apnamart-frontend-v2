@@ -49,4 +49,4 @@ export const ImgPreviewInput = ({
   );
 };
 
-export default ImgPreviewInput
+export default ImgPreviewInput;

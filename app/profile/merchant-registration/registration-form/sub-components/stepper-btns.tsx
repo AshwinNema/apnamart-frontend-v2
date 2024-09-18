@@ -6,11 +6,11 @@ import {
 } from "../utils";
 import { useProfileDispatch, useProfileSelector } from "@/lib/profile/hooks";
 import { ReactNode, useContext } from "react";
-import { MainProfileStateContext } from "../../utils";
 import { ForwardToolTip } from "./forward-tooltip";
 import { Button } from "@nextui-org/react";
-import { stepperLastBtnText } from "../index";
 import { BackwardToolTip } from "./stepper-arrows";
+import { MainProfileStateContext } from "@/app/profile/utils";
+import { stepperLastBtnText } from "../..";
 
 export const StepperNextBtn = () => {
   const merchantDetails = useProfileSelector((state) => state.merchantDetails);

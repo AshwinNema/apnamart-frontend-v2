@@ -22,6 +22,7 @@ import { ImgPreviewInputProps } from "../inputs/interface";
 // uploadFile - Function for uploading file to the server.
 export interface ImageViewerProps {
   showImage?: boolean;
+  showImgChangeBtn?: boolean;
   imgSrc?: string;
   height: number;
   width: number;

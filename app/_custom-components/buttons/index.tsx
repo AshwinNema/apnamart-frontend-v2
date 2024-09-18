@@ -6,7 +6,7 @@ export const ToolTipBtn = ({
   buttonProps,
   toolTipProps,
 }: {
-  children: ReactNode;
+  children?: ReactNode;
   buttonProps: ButtonProps;
   toolTipProps: TooltipProps;
 }) => {

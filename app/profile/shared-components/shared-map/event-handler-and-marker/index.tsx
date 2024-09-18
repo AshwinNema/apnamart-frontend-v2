@@ -14,6 +14,7 @@ export default function EventHandlerAndMarker({
   fly,
   setMultipleData,
   componentType,
+  disallowMarkerDrag,
 }: EventHandlerAndMarkerProps) {
   const dispatch = useProfileDispatch();
   const icon = useMemo(() => {
@@ -51,6 +52,7 @@ export default function EventHandlerAndMarker({
 
   const map = useMapEvents({
     drag() {
+      if (disallowMarkerDrag) return;
       const newLatLng = new L.LatLng(
         map.getCenter().lat,
         map.getCenter().lng || 0,
@@ -58,6 +60,7 @@ export default function EventHandlerAndMarker({
       setPosition(newLatLng);
     },
     locationfound(e) {
+      if (disallowMarkerDrag) return;
       setPosition(e.latlng);
       map.flyTo(e.latlng);
       const { lat, lng } = e.latlng;
@@ -65,11 +68,13 @@ export default function EventHandlerAndMarker({
       getLocationAddress(lat, lng);
     },
     dragend(event) {
+      if (disallowMarkerDrag) return;
       const { lat, lng } = event.target.getCenter();
       getLocationAddress(lat, lng);
       setLatLng(lat, lng);
     },
     moveend(event) {
+      if (disallowMarkerDrag) return;
       const { lat, lng } = event.target.getCenter();
       const newLatLng = new L.LatLng(lat, lng);
       setPosition(newLatLng);
@@ -77,6 +82,7 @@ export default function EventHandlerAndMarker({
       setLatLng(lat, lng);
     },
     zoom(event) {
+      if (disallowMarkerDrag) return;
       dispatchDetails({
         zoom: event.target._zoom,
       });

@@ -2,7 +2,7 @@ import { useProfileDispatch, useProfileSelector } from "@/lib/profile/hooks";
 import { useContext, useMemo } from "react";
 import { stepList, stepperIconClickHandler } from "../utils";
 import { stepperProps } from "@/app/_custom-components/stepper/utils";
-import { MainProfileStateContext } from "../../utils";
+import { MainProfileStateContext } from "@/app/profile/utils";
 
 export default function useStepperState(): [
   stepperProps["steps"],

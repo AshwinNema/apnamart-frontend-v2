@@ -47,8 +47,12 @@ export interface nextHandlerDetails
     step1Details,
     step2Details {
   id?: number;
-  latitude?: number;
-  longtitude?: number;
+}
+
+export interface createUpdateRegistrationDetails extends nextHandlerDetails {
+  latitude: number;
+  longtitude: number;
+  registrationStatus: Merchantdetails["registrationStatus"];
 }
 
 export const addressDrawerDefaultVal = (): step2Details => ({
@@ -74,3 +78,8 @@ export const stepIcons = {
   [stepLabels.bankDetails]: <FaBusinessTime />,
   [stepLabels.pickUpAddress]: <FaTruckMoving />,
 };
+
+export interface forwardTooltipProps {
+  content: ReactNode;
+  color: TooltipProps["color"];
+}

@@ -12,12 +12,18 @@ export enum UserRole {
   merchant = "merchant",
 }
 
+export enum MerchantRegistrationStatus {
+  adminReview = "review_by_admin",
+  merchantReview = "review_by_merchant",
+  completed = "completed",
+}
+
 export interface Merchantdetails {
   id?: number;
   name: string;
   description: string;
   isMerchantBlocked: boolean;
-  isRegistreationCompleted: boolean;
+  registrationStatus: MerchantRegistrationStatus | null;
   latitude: number;
   longtitude: number;
   addressLine1: string;

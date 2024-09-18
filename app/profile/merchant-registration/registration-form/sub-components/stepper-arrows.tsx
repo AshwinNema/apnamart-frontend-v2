@@ -10,7 +10,7 @@ import {
   stepList,
 } from "../utils";
 import { ReactNode, useContext } from "react";
-import { MainProfileStateContext } from "../../utils";
+import { MainProfileStateContext } from "@/app/profile/utils";
 
 export const BackwardToolTip = ({ children }: { children: ReactNode }) => {
   const currentStep = useProfileSelector(

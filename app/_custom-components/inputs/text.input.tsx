@@ -11,29 +11,29 @@ export const TextInput = ({
   setData,
   validationSchema,
   Icon,
-  label,
-  placeholder,
   className = "",
   classNames,
   variant = "bordered",
   autoFocus = false,
   labelPlacement = "inside",
   fullWidth = false,
-  isRequired,
   type = "text",
+  ...props
 }: TextInputProps) => {
   const [config, setConfig] = useState<TextInputState>({
     invalid: false,
     errorMsg: "",
-    label: label || "",
-    placeholder: `${placeholder ? placeholder : ""}`,
+    label: props.label || "",
+    placeholder: `${props.placeholder ? props.placeholder : ""}`,
   });
   const setDataFunc = useCallback(setNestedPath(setConfig), [setConfig]);
   const isInvalid = () =>
     invalidTextInputCheck(value, validationSchema, setDataFunc);
 
   const EndContent = () => {
-    return !!value ? <ClearIcon onClick={() => setData("")} /> : null;
+    return !!value && !props.isReadOnly ? (
+      <ClearIcon onClick={() => setData("")} />
+    ) : null;
   };
 
   return (
@@ -54,9 +54,10 @@ export const TextInput = ({
       color={config.invalid ? "danger" : "default"}
       labelPlacement={labelPlacement}
       errorMessage={`${config.errorMsg}`}
-      isRequired={isRequired}
+      isRequired={props.isRequired}
       isClearable={false}
       fullWidth={fullWidth}
+      isReadOnly={props.isReadOnly}
       type={type}
       endContent={<EndContent />}
       onValueChange={setData}
