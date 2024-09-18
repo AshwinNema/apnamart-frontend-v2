@@ -70,8 +70,4 @@ const MerchantRegistration = () => {
   );
 };
 
-export const stepperLastBtnText = (id?: number) => {
-  return id ? "Update details" : "Register";
-};
-
 export default MerchantRegistration;

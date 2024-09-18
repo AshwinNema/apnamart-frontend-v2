@@ -6,6 +6,11 @@ import dynamic from "next/dynamic";
 import BusinessOverview from "../business-overview";
 import { GoBackIcon, GoForwardIcon } from "../sub-components";
 import { stepIcons, stepLabels, stepList } from "../utils";
+
+export const stepperLastBtnText = (id?: number) => {
+  return id ? "Update details" : "Register";
+};
+
 // Note - if you want to change the steps here. Its pretty simple only 2 things here
 // 1. getContent - for resetting their postions
 // 2. nextStepErrs - for configuring errors for jumping to the next step
