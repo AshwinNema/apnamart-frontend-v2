@@ -1,4 +1,4 @@
-import { Button, CardBody, CardFooter } from "@nextui-org/react";
+import { CardBody, CardFooter, ScrollShadow } from "@nextui-org/react";
 import {
   StepperBackBtn,
   StepperNextBtn,
@@ -9,7 +9,6 @@ import { useProfileSelector } from "@/lib/profile/hooks";
 import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
 import { MainMerchantRegistrationContext } from ".";
 import { useContext } from "react";
-import { variants } from "@/app/_utils";
 import { ToolTipBtn } from "@/app/_custom-components";
 
 export const MainRegistrationForm = () => {
@@ -41,8 +40,12 @@ export const MainRegistrationForm = () => {
             <MdArrowBackIosNew />
           </ToolTipBtn>
         ) : null}
-        <StepperComponent />
       </CardBody>
+      <ScrollShadow>
+        <CardBody className="h-[70svh]">
+          <StepperComponent />
+        </CardBody>
+      </ScrollShadow>
 
       <CardFooter>
         <div className="flex justify-between w-full">

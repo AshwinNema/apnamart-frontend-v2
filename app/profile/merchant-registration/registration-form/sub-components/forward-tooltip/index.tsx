@@ -3,14 +3,14 @@ import { Tooltip } from "@nextui-org/react";
 import { ReactNode, useContext, useState } from "react";
 import {
   forwardTooltipProps,
-  stepIcons,
   stepLabels,
   stepList,
   stepValidator,
-} from "../utils";
-import { getAddressDrawerBtntext } from "../pickup-address/details";
+} from "../../utils";
+import { getAddressDrawerBtntext } from "../../pickup-address/details";
 import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
 import { MainProfileStateContext } from "@/app/profile/utils";
+import { getToolTipContent } from "./utils";
 
 export const ForwardToolTip = ({ children }: { children: ReactNode }) => {
   const merchantDetails = useProfileSelector((state) => state.merchantDetails);
@@ -22,8 +22,10 @@ export const ForwardToolTip = ({ children }: { children: ReactNode }) => {
   });
   const context = useContext(MainProfileStateContext);
   const currentStepKey = stepList[currentStep];
+  const underAdminReview =
+    registrationStatus === MerchantRegistrationStatus.adminReview;
   const setToolTipContent = () => {
-    if (registrationStatus === MerchantRegistrationStatus.adminReview) {
+    if (underAdminReview && currentStep === stepList.length - 1) {
       setConfig({
         content: "Your profile is currently being reviewed by admin",
         color: "secondary",
@@ -45,8 +47,7 @@ export const ForwardToolTip = ({ children }: { children: ReactNode }) => {
                 Please click on{" "}
                 <span className="font-bold">
                   {getAddressDrawerBtntext(
-                    merchantDetails.registrationStatus ===
-                      MerchantRegistrationStatus.adminReview,
+                    underAdminReview,
                     merchantDetails.id,
                   )}
                 </span>{" "}
@@ -60,32 +61,10 @@ export const ForwardToolTip = ({ children }: { children: ReactNode }) => {
       });
       return;
     }
-    const getToolTipContext = () => {
-      const isLastStep = currentStep >= stepList.length - 1;
-      const nextStepLabel = stepList[currentStep + 1];
-      return (
-        <>
-          {isLastStep ? (
-            <p>
-              Click below to {merchantDetails.id ? "update" : "register"} on the
-              platform
-            </p>
-          ) : (
-            <div className="inline-block align-middle">
-              Please click below to go to{" "}
-              <span className="inline-block align-middle mx-1 scale-[1.3]">
-                {stepIcons[nextStepLabel]}
-              </span>
-              <span className="font-bold"> {nextStepLabel}</span>{" "}
-            </div>
-          )}
-        </>
-      );
-    };
 
     setConfig({
       color: "secondary",
-      content: getToolTipContext(),
+      content: getToolTipContent(currentStep, merchantDetails.id),
     });
   };
 

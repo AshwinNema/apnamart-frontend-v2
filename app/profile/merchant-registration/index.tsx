@@ -33,8 +33,9 @@ const MerchantRegistration = () => {
       registrationStatus === MerchantRegistrationStatus.adminReview,
     );
   }, [registrationStatus]);
+
   return (
-    <Card>
+    <Card className="h-[80svh]">
       {config.showReviewDetails ? (
         <>
           <CardBody>
