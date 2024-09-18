@@ -1,17 +1,14 @@
 import { CardBody, CardFooter, ScrollShadow } from "@nextui-org/react";
-import {
-  StepperBackBtn,
-  StepperNextBtn,
-} from "./registration-form/sub-components";
-import { StepperComponent } from "./registration-form/stepper";
+import { StepperBackBtn, StepperNextBtn } from "./sub-components";
+import { StepperComponent } from "./stepper";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { useProfileSelector } from "@/lib/profile/hooks";
 import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
-import { MainMerchantRegistrationContext } from ".";
+import { MainMerchantRegistrationContext } from "..";
 import { useContext } from "react";
 import { ToolTipBtn } from "@/app/_custom-components";
 
-export const MainRegistrationForm = () => {
+const RegistrationForm = () => {
   const underReview =
     useProfileSelector((state) => state.merchantDetails.registrationStatus) ===
     MerchantRegistrationStatus.adminReview;
@@ -60,3 +57,5 @@ export const MainRegistrationForm = () => {
     </>
   );
 };
+
+export default RegistrationForm;

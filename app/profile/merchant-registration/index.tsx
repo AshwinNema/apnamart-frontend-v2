@@ -1,5 +1,4 @@
 import { Button, Card, CardBody } from "@nextui-org/react";
-import { MainRegistrationForm } from "./sub-components";
 import { useProfileSelector } from "@/lib/profile/hooks";
 import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
 import {
@@ -11,6 +10,7 @@ import {
   useState,
 } from "react";
 import { setKeyVal, setNestedPath } from "@/app/_utils";
+import RegistrationForm from "./registration-form";
 interface merchantRegistrationState {
   showReviewDetails: boolean;
 }
@@ -63,7 +63,7 @@ const MerchantRegistration = () => {
             setData,
           }}
         >
-          <MainRegistrationForm />
+          <RegistrationForm />
         </MainMerchantRegistrationContext.Provider>
       )}
     </Card>
