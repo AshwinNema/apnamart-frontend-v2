@@ -46,7 +46,7 @@ function Conversation({ title, subtitle, resizable }: Props) {
   return (
     <div
       ref={containerDiv}
-      className={`shadow-chatConversationContainer min-w-[25svw] max-w-[90svw] rounded-[4rem] mb-16 relative ${theme === browserTheme.dark ? "bg-black" : "bg-white"}`}
+      className={`shadow-chatConversationContainer min-w-[25svw] max-w-[90svw] rounded-[4rem] mb-16 relative ${theme === browserTheme.dark ? "bg-black" : "bg-[#E5E6E4]"}`}
       aria-live="polite"
     >
       {resizable && (

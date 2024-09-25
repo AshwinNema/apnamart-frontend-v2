@@ -7,4 +7,5 @@ export type MessageBoxType = {
   date: Date;
   status: "waiting" | "sent" | "received" | "read";
   msgBoxClass?: string;
+  hideSeenAndStatus?: boolean;
 };

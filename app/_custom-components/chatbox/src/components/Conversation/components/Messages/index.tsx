@@ -14,6 +14,8 @@ function Messages({}) {
       <ScrollShadow className="h-[50svh] ">
         <div className="mb-24 flex flex-col gap-5 mt-5">
           {messages?.map?.((message) => {
+            const isClientMessage =
+              message.senderType === messageSenderType.client;
             switch (message.componentType) {
               case componentType.systemComponent:
                 return (
@@ -35,12 +37,13 @@ function Messages({}) {
                 return (
                   <Fragment key={message.id}>
                     <MessageBox
-                      position={
-                        message.senderType === messageSenderType.client
-                          ? "right"
-                          : "left"
-                      }
-                      msgBoxClass="bg-chatBoxMsgTheme text-white"
+                      position={isClientMessage ? "right" : "left"}
+                      hideSeenAndStatus={message.hideStatusAndTime}
+                      msgBoxClass={`${
+                        isClientMessage
+                          ? "bg-chatBoxMsgTheme"
+                          : theme !== browserTheme.dark ? "bg-white" : "bg-darkContainerTheme"
+                      } ${isClientMessage || theme === browserTheme.dark ? "text-white" : "text-black"}`}
                       text={`${message.text}`}
                       date={new Date()}
                       status="received"

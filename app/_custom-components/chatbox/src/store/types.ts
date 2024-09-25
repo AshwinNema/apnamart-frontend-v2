@@ -18,6 +18,7 @@ export interface Message {
   id: string | number;
   props?: any;
   text: string;
+  hideStatusAndTime?: boolean
 }
 
 export interface MessagesState {

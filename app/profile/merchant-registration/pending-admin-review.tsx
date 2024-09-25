@@ -65,11 +65,9 @@ const PendingAdminReview = ({ setData }: { setData: setKeyVal }) => {
                 timestamp: new Date(),
                 status: "read",
                 id: v4(),
-
-                text: `
-  👋 Hello! Welcome to Apnamart! We're here to help you with anything you need. If you have questions about our platform, your profile status, or anything else, just ask! 😊
-How can we assist you today?
-  `,
+                hideStatusAndTime: true,
+                text: `👋 Hello! Welcome to Apnamart! We're here to help you with anything you need. If you have questions about our platform, your profile status, or anything else, just ask! 😊
+How can we assist you today?`,
               },
             ]}
           />

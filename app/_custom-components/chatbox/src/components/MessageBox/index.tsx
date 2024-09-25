@@ -14,24 +14,25 @@ const MessageBox: React.FC<MessageBoxType> = (props) => {
       >
         <div>
           <div className="break-all">{props.text}</div>
+          {props.hideSeenAndStatus ? null : (
+            <div
+              className={
+                "flex items-center justify-end text-right opacity-50 text-[8px] right-[-4px] bottom-[-5px] gap-1 mt-2"
+              }
+            >
+              {format(props.date, "hh:mm")}
 
-          <div
-            className={
-              "flex items-center justify-end text-right opacity-50 text-[8px] right-[-4px] bottom-[-5px] gap-1 mt-2"
-            }
-          >
-            {format(props.date, "hh:mm")}
+              <span className="scale-[1.3]">
+                {props.status === "waiting" && <MdAccessTime />}
 
-            <span className="scale-[1.3]">
-              {props.status === "waiting" && <MdAccessTime />}
+                {props.status === "sent" && <MdCheck />}
 
-              {props.status === "sent" && <MdCheck />}
+                {props.status === "received" && <MdDoneAll />}
 
-              {props.status === "received" && <MdDoneAll />}
-
-              {props.status === "read" && <MdDoneAll color="#4FC3F7" />}
-            </span>
-          </div>
+                {props.status === "read" && <MdDoneAll color="#4FC3F7" />}
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </div>
