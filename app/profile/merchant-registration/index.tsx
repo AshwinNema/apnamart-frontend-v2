@@ -1,4 +1,4 @@
-import { Button, Card, CardBody } from "@nextui-org/react";
+import { Card } from "@nextui-org/react";
 import { useProfileSelector } from "@/lib/profile/hooks";
 import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
 import {
@@ -11,6 +11,8 @@ import {
 } from "react";
 import { setKeyVal, setNestedPath } from "@/app/_utils";
 import RegistrationForm from "./registration-form";
+import PendingAdminReview from "./pending-admin-review";
+
 interface merchantRegistrationState {
   showReviewDetails: boolean;
 }
@@ -38,22 +40,7 @@ const MerchantRegistration = () => {
     <Card className="h-[80svh]">
       {config.showReviewDetails ? (
         <>
-          <CardBody>
-            Your profile is currently being reviewed by the admin. We will get
-            back to you soon! ⏳ If you have any questions, feel free to reach
-            out through chat support. 💬
-            <div className="mt-5">
-              <Button
-                onPress={() => {
-                  setData("showReviewDetails")(false);
-                }}
-                variant="bordered"
-                color="primary"
-              >
-                View Profile Details
-              </Button>
-            </div>
-          </CardBody>
+         <PendingAdminReview setData={setData} />
         </>
       ) : (
         <MainMerchantRegistrationContext.Provider

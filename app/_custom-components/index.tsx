@@ -12,6 +12,7 @@ export * from "./table";
 export * from "./loaders";
 export * from "./stepper";
 export * from "./buttons";
+export * from "./chatbox";
 export { default as CustomImagePreviewer } from "./image-previewer";
 
 export const ImageComponent = ({

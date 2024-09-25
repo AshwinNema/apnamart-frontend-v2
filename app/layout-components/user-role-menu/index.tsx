@@ -80,7 +80,7 @@ export const UserRoleMenu = () => {
             <DropdownItem
               startContent={item.icon}
               key={item.link}
-              className={`${path === item.link && "bg-theme"}`}
+              className={`${path === item.link && "bg-mainTheme"}`}
               variant={`${path === item.link ? "solid" : "faded"}`}
             >
               {item.label}

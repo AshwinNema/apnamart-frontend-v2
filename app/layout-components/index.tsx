@@ -18,7 +18,7 @@ import {
 } from "../_services";
 import { commonRoleRoutes, setNestedPath } from "../_utils";
 import { UserRole } from "@/lib/main/slices/user/user.slice";
-
+import {z} from "zod"
 export default function Layout({
   children,
 }: Readonly<{
@@ -37,10 +37,11 @@ export default function Layout({
   const path = usePathname();
 
   useEffect(() => {
+  
     setData("mounted")(true);
     setTimeout(() => {
       setData("showStartLoader")(false);
-    }, 2000);
+    }, Number(process.env.NEXT_PUBLIC_START_LOADER_TIMER) );
   }, []);
 
   useEffect(() => {
