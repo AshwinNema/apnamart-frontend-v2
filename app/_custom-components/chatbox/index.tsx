@@ -10,7 +10,7 @@ export type chatBoxProps = {
   resizable?: boolean;
   title?: ReactNode;
   subtitle?: string;
-  initalMessages?:Message[];
+  initalMessages?: Message[];
 };
 
 const Chatbox = ({

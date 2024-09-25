@@ -10,8 +10,7 @@ export type CounterState = {
   count: number;
 };
 
-export type chatBoxStore = behaviourState &
-  messageState
+export type chatBoxStore = behaviourState & messageState;
 
 export const createChatboxStore = () => {
   return createStore<chatBoxStore>()((...args) => ({

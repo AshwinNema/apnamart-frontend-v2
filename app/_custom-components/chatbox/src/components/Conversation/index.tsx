@@ -3,8 +3,8 @@ import Header from "./components/Header";
 import Messages from "./components/Messages";
 import Sender from "./components/Sender";
 import { chatBoxProps } from "../../..";
-import { getBrowserTheme } from "@/app/_utils";
 import { browserTheme } from "@/app/layout-components/theme-switch";
+import { useTheme } from "next-themes";
 
 type Props = {
   title: chatBoxProps["title"];
@@ -41,11 +41,12 @@ function Conversation({ title, subtitle, resizable }: Props) {
     window.removeEventListener("mousemove", resize, false);
     window.removeEventListener("mouseup", stopResize, false);
   };
+  const { theme } = useTheme();
 
   return (
     <div
       ref={containerDiv}
-      className={`shadow-chatConversationContainer min-w-[25svw] max-w-[90svw] rounded-[4rem] mb-16 relative ${getBrowserTheme() === browserTheme.dark ? "bg-black" : "bg-white"}`}
+      className={`shadow-chatConversationContainer min-w-[25svw] max-w-[90svw] rounded-[4rem] mb-16 relative ${theme === browserTheme.dark ? "bg-black" : "bg-white"}`}
       aria-live="polite"
     >
       {resizable && (

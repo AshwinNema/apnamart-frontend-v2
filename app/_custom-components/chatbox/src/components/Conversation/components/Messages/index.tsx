@@ -3,12 +3,12 @@ import { componentType, messageSenderType } from "../../../../store/types";
 import { ScrollShadow } from "@nextui-org/react";
 import MessageBox from "../../../MessageBox";
 import { useChatboxStore } from "../../../../store";
-import { getBrowserTheme } from "@/app/_utils";
 import { browserTheme } from "@/app/layout-components/theme-switch";
+import { useTheme } from "next-themes";
 
 function Messages({}) {
   const messages = useChatboxStore((state) => state.messages);
-  const theme = getBrowserTheme();
+  const { theme } = useTheme();
   return (
     <div className="h-[50svh] ">
       <ScrollShadow className="h-[50svh] ">

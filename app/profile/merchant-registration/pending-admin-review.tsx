@@ -1,17 +1,20 @@
 import { Chatbox, ChatIcon } from "@/app/_custom-components";
-import { componentType, messageSenderType } from "@/app/_custom-components/chatbox/src/store/types";
+import {
+  componentType,
+  messageSenderType,
+} from "@/app/_custom-components/chatbox/src/store/types";
 import { setKeyVal } from "@/app/_utils";
 import { Button, CardBody, CardHeader } from "@nextui-org/react";
 import { MdOutlineSupportAgent } from "react-icons/md";
-import {v4} from "uuid"
+import { v4 } from "uuid";
 const PendingAdminReview = ({ setData }: { setData: setKeyVal }) => {
   return (
     <>
-    <CardHeader >
-      <div className="font-bold text-2xl flex justify-center w-full mb-11">
-      Registration Status : Under admin review
-      </div>
-    </CardHeader>
+      <CardHeader>
+        <div className="font-bold text-2xl flex justify-center w-full mb-11">
+          Registration Status : Under admin review
+        </div>
+      </CardHeader>
       <CardBody>
         <div className="inline-block align-middle">
           Your profile is currently being reviewed by the admin. We will get
@@ -54,20 +57,21 @@ const PendingAdminReview = ({ setData }: { setData: setKeyVal }) => {
             }
             subtitle=""
             resizable={true}
-            initalMessages={[{
-              componentType: componentType.textComponent,
-  senderName: "Admin Bot",
-  senderType: messageSenderType.response,
-  timestamp: new Date(),
-  status: "read",
-  id: v4(),
- 
-  text: `
-  👋 Hello! Welcome to [Your Company Name]! We're here to help you with anything you need. If you have questions about our platform, your profile status, or anything else, just ask! 😊
+            initalMessages={[
+              {
+                componentType: componentType.textComponent,
+                senderName: "Admin Bot",
+                senderType: messageSenderType.response,
+                timestamp: new Date(),
+                status: "read",
+                id: v4(),
 
+                text: `
+  👋 Hello! Welcome to Apnamart! We're here to help you with anything you need. If you have questions about our platform, your profile status, or anything else, just ask! 😊
 How can we assist you today?
-  `
-            }]}
+  `,
+              },
+            ]}
           />
         </div>
       </CardBody>

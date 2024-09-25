@@ -29,7 +29,7 @@ function Sender() {
   });
 
   const dateMap = useChatboxStore((state) => state.dateMap);
-  const addMsgsAndKey = useChatboxStore((state) => state.addMsgsAndKey)
+  const addMsgsAndKey = useChatboxStore((state) => state.addMsgsAndKey);
   return (
     <>
       <EmojiPicker config={config} setConfig={setConfig} />
@@ -61,7 +61,7 @@ function Sender() {
                 onClick={() => {
                   addChatboxMsg(config.inputVal, setData, {
                     dateMap,
-                    addMsgsAndKey
+                    addMsgsAndKey,
                   });
                 }}
                 className={`scale-y-[0.5] cursor-pointer ${

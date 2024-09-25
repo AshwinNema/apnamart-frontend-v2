@@ -40,7 +40,7 @@ const MerchantRegistration = () => {
     <Card className="h-[80svh]">
       {config.showReviewDetails ? (
         <>
-         <PendingAdminReview setData={setData} />
+          <PendingAdminReview setData={setData} />
         </>
       ) : (
         <MainMerchantRegistrationContext.Provider

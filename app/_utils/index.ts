@@ -88,7 +88,7 @@ export const validateZodSchema = (
 
   return { error, data, errMsg };
 };
-
+// Note - Do not use this in components to get theme instead use useTheme  (next-themes) because it does not gets rerendered
 export const getBrowserTheme = (): browserTheme => {
   return getLocalStorageKey(storageAttributes.theme) || browserTheme.light;
 };

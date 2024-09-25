@@ -21,7 +21,7 @@ function Widget({
   initalMessages,
 }: Props) {
   const toggleChat = useChatboxStore((state) => state.toggleChat);
-  const isLoaded = useRef(false)
+  const isLoaded = useRef(false);
   const addMultipleMessages = useChatboxStore(
     (state) => state.addMultipleMessages,
   );
@@ -32,8 +32,9 @@ function Widget({
   };
 
   useEffect(() => {
-    if (!isLoaded.current) initalMessages && addMultipleMessages(initalMessages);
-    isLoaded.current = true
+    if (!isLoaded.current)
+      initalMessages && addMultipleMessages(initalMessages);
+    isLoaded.current = true;
   }, [initalMessages]);
 
   return (

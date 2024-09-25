@@ -30,7 +30,7 @@ const config: Config = {
         successTheme,
         warningTheme,
         chatBoxMsgTheme,
-        darkContainerTheme
+        darkContainerTheme,
       },
       animation: {
         glow: "glow 1.5s linear 3s infinite",
