@@ -1,8 +1,14 @@
 "use client";
 
-import { type ReactNode, createContext, useRef, useContext } from "react";
+import {
+  type ReactNode,
+  createContext,
+  useContext,
+  useRef,
+} from "react";
 import { useStore } from "zustand";
 import { type chatBoxStore, createChatboxStore } from "./store";
+
 export type chatboxStoreApi = ReturnType<typeof createChatboxStore>;
 export const ChatboxStoreContext = createContext<chatboxStoreApi | undefined>(
   undefined,
@@ -15,9 +21,10 @@ export interface chatboxStoreProviderProps {
 export const ChatboxStoreProvider = ({
   children,
 }: chatboxStoreProviderProps) => {
-  const storeRef = useRef<chatboxStoreApi>();
+  const storeRef = useRef<chatboxStoreApi | undefined>();
   if (!storeRef.current) {
-    storeRef.current = createChatboxStore();
+    const store = createChatboxStore();
+    storeRef.current = store;
   }
 
   return (

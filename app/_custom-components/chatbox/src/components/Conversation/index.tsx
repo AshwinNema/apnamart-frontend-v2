@@ -1,24 +1,19 @@
-import { useRef, MouseEvent } from "react";
+import { useRef, MouseEvent, useContext } from "react";
 import Header from "./components/Header";
 import Messages from "./components/Messages";
 import Sender from "./components/Sender";
-import { chatBoxProps } from "../../..";
+import { WidgetContext } from "../../..";
 import { browserTheme } from "@/app/layout-components/theme-switch";
 import { useTheme } from "next-themes";
 
-type Props = {
-  title: chatBoxProps["title"];
-  subtitle: string;
-  resizable?: boolean;
-};
-
-function Conversation({ title, subtitle, resizable }: Props) {
+function Conversation() {
+  const widgetProps = useContext(WidgetContext);
   const containerDiv = useRef<HTMLDivElement | null>(null);
   const startX = useRef(0);
   const startWidth = useRef(0);
 
   const initResize = (e: MouseEvent<HTMLDivElement>) => {
-    if (resizable) {
+    if (widgetProps?.resizable) {
       startX.current = e.clientX;
       if (document.defaultView && containerDiv.current) {
         startWidth.current = parseInt(
@@ -42,14 +37,14 @@ function Conversation({ title, subtitle, resizable }: Props) {
     window.removeEventListener("mouseup", stopResize, false);
   };
   const { theme } = useTheme();
-
+  if (!widgetProps) return null;
   return (
     <div
       ref={containerDiv}
       className={`shadow-chatConversationContainer min-w-[25svw] max-w-[90svw] rounded-[4rem] mb-16 relative ${theme === browserTheme.dark ? "bg-black" : "bg-[#E5E6E4]"}`}
       aria-live="polite"
     >
-      {resizable && (
+      {widgetProps.resizable && (
         <div
           onMouseDown={(e) => {
             initResize(e);
@@ -57,7 +52,7 @@ function Conversation({ title, subtitle, resizable }: Props) {
           className="cursor-col-resize h-full left-0 absolute top-0 w-[5px] z-20"
         />
       )}
-      <Header title={title} subtitle={subtitle} />
+      <Header />
       <Messages />
       <Sender />
     </div>

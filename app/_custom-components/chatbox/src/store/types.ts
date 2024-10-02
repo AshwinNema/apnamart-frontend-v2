@@ -10,21 +10,24 @@ export enum messageSenderType {
 }
 
 export interface Message {
-  componentType: componentType;
-  senderName: string;
   senderType: messageSenderType;
   timestamp: Date;
   status: MessageBoxType["status"];
   id: string | number;
-  props?: any;
   text: string;
-  hideStatusAndTime?: boolean
+  hideStatusAndTime?: boolean;
 }
+// firstDayMap - This map store the first message for a particular day. Here
+// 1.id = id of the message for that day
+// 2.time = time stamp for that day
 
 export interface MessagesState {
   messages: Message[];
-  badgeCount: number;
-  dateMap: {
-    [date: string]: true;
+  firstDayMap: {
+    [date: string]: {
+      id: string | number;
+      time: Date;
+    };
   };
+  totalResults: number
 }
