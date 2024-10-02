@@ -11,7 +11,7 @@ import {
 
 export * from "./helper";
 export * from "./upload-handler";
-export * from "./websocket"
+export * from "./websocket";
 
 export const makeDataRequest = async (
   method: HTTP_METHODS,

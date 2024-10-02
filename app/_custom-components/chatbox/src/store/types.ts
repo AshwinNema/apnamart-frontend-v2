@@ -29,5 +29,5 @@ export interface MessagesState {
       time: Date;
     };
   };
-  totalResults: number
+  totalResults: number;
 }

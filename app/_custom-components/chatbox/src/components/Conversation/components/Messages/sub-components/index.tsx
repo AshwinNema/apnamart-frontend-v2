@@ -2,7 +2,11 @@ import { browserTheme } from "@/app/layout-components/theme-switch";
 import { useTheme } from "next-themes";
 import React, { Fragment } from "react";
 import { formatChatBoxDate } from "../../../../../utils/interfaces & types & constants";
-import { Message, messageSenderType, MessagesState } from "../../../../../store/types";
+import {
+  Message,
+  messageSenderType,
+  MessagesState,
+} from "../../../../../store/types";
 import { SystemComponent, MessageBox } from "./msg-parts";
 
 export const MainMsgComponent = ({
