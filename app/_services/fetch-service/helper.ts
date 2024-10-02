@@ -1,6 +1,6 @@
 import { toastErrorIcons } from "@/app/_utils/toast";
 import { getLocalStorageKey, storageAttributes } from "../web-storage.service";
-import { getRefreshToken } from "./helper-apis";
+import { getRefreshToken } from "./refresh-token";
 import { ReactNode } from "react";
 
 export enum HTTP_METHODS {

@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback } from "react";
+import { useRef, useState, useCallback, useContext } from "react";
 import { Input } from "@nextui-org/react";
 import { FaRegSmile } from "react-icons/fa";
 import { IoSend } from "react-icons/io5";
@@ -6,11 +6,10 @@ import { useHover } from "react-aria";
 import EmojiPicker, { pickerStateChanger } from "./emoji-picker";
 import { setNestedPath } from "@/app/_utils";
 import { addChatboxMsg, handleEmojiEvents, senderState } from "./utils";
-import { useChatboxStore } from "../../../../store";
+import { WidgetContext } from "@/app/_custom-components/chatbox";
 
 function Sender() {
   const senderInputContainer = useRef<HTMLDivElement | null>(null);
-
   const [config, setConfig] = useState<senderState>({
     pickerOffset: 0,
     height: 0,
@@ -18,7 +17,7 @@ function Sender() {
     inputVal: "",
   });
   const emojiEventHandler = (behaviour: pickerStateChanger = "toggle") => {
-    handleEmojiEvents("open", config, setConfig, senderInputContainer);
+    handleEmojiEvents(behaviour, config, setConfig, senderInputContainer);
   };
 
   const setData = useCallback(setNestedPath(setConfig), [setConfig]);
@@ -28,8 +27,9 @@ function Sender() {
     },
   });
 
-  const dateMap = useChatboxStore((state) => state.dateMap);
-  const addMsgsAndKey = useChatboxStore((state) => state.addMsgsAndKey);
+  const widgetProps = useContext(WidgetContext);
+  if (!widgetProps) return null;
+
   return (
     <>
       <EmojiPicker config={config} setConfig={setConfig} />
@@ -59,10 +59,19 @@ function Sender() {
             endContent={
               <IoSend
                 onClick={() => {
-                  addChatboxMsg(config.inputVal, setData, {
-                    dateMap,
-                    addMsgsAndKey,
-                  });
+                  const value = config.inputVal.trim();
+                  if (!value) return;
+                  if (widgetProps.customAddMsg) {
+                    widgetProps.customAddMsg(value, () =>
+                      setData("inputVal")(""),
+                    );
+                    return;
+                  }
+                  addChatboxMsg(
+                    config.inputVal,
+                    setData,
+                    widgetProps.stateConfig[1],
+                  );
                 }}
                 className={`scale-y-[0.5] cursor-pointer ${
                   !config.inputVal.trim() && "opacity-50"

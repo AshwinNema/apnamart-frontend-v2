@@ -1,10 +1,11 @@
 import { Dispatch, MutableRefObject, SetStateAction } from "react";
 import { pickerStateChanger } from "./emoji-picker";
 import { setKeyVal } from "@/app/_utils";
-import { messageState } from "../../../../store/slice";
-import { format } from "date-fns";
 import { v4 } from "uuid";
-import { componentType, messageSenderType } from "../../../../store/types";
+import { assignDateKey, chatBoxProps } from "@/app/_custom-components/chatbox";
+import { produce } from "immer";
+import { messageSenderType } from "../../../../store/types";
+import { messageBoxStatusTypes } from "../../../../utils/interfaces & types & constants";
 
 export interface senderState {
   pickerOffset: number;
@@ -49,43 +50,24 @@ export const handleEmojiEvents = (
 export const addChatboxMsg = (
   inputVal: string,
   setData: setKeyVal,
-  {
-    dateMap,
-    addMsgsAndKey,
-  }: {
-    dateMap: messageState["dateMap"];
-    addMsgsAndKey: messageState["addMsgsAndKey"];
-  },
+  setConfig: chatBoxProps["stateConfig"][1],
 ) => {
   const value = inputVal.trim();
   if (!value) return;
-  const currentDate = new Date();
-  const formattedDate = format(currentDate, "dd-MMMM-yyyy")
-    .split("-")
-    .join(" ");
-  const messageBoxes: messageState["messages"] = [];
-  const isDateHeaderAdded = !!dateMap[formattedDate];
+  const id = v4();
+  const timestamp = new Date();
 
-  if (!isDateHeaderAdded) {
-    messageBoxes.push({
-      componentType: componentType.systemComponent,
-      senderName: "Sender",
-      senderType: messageSenderType.client,
-      timestamp: new Date(),
-      status: "read",
-      id: v4(),
-      text: formattedDate,
-    });
-  }
-  messageBoxes.push({
-    componentType: componentType.textComponent,
-    senderName: "Sender",
-    senderType: messageSenderType.client,
-    timestamp: new Date(),
-    status: "waiting",
-    id: v4(),
-    text: value,
-  });
-  addMsgsAndKey(messageBoxes, formattedDate);
+  setConfig(
+    produce((draft) => {
+      assignDateKey(id, timestamp, draft.firstDayMap);
+      draft.messages.push({
+        senderType: messageSenderType.client,
+        timestamp,
+        status: messageBoxStatusTypes.sent,
+        id,
+        text: value,
+      });
+    }),
+  );
   setData("inputVal")("");
 };

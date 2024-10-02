@@ -1,6 +1,6 @@
-const backendService = `${process.env.NEXT_PUBLIC_BACKEND_URL}v2/`;
+export const backendService = `${process.env.NEXT_PUBLIC_BACKEND_URL}v2/`;
 
-const auth = {
+export const auth = {
   LOGIN: `${backendService}auth/login`,
   REGISTER: `${backendService}auth/register`,
   REFRESH_TOKEN: `${backendService}auth/refresh-token`,
@@ -10,7 +10,7 @@ const auth = {
   LOG_OUT: `${backendService}auth/logout`,
 };
 
-const user = {
+export const user = {
   UPLOAD_PROFILE_IMG: `${backendService}user/profile-photo`,
   PROFILE: `${backendService}user/profile`,
   QUERY_MAP_LOCATION: `${backendService}user/query-location`,
@@ -19,7 +19,7 @@ const user = {
   UPDATE_USER_PROFILE: `${backendService}user/profile`,
 };
 
-const category = {
+export const category = {
   CREATE_CATEGORY: `${backendService}category`,
   UPDATE_CATEGORY: `${backendService}category/`,
   QUERY_CATEGORIES: `${backendService}category`,
@@ -29,7 +29,7 @@ const category = {
   CATEGORY_LIST: `${backendService}category/list`,
 };
 
-const subcategory = {
+export const subcategory = {
   CREATE_SUB_CATEGORY: `${backendService}subcategory`,
   UPDATE_SUB_CATEGORY: `${backendService}subcategory/`,
   QUERY_SUB_CATEGORIES: `${backendService}subcategory`,
@@ -39,7 +39,7 @@ const subcategory = {
   SUB_CATEGORY_LIST: `${backendService}subcategory/list`,
 };
 
-const items = {
+export const items = {
   CREATE_ITEM: `${backendService}item`,
   UPDATE_ITEM: `${backendService}item/`,
   QUERY_ITEMS: `${backendService}item`,
@@ -49,19 +49,8 @@ const items = {
   GET_ITEM_FILTERS_BY_ITEM_ID: `${backendService}item/item-filter/by-item-id/`,
 };
 
-const merchant = {
+export const merchant = {
   START_MERCHANT_REGISTRATION: `${backendService}merchant/registration`,
   MERCHANT_REGISTRATION_FILE: `${backendService}merchant/registration/image`,
   UPDATE_REGISTRATION_DETAILS: `${backendService}merchant/registration`,
-};
-
-export const appEndPoints = {
-  ...auth,
-  ...user,
-  UPDATE_DELIVERY_AREA: `${backendService}delivery-area`,
-  GET_ALL_DELIVERY_AREAS: `${backendService}delivery-area`,
-  ...category,
-  ...subcategory,
-  ...items,
-  ...merchant,
 };

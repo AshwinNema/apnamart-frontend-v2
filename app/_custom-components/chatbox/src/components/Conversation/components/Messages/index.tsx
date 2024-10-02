@@ -1,59 +1,37 @@
-import { Fragment } from "react";
-import { componentType, messageSenderType } from "../../../../store/types";
 import { ScrollShadow } from "@nextui-org/react";
-import MessageBox from "../../../MessageBox";
-import { useChatboxStore } from "../../../../store";
-import { browserTheme } from "@/app/layout-components/theme-switch";
-import { useTheme } from "next-themes";
+import { MainMsgComponent } from "./sub-components";
+import { Fragment, useContext } from "react";
+import { WidgetContext } from "@/app/_custom-components/chatbox";
 
 function Messages({}) {
-  const messages = useChatboxStore((state) => state.messages);
-  const { theme } = useTheme();
+  const widgetProps = useContext(WidgetContext);
+  if (!widgetProps) return null;
+  const {
+    stateConfig: [{ firstDayMap, messages }],
+  } = widgetProps;
+
   return (
     <div className="h-[50svh] ">
       <ScrollShadow className="h-[50svh] ">
         <div className="mb-24 flex flex-col gap-5 mt-5">
-          {messages?.map?.((message) => {
-            const isClientMessage =
-              message.senderType === messageSenderType.client;
-            switch (message.componentType) {
-              case componentType.systemComponent:
+          {widgetProps.initialMessages
+            ? widgetProps.initialMessages.map((message) => {
                 return (
                   <Fragment key={message.id}>
-                    <div className="flex items-center justify-center">
-                      <div
-                        className={`relative rounded-[10px] shadow-systemComponentShadow flex flex-col my-1.5 pt-1.5 pr-2.5 pb-2 pl-2.5 float-left max-w-[70%] items-center justify-center ${
-                          theme === browserTheme.dark && "bg-darkContainerTheme"
-                        }`}
-                      >
-                        <div className="text-center text-[15px] inline-block opacity-50 text-supSmall">
-                          {message.text}
-                        </div>
-                      </div>
-                    </div>
-                  </Fragment>
-                );
-              case componentType.textComponent:
-                return (
-                  <Fragment key={message.id}>
-                    <MessageBox
-                      position={isClientMessage ? "right" : "left"}
-                      hideSeenAndStatus={message.hideStatusAndTime}
-                      msgBoxClass={`${
-                        isClientMessage
-                          ? "bg-chatBoxMsgTheme"
-                          : theme !== browserTheme.dark ? "bg-white" : "bg-darkContainerTheme"
-                      } ${isClientMessage || theme === browserTheme.dark ? "text-white" : "text-black"}`}
-                      text={`${message.text}`}
-                      date={new Date()}
-                      status="received"
+                    <MainMsgComponent
+                      message={message}
+                      firstDayMap={firstDayMap}
                     />
                   </Fragment>
                 );
-
-              default:
-                return <Fragment key={message.id}></Fragment>;
-            }
+              })
+            : null}
+          {messages?.map?.((message) => {
+            return (
+              <Fragment key={message.id}>
+                <MainMsgComponent message={message} firstDayMap={firstDayMap} />
+              </Fragment>
+            );
           })}
         </div>
       </ScrollShadow>

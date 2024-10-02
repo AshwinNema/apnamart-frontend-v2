@@ -1,20 +1,14 @@
 import { createStore } from "zustand/vanilla";
-import {
-  behaviourState,
-  createBehaviourSlice,
-  createMessageSlice,
-  messageState,
-} from "./slice";
+import { behaviourState, createBehaviourSlice } from "./slice";
 
 export type CounterState = {
   count: number;
 };
 
-export type chatBoxStore = behaviourState & messageState;
+export type chatBoxStore = behaviourState;
 
 export const createChatboxStore = () => {
   return createStore<chatBoxStore>()((...args) => ({
     ...createBehaviourSlice(...args),
-    ...createMessageSlice(...args),
   }));
 };
