@@ -17,7 +17,7 @@ import {
   sendChatMsg,
 } from "./helpers/socket-manager";
 
-const ChatSupport = () => {
+const MerchantAdminChatSupport = () => {
   const socketRef = useRef<WebSocket | null>(null);
   const [chatConfig, setChatConfig] = useChatDataManager();
   const [config] = useState<chatSupportConfig>({
@@ -80,4 +80,4 @@ How can we assist you today?`,
   );
 };
 
-export default ChatSupport;
+export default MerchantAdminChatSupport;

@@ -1,5 +1,0 @@
-const ChatSupport = () => {
-    return <>
-    frefd
-    </>
-}
