@@ -1,6 +1,6 @@
 import { Card } from "@nextui-org/react";
 import { useProfileSelector } from "@/lib/profile/hooks";
-import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
+import { merchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
 import {
   createContext,
   Dispatch,
@@ -32,7 +32,7 @@ const MerchantRegistration = () => {
   const setData = useCallback(setNestedPath(setConfig), [setConfig]);
   useEffect(() => {
     setData("showReviewDetails")(
-      registrationStatus === MerchantRegistrationStatus.adminReview,
+      registrationStatus === merchantRegistrationStatus.adminReview,
     );
   }, [registrationStatus]);
 

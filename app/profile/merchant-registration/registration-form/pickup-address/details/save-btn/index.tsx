@@ -10,7 +10,7 @@ import { ToolTipBtn } from "@/app/_custom-components";
 import { useState } from "react";
 import { infoToast } from "@/app/_utils";
 import { getSavingInfoContent, SuccessToolTipContent } from "./sub-components";
-import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
+import { merchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
 
 export const DrawerSaveBtn = ({
   config: allDetails,
@@ -25,7 +25,7 @@ export const DrawerSaveBtn = ({
     (state) => state.merchantDetails.registrationStatus,
   );
   const underAdminReview =
-    registrationStatus === MerchantRegistrationStatus.adminReview;
+    registrationStatus === merchantRegistrationStatus.adminReview;
   const reviewByAdminMsg =
     "Your profile is curerntly been reviewed by admin after that you will be able to update all the details";
   const [config, setConfig] = useState<nxtSaveBtnState>({

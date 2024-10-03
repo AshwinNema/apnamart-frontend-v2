@@ -53,4 +53,6 @@ export const merchant = {
   START_MERCHANT_REGISTRATION: `${backendService}merchant/registration`,
   MERCHANT_REGISTRATION_FILE: `${backendService}merchant/registration/image`,
   UPDATE_REGISTRATION_DETAILS: `${backendService}merchant/registration`,
+  QUERY_MERCHANT_REGISTRATIONS: `${backendService}merchant/registration`,
+  APPROVE_MERCHANT_REGISTRATION: `${backendService}merchant/registration/approve/`,
 };

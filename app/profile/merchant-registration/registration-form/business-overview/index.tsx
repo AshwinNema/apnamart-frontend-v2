@@ -5,7 +5,7 @@ import MerchantLogo from "./merchant-logo";
 import { SiNamesilo } from "react-icons/si";
 import { textInputProps } from "../utils";
 import { Textarea } from "@nextui-org/react";
-import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
+import { merchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
 
 const BusinessOverview = () => {
   const dispatch = useProfileDispatch();
@@ -25,7 +25,7 @@ const BusinessOverview = () => {
     );
   };
   const readOnlyInputs =
-    registrationStatus === MerchantRegistrationStatus.adminReview;
+    registrationStatus === merchantRegistrationStatus.adminReview;
   return (
     <>
       <MerchantLogo />

@@ -2,7 +2,7 @@ import { Button, useDisclosure } from "@nextui-org/react";
 import { BiSolidEditLocation } from "react-icons/bi";
 import AddressDrawer from "./drawer";
 import { useProfileSelector } from "@/lib/profile/hooks";
-import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
+import { merchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
 
 export const getAddressDrawerBtntext = (adminReview: boolean, id?: number) => {
   return adminReview
@@ -30,7 +30,7 @@ export default function Step2Details() {
           size="sm"
         >
           {getAddressDrawerBtntext(
-            registrationStatus === MerchantRegistrationStatus.adminReview,
+            registrationStatus === merchantRegistrationStatus.adminReview,
             id,
           )}
         </Button>

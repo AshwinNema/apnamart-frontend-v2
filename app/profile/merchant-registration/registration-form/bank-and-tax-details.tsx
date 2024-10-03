@@ -5,7 +5,7 @@ import { MdAccountBalance } from "react-icons/md";
 import { FaFileInvoiceDollar } from "react-icons/fa";
 import { IoCardSharp } from "react-icons/io5";
 import { textInputProps } from "./utils";
-import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
+import { merchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
 import { useMemo } from "react";
 export const BankAndTaxDetails = () => {
   const registrationStatus = useProfileSelector(
@@ -23,7 +23,7 @@ export const BankAndTaxDetails = () => {
 
   const inputProps = useMemo(() => {
     return {
-      isReadOnly: MerchantRegistrationStatus.adminReview === registrationStatus,
+      isReadOnly: merchantRegistrationStatus.adminReview === registrationStatus,
       ...textInputProps,
     };
   }, [registrationStatus]);

@@ -3,7 +3,7 @@ import { StepperBackBtn, StepperNextBtn } from "./sub-components";
 import { StepperComponent } from "./stepper";
 import { MdArrowBackIosNew } from "react-icons/md";
 import { useProfileSelector } from "@/lib/profile/hooks";
-import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
+import { merchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
 import { MainMerchantRegistrationContext } from "..";
 import { useContext } from "react";
 import { ToolTipBtn } from "@/app/_custom-components";
@@ -11,7 +11,7 @@ import { ToolTipBtn } from "@/app/_custom-components";
 const RegistrationForm = () => {
   const underReview =
     useProfileSelector((state) => state.merchantDetails.registrationStatus) ===
-    MerchantRegistrationStatus.adminReview;
+    merchantRegistrationStatus.adminReview;
 
   const context = useContext(MainMerchantRegistrationContext);
   if (!context) return;

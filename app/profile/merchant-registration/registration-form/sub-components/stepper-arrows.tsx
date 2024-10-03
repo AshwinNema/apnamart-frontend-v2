@@ -1,7 +1,5 @@
 import { useProfileDispatch, useProfileSelector } from "@/lib/profile/hooks";
 import { Tooltip } from "@nextui-org/react";
-import { TiArrowBackOutline } from "react-icons/ti";
-import { TiArrowForwardOutline } from "react-icons/ti";
 import { ForwardToolTip } from "./forward-tooltip";
 import {
   immediateNextStepHandler,
@@ -11,6 +9,7 @@ import {
 } from "../utils";
 import { ReactNode, useContext } from "react";
 import { MainProfileStateContext } from "@/app/profile/utils";
+import { BackIcon, ForwardIcon } from "@/app/_custom-components";
 
 export const BackwardToolTip = ({ children }: { children: ReactNode }) => {
   const currentStep = useProfileSelector(
@@ -49,7 +48,7 @@ export const GoBackIcon = () => {
   return (
     <BackwardToolTip>
       <span className="relative">
-        <TiArrowBackOutline
+        <BackIcon
           onClick={() => {
             prevStepHandler(
               { currentStep, nextStep: currentStep - 1, totalCompletedSteps },
@@ -57,7 +56,6 @@ export const GoBackIcon = () => {
               dispatch,
             );
           }}
-          className="scale-[1.5] cursor-pointer"
         />
       </span>
     </BackwardToolTip>
@@ -75,7 +73,7 @@ export const GoForwardIcon = () => {
   return (
     <ForwardToolTip>
       <span className="relative">
-        <TiArrowForwardOutline
+        <ForwardIcon
           onClick={() => {
             immediateNextStepHandler(
               { currentStep, totalCompletedSteps },
@@ -84,7 +82,6 @@ export const GoForwardIcon = () => {
               context?.config?.businessRegistrationFile?.cachedFileArray?.[0],
             );
           }}
-          className="scale-[1.5] cursor-pointer"
         />
       </span>
     </ForwardToolTip>

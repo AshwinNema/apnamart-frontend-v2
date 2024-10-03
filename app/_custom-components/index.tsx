@@ -13,6 +13,9 @@ export * from "./loaders";
 export * from "./stepper";
 export * from "./buttons";
 export * from "./chatbox";
+export * from "./pagination";
+export * from "./custom-icons";
+
 export { default as CustomImagePreviewer } from "./image-previewer";
 
 export const ImageComponent = ({

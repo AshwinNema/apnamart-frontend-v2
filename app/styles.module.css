@@ -24,3 +24,8 @@
   -moz-appearance: textfield;
   appearance: textfield;
 }
+
+.merchant-registration-card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
