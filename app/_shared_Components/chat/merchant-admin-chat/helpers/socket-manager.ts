@@ -15,6 +15,7 @@ import { chatMsg } from "./transformer";
 
 export interface chatSupportConfig {
   limit: number;
+  merchantRegistrationId?: number;
 }
 
 export interface socketChatHandlerData {
@@ -36,7 +37,8 @@ export const establishSocketConnection = (
     const options: {
       limit: number;
       role?: UserRole;
-    } = _.pick(config, ["limit"]);
+      merchantRegistrationId?: number;
+    } = _.pick(config, ["limit", "merchantRegistrationId"]);
     const user = getLocalStorageKey(storageAttributes.user) as UserInterface;
     options.role = user?.role;
     sendSocketData(

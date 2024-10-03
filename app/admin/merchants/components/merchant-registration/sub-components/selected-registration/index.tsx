@@ -9,6 +9,7 @@ import { produce } from "immer";
 import { merchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
 import { MdOutlinePending } from "react-icons/md";
 import { FcApproval } from "react-icons/fc";
+import MerchantAdminChatSupport from "@/app/_shared_Components/chat/merchant-admin-chat";
 
 export const SelectedMerchantRegistration = ({}: {}) => {
   const mainState = useContext(MainStateContext);
@@ -67,6 +68,9 @@ export const SelectedMerchantRegistration = ({}: {}) => {
           }}
         />
       </div>
+      <MerchantAdminChatSupport
+        merchantRegistrationId={config.selectedRegistrationDetails.id}
+      />
     </>
   );
 };

@@ -10,14 +10,18 @@ import { MdOutlineSupportAgent } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 import * as _ from "lodash";
 import { messageBoxStatusTypes } from "@/app/_custom-components/chatbox/src/utils/interfaces & types & constants";
-import {transformChatMsgs} from "./helpers/transformer"
+import { transformChatMsgs } from "./helpers/transformer";
 import {
   chatSupportConfig,
   establishSocketConnection,
   sendChatMsg,
 } from "./helpers/socket-manager";
 
-const MerchantAdminChatSupport = () => {
+const MerchantAdminChatSupport = ({
+  merchantRegistrationId,
+}: {
+  merchantRegistrationId?: number;
+}) => {
   const socketRef = useRef<WebSocket | null>(null);
   const [chatConfig, setChatConfig] = useChatDataManager();
   const [config] = useState<chatSupportConfig>({
@@ -25,7 +29,10 @@ const MerchantAdminChatSupport = () => {
   });
 
   useEffect(() => {
-    establishSocketConnection(config, socketRef, (data, messageType) => {
+    const finalConfig = structuredClone(config);
+    if (merchantRegistrationId)
+      finalConfig.merchantRegistrationId = merchantRegistrationId;
+    establishSocketConnection(finalConfig, socketRef, (data, messageType) => {
       const chatMsgs = transformChatMsgs(data.data);
       switch (messageType) {
         case "forward":
@@ -42,7 +49,7 @@ const MerchantAdminChatSupport = () => {
     return () => {
       socketRef.current && socketRef.current.close();
     };
-  }, []);
+  }, [merchantRegistrationId]);
 
   return (
     <Chatbox
