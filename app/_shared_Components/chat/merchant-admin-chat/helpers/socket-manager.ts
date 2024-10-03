@@ -11,7 +11,7 @@ import {
 import { UserInterface, UserRole } from "@/lib/main/slices/user/user.slice";
 import * as _ from "lodash";
 import { MutableRefObject } from "react";
-import { chatMsg } from "./chat-msg";
+import { chatMsg } from "./transformer";
 
 export interface chatSupportConfig {
   limit: number;

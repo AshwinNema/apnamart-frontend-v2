@@ -1,6 +1,6 @@
 import {
   Chatbox,
-  useDataManager,
+  useChatDataManager,
   prevMsgsHandler,
   forwardMsgsHandler,
 } from "@/app/_custom-components";
@@ -9,17 +9,17 @@ import { v4 } from "uuid";
 import { MdOutlineSupportAgent } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 import * as _ from "lodash";
+import { messageBoxStatusTypes } from "@/app/_custom-components/chatbox/src/utils/interfaces & types & constants";
+import {transformChatMsgs} from "./helpers/transformer"
 import {
   chatSupportConfig,
   establishSocketConnection,
   sendChatMsg,
-} from "./utils";
-import { messageBoxStatusTypes } from "@/app/_custom-components/chatbox/src/utils/interfaces & types & constants";
-import { transformChatMsgs } from "./utils/chat-msg";
+} from "./helpers/socket-manager";
 
 const ChatSupport = () => {
   const socketRef = useRef<WebSocket | null>(null);
-  const [chatConfig, setChatConfig] = useDataManager();
+  const [chatConfig, setChatConfig] = useChatDataManager();
   const [config] = useState<chatSupportConfig>({
     limit: 10,
   });

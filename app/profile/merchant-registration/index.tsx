@@ -12,6 +12,7 @@ import {
 import { setKeyVal, setNestedPath } from "@/app/_utils";
 import RegistrationForm from "./registration-form";
 import PendingAdminReview from "./pending-admin-review";
+import ChatSupport from "../../_shared_Components/chat/merchant-admin-chat";
 
 interface merchantRegistrationState {
   showReviewDetails: boolean;
@@ -25,6 +26,9 @@ export const MainMerchantRegistrationContext = createContext<{
 const MerchantRegistration = () => {
   const registrationStatus = useProfileSelector(
     (state) => state.merchantDetails.registrationStatus,
+  );
+  const registrationId = useProfileSelector(
+    (state) => state.merchantDetails.id,
   );
   const [config, setConfig] = useState<merchantRegistrationState>({
     showReviewDetails: false,
@@ -53,6 +57,7 @@ const MerchantRegistration = () => {
           <RegistrationForm />
         </MainMerchantRegistrationContext.Provider>
       )}
+      {registrationId && <ChatSupport />}
     </Card>
   );
 };

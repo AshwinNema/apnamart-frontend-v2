@@ -6,10 +6,10 @@ import { anyFunction } from "./src/utils/interfaces & types & constants";
 export { assignDateKey } from "./src/utils/interfaces & types & constants";
 import { Message, MessagesState } from "./src/store/types";
 export {
-  default as useDataManager,
+  default as useChatDataManager,
   prevMsgsHandler,
   forwardMsgsHandler,
-} from "./src/store/hooks/useDataManager";
+} from "./src/store/hooks/useChatDataManager";
 export { type chatboxStoreApi } from "./src/store";
 
 export type chatBoxProps = {

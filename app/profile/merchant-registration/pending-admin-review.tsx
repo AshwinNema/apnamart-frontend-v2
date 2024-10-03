@@ -1,12 +1,6 @@
-import { Chatbox, ChatIcon } from "@/app/_custom-components";
-import {
-  componentType,
-  messageSenderType,
-} from "@/app/_custom-components/chatbox/src/store/types";
+import {  ChatIcon } from "@/app/_custom-components";
 import { setKeyVal } from "@/app/_utils";
 import { Button, CardBody, CardHeader } from "@nextui-org/react";
-import { MdOutlineSupportAgent } from "react-icons/md";
-import { v4 } from "uuid";
 const PendingAdminReview = ({ setData }: { setData: setKeyVal }) => {
   return (
     <>
@@ -43,34 +37,6 @@ const PendingAdminReview = ({ setData }: { setData: setKeyVal }) => {
           >
             View Profile Details
           </Button>
-          <Chatbox
-            title={
-              <div className="flex items-center gap-4 justify-center">
-                <div className="flex flex-col">
-                  <div className="flex justify-center">
-                    <MdOutlineSupportAgent />
-                  </div>
-
-                  <div>Technical Support</div>
-                </div>
-              </div>
-            }
-            subtitle=""
-            resizable={true}
-            initalMessages={[
-              {
-                componentType: componentType.textComponent,
-                senderName: "Admin Bot",
-                senderType: messageSenderType.response,
-                timestamp: new Date(),
-                status: "read",
-                id: v4(),
-                hideStatusAndTime: true,
-                text: `👋 Hello! Welcome to Apnamart! We're here to help you with anything you need. If you have questions about our platform, your profile status, or anything else, just ask! 😊
-How can we assist you today?`,
-              },
-            ]}
-          />
         </div>
       </CardBody>
     </>
