@@ -33,7 +33,7 @@ export const forwardMsgsHandler = (
   );
 };
 
-const useDataManager = (): [
+const useChatDataManager = (): [
   MessagesState,
   Dispatch<SetStateAction<MessagesState>>,
 ] => {
@@ -45,4 +45,4 @@ const useDataManager = (): [
   return [config, setConfig];
 };
 
-export default useDataManager;
+export default useChatDataManager;

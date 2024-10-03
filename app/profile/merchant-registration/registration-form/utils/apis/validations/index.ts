@@ -8,14 +8,14 @@ import {
   createUpdateRegistrationDetails,
   finalDetailsValidation,
 } from "../../interfaces & validations";
-import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
+import { merchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
 
 export const createUpdateRegistrationValidation = (
   allDetails: createUpdateRegistrationDetails,
   file?: File,
 ) => {
   const underAdminReview =
-    allDetails.registrationStatus === MerchantRegistrationStatus.adminReview;
+    allDetails.registrationStatus === merchantRegistrationStatus.adminReview;
   if (underAdminReview) {
     infoToast({
       msg: "Your profile is under review by admin. After review is completed you will be allowed to update your profile details",

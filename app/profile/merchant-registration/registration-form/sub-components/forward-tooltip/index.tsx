@@ -8,7 +8,7 @@ import {
   stepValidator,
 } from "../../utils";
 import { getAddressDrawerBtntext } from "../../pickup-address/details";
-import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
+import { merchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
 import { MainProfileStateContext } from "@/app/profile/utils";
 import { getToolTipContent } from "./utils";
 
@@ -23,7 +23,7 @@ export const ForwardToolTip = ({ children }: { children: ReactNode }) => {
   const context = useContext(MainProfileStateContext);
   const currentStepKey = stepList[currentStep];
   const underAdminReview =
-    registrationStatus === MerchantRegistrationStatus.adminReview;
+    registrationStatus === merchantRegistrationStatus.adminReview;
   const setToolTipContent = () => {
     if (underAdminReview && currentStep === stepList.length - 1) {
       setConfig({

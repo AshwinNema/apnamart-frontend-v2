@@ -7,7 +7,7 @@ import { TextInput } from "@/app/_custom-components";
 import { z } from "zod";
 import { setNestedPath } from "@/app/_utils";
 import { DrawerSaveBtn } from "./save-btn";
-import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
+import { merchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
 
 export default function AddressDrawer({
   isOpen,
@@ -39,7 +39,7 @@ export default function AddressDrawer({
   );
   const inputProps = {
     isRequired: true,
-    isReadOnly: registrationStatus === MerchantRegistrationStatus.adminReview,
+    isReadOnly: registrationStatus === merchantRegistrationStatus.adminReview,
   };
 
   return (

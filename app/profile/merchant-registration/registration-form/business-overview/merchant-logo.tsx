@@ -4,7 +4,7 @@ import { useProfileDispatch, useProfileSelector } from "@/lib/profile/hooks";
 import { setNestedPath } from "@/app/_utils";
 import { setMerchantDetails } from "@/lib/profile/slices/merchant-details.slice";
 import { uploadMerchantLogo } from "../utils";
-import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
+import { merchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
 import { MainProfileStateContext } from "@/app/profile/utils";
 
 const MerchantLogo = () => {
@@ -29,7 +29,7 @@ const MerchantLogo = () => {
   };
 
   useEffect(() => {
-    if (registrationStatus === MerchantRegistrationStatus.adminReview) {
+    if (registrationStatus === merchantRegistrationStatus.adminReview) {
       dispatchMerchantDetails({
         showImgChangeBtn: false,
       });

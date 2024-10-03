@@ -1,6 +1,6 @@
 import { Card } from "@nextui-org/react";
 import { useProfileSelector } from "@/lib/profile/hooks";
-import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
+import { merchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
 import {
   createContext,
   Dispatch,
@@ -12,6 +12,7 @@ import {
 import { setKeyVal, setNestedPath } from "@/app/_utils";
 import RegistrationForm from "./registration-form";
 import PendingAdminReview from "./pending-admin-review";
+import MerchantAdminChatSupport from "../../_shared_Components/chat/merchant-admin-chat";
 
 interface merchantRegistrationState {
   showReviewDetails: boolean;
@@ -26,13 +27,16 @@ const MerchantRegistration = () => {
   const registrationStatus = useProfileSelector(
     (state) => state.merchantDetails.registrationStatus,
   );
+  const registrationId = useProfileSelector(
+    (state) => state.merchantDetails.id,
+  );
   const [config, setConfig] = useState<merchantRegistrationState>({
     showReviewDetails: false,
   });
   const setData = useCallback(setNestedPath(setConfig), [setConfig]);
   useEffect(() => {
     setData("showReviewDetails")(
-      registrationStatus === MerchantRegistrationStatus.adminReview,
+      registrationStatus === merchantRegistrationStatus.adminReview,
     );
   }, [registrationStatus]);
 
@@ -53,6 +57,7 @@ const MerchantRegistration = () => {
           <RegistrationForm />
         </MainMerchantRegistrationContext.Provider>
       )}
+      {registrationId && <MerchantAdminChatSupport />}
     </Card>
   );
 };

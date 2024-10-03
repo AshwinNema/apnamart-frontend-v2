@@ -11,10 +11,11 @@ import {
 import { UserInterface, UserRole } from "@/lib/main/slices/user/user.slice";
 import * as _ from "lodash";
 import { MutableRefObject } from "react";
-import { chatMsg } from "./chat-msg";
+import { chatMsg } from "./transformer";
 
 export interface chatSupportConfig {
   limit: number;
+  merchantRegistrationId?: number;
 }
 
 export interface socketChatHandlerData {
@@ -36,7 +37,8 @@ export const establishSocketConnection = (
     const options: {
       limit: number;
       role?: UserRole;
-    } = _.pick(config, ["limit"]);
+      merchantRegistrationId?: number;
+    } = _.pick(config, ["limit", "merchantRegistrationId"]);
     const user = getLocalStorageKey(storageAttributes.user) as UserInterface;
     options.role = user?.role;
     sendSocketData(

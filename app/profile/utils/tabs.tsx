@@ -5,7 +5,7 @@ import BasicDetails from "../user-input-details";
 import { tabOption } from ".";
 import dynamic from "next/dynamic";
 import {
-  MerchantRegistrationStatus,
+  merchantRegistrationStatus,
   UserInterface,
   UserRole,
 } from "@/lib/main/slices/user/user.slice";

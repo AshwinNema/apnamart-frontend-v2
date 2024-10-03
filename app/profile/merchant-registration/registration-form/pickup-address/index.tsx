@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { CardBody } from "@nextui-org/react";
 import * as _ from "lodash";
 import { setMultiplePaths } from "@/app/_utils";
-import { MerchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
+import { merchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
 import { getAddress } from "@/app/profile/address/utils";
 import {
   EventHandlerAndMarker,
@@ -49,7 +49,7 @@ export default function PickUpAddress() {
           setMultipleData={setMultiplePaths(setConfig)}
           disallowMarkerDrag={
             merchantDetails.registrationStatus ===
-            MerchantRegistrationStatus.adminReview
+            merchantRegistrationStatus.adminReview
           }
         />
       </MainMap>

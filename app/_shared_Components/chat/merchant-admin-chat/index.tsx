@@ -1,6 +1,6 @@
 import {
   Chatbox,
-  useDataManager,
+  useChatDataManager,
   prevMsgsHandler,
   forwardMsgsHandler,
 } from "@/app/_custom-components";
@@ -9,23 +9,30 @@ import { v4 } from "uuid";
 import { MdOutlineSupportAgent } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 import * as _ from "lodash";
+import { messageBoxStatusTypes } from "@/app/_custom-components/chatbox/src/utils/interfaces & types & constants";
+import { transformChatMsgs } from "./helpers/transformer";
 import {
   chatSupportConfig,
   establishSocketConnection,
   sendChatMsg,
-} from "./utils";
-import { messageBoxStatusTypes } from "@/app/_custom-components/chatbox/src/utils/interfaces & types & constants";
-import { transformChatMsgs } from "./utils/chat-msg";
+} from "./helpers/socket-manager";
 
-const ChatSupport = () => {
+const MerchantAdminChatSupport = ({
+  merchantRegistrationId,
+}: {
+  merchantRegistrationId?: number;
+}) => {
   const socketRef = useRef<WebSocket | null>(null);
-  const [chatConfig, setChatConfig] = useDataManager();
+  const [chatConfig, setChatConfig] = useChatDataManager();
   const [config] = useState<chatSupportConfig>({
     limit: 10,
   });
 
   useEffect(() => {
-    establishSocketConnection(config, socketRef, (data, messageType) => {
+    const finalConfig = structuredClone(config);
+    if (merchantRegistrationId)
+      finalConfig.merchantRegistrationId = merchantRegistrationId;
+    establishSocketConnection(finalConfig, socketRef, (data, messageType) => {
       const chatMsgs = transformChatMsgs(data.data);
       switch (messageType) {
         case "forward":
@@ -42,7 +49,7 @@ const ChatSupport = () => {
     return () => {
       socketRef.current && socketRef.current.close();
     };
-  }, []);
+  }, [merchantRegistrationId]);
 
   return (
     <Chatbox
@@ -80,4 +87,4 @@ How can we assist you today?`,
   );
 };
 
-export default ChatSupport;
+export default MerchantAdminChatSupport;
