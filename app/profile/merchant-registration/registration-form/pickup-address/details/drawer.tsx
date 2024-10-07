@@ -1,10 +1,10 @@
 import CustomDrawer from "@/app/_custom-components/drawer";
 import { useProfileSelector } from "@/lib/profile/hooks";
 import { ModalBody } from "@nextui-org/react";
+import { z } from "zod";
 import { useEffect, useState } from "react";
 import { addressDrawerDefaultVal } from "../../utils";
 import { TextInput } from "@/app/_custom-components";
-import { z } from "zod";
 import { setNestedPath } from "@/app/_utils";
 import { DrawerSaveBtn } from "./save-btn";
 import { merchantRegistrationStatus } from "@/lib/main/slices/user/user.slice";
@@ -59,6 +59,7 @@ export default function AddressDrawer({
               {...inputProps}
               setData={setData("addressLine2")}
             />
+
             <TextInput
               value={config.pinCode}
               validationSchema={z.string().length(6, {

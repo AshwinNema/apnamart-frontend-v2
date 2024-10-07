@@ -16,7 +16,6 @@ export const SubDetailsViewer = ({
   subDetailsType,
   clearSubDetailsType,
 }: subDetailsViewerProps) => {
-  console.log(details, "these are the details");
   const { isOpen, onOpenChange, onOpen } = useDisclosure();
   useEffect(() => {
     if (!subDetailsType) return;

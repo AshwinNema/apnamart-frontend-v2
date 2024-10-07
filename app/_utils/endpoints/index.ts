@@ -28,4 +28,6 @@ export const webSocketEndPoints = {
 export enum socketEvents {
   initiateMerchantAdminChat = "initiate-merchant-admin-chat",
   sendMerchantAdminChatMsg = "merchant-admin-chat-msg",
+  error = "error",
+  queryChatsMsgs = "query-merchant-admin-chat-msgs",
 }
